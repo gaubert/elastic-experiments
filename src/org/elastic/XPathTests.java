@@ -7,6 +7,7 @@ import java.io.IOException;
  
 
 
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -17,6 +18,8 @@ import javax.xml.xpath.XPathFactory;
  
 
 
+
+import org.apache.commons.io.FileUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.w3c.dom.Document;
@@ -139,6 +142,9 @@ public class XPathTests {
             }*/
             
             System.out.println("JSON Result Object: " + jsonObject.toJSONString());
+            
+            File f = new File("/tmp/metadata.json");
+            FileUtils.writeStringToFile(new File("./sandbox/firstFile.json"), jsonObject.toJSONString());
  
             System.out.println("*************************");
  
