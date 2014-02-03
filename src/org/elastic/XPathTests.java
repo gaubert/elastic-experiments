@@ -28,7 +28,7 @@ public class XPathTests {
     public static void main(String[] args) {
  
         try {
-            FileInputStream file = new FileInputStream(new File("h:/Dev/metadata/EO-EUM-DAT-METOP-AMSU-AHRPT.xml"));
+            FileInputStream file = new FileInputStream(new File("./etc/metadata/EO-EUM-DAT-METOP-AMSU-AHRPT.xml"));
                  
             DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
              
@@ -138,7 +138,7 @@ public class XPathTests {
                 System.out.println(nodeList.item(i).getFirstChild().getNodeValue()); 
             }*/
             
-            System.out.println("JSON Result Object: " + jsonObject);
+            System.out.println("JSON Result Object: " + jsonObject.toJSONString());
  
             System.out.println("*************************");
  
