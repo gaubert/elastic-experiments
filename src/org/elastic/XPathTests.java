@@ -65,7 +65,7 @@ public class XPathTests {
             String result = xPath.compile(expression).evaluate(xmlDocument);
             System.out.println("result=" + fileID);
             
-            if (fileID != null)
+            if (result != null)
             {
             	jsonObject.put("abstract", result);
             }
@@ -87,60 +87,67 @@ public class XPathTests {
             	jsonObject.put("hierarchyNames", list);
             }
             
- 
-            /*System.out.println("*************************");
-            expression = "/Employees/Employee[@type='admin']/firstname";
-            System.out.println(expression);
-            nodeList = (NodeList) xPath.compile(expression).evaluate(xmlDocument, XPathConstants.NODESET);
-            for (int i = 0; i < nodeList.getLength(); i++) {
-                System.out.println(nodeList.item(i).getFirstChild().getNodeValue()); 
-            }
- 
-            System.out.println("*************************");
-            expression = "/Employees/Employee[@emplid='2222']";
-            System.out.println(expression);
-            Node node = (Node) xPath.compile(expression).evaluate(xmlDocument, XPathConstants.NODE);
-            if(null != node) {
-                nodeList = node.getChildNodes();
-                for (int i = 0;null!=nodeList && i < nodeList.getLength(); i++) {
-                    Node nod = nodeList.item(i);
-                    if(nod.getNodeType() == Node.ELEMENT_NODE)
-                        System.out.println(nodeList.item(i).getNodeName() + " : " + nod.getFirstChild().getNodeValue()); 
-                }
-            }
-             
-            System.out.println("*************************");
- 
-            expression = "/Employees/Employee[age>40]/firstname";
-            nodeList = (NodeList) xPath.compile(expression).evaluate(xmlDocument, XPathConstants.NODESET);
-            System.out.println(expression);
-            for (int i = 0; i < nodeList.getLength(); i++) {
-                System.out.println(nodeList.item(i).getFirstChild().getNodeValue()); 
-            }
-         
-            System.out.println("*************************");
-            expression = "/Employees/Employee[1]/firstname";
-            System.out.println(expression);
-            nodeList = (NodeList) xPath.compile(expression).evaluate(xmlDocument, XPathConstants.NODESET);
-            for (int i = 0; i < nodeList.getLength(); i++) {
-                System.out.println(nodeList.item(i).getFirstChild().getNodeValue()); 
-            }
-            System.out.println("*************************");
-            expression = "/Employees/Employee[position() <= 2]/firstname";
-            System.out.println(expression);
-            nodeList = (NodeList) xPath.compile(expression).evaluate(xmlDocument, XPathConstants.NODESET);
-            for (int i = 0; i < nodeList.getLength(); i++) {
-                System.out.println(nodeList.item(i).getFirstChild().getNodeValue()); 
-            }
- 
-            System.out.println("*************************");
-            expression = "/Employees/Employee[last()]/firstname";
-            System.out.println(expression);
-            nodeList = (NodeList) xPath.compile(expression).evaluate(xmlDocument, XPathConstants.NODESET);
-            for (int i = 0; i < nodeList.getLength(); i++) {
-                System.out.println(nodeList.item(i).getFirstChild().getNodeValue()); 
-            }*/
             
+            // Get Contact info           
+            String deliveryPoint      = "//*[local-name()='address']//*[local-name()='deliveryPoint']/*[local-name()='CharacterString']";
+            String city               = "//*[local-name()='address']//*[local-name()='city']/*[local-name()='CharacterString']";
+            String administrativeArea = "//*[local-name()='address']//*[local-name()='administrativeArea']/*[local-name()='CharacterString']";
+            String postalCode         = "//*[local-name()='address']//*[local-name()='postalCode']/*[local-name()='CharacterString']";
+            String country            = "//*[local-name()='address']//*[local-name()='country']/*[local-name()='CharacterString']";
+            String email              = "//*[local-name()='address']//*[local-name()='electronicMailAddress']/*[local-name()='CharacterString']";
+            
+            String addressString = "";
+            String emailString   = "";
+            
+            result = xPath.compile(deliveryPoint).evaluate(xmlDocument);
+            
+            if (result != null)
+            {
+            	addressString += result.trim();
+            }
+            
+            result = xPath.compile(postalCode).evaluate(xmlDocument);
+            
+            if (result != null)
+            {
+            	addressString += "\n" + result.trim();
+            }
+            
+            result = xPath.compile(city).evaluate(xmlDocument);
+            
+            if (result != null)
+            {
+            	addressString += " " + result.trim();
+            }
+            result = xPath.compile(administrativeArea).evaluate(xmlDocument);
+            
+            if (result != null)
+            {
+            	addressString += "\n" + result.trim();
+            }
+                      
+            result = xPath.compile(country).evaluate(xmlDocument);
+            
+            if (result != null)
+            {
+            	addressString += "\n" + result.trim();
+            }
+            
+           
+            System.out.println("address =" + addressString);
+            
+            result = xPath.compile(email).evaluate(xmlDocument);
+            
+            if (result != null)
+            {
+            	 emailString += result.trim();
+            }
+            
+            System.out.println("email =" + emailString);
+            
+            jsonObject.put("responsiblePartyAddress", addressString);
+            jsonObject.put("responsiblePartyEmail", emailString);
+                       
             System.out.println("JSON Result Object: " + jsonObject.toJSONString());
             
             File f = new File("/tmp/metadata.json");
