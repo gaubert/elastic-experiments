@@ -155,7 +155,7 @@ public class XPathTests {
             
             String abstractStr = "//*[local-name()='identificationInfo']//*[local-name()='abstract']/*[local-name()='CharacterString']";
             String statusStr   = "//*[local-name()='identificationInfo']//*[local-name()='status']/*[local-name()='MD_ProgressCode']/@codeListValue";
-            String keywords    = "//*[local-name()='identificationInfo']//*[local-name()='descriptiveKeywords']/*[local-name()='keyword']/*[local-name()='CharacterString']";
+            String keywords    = "//*[local-name()='keyword']/*[local-name()='CharacterString']";
             
             HashMap<String,String> idMap = new HashMap<String, String>();
             
