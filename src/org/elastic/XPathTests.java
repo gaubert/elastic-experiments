@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
  
 
 
@@ -144,10 +145,47 @@ public class XPathTests {
             }
             
             System.out.println("email =" + emailString);
+            HashMap<String,String> map = new HashMap<String, String>();
+            map.put("address", addressString);
+            map.put("email", emailString);
             
-            jsonObject.put("responsiblePartyAddress", addressString);
-            jsonObject.put("responsiblePartyEmail", emailString);
-                       
+            jsonObject.put("contact", map);
+         
+            // add identification info   
+            
+            String abstractStr = "//*[local-name()='identificationInfo']//*[local-name()='abstract']/*[local-name()='CharacterString']";
+            String statusStr   = "//*[local-name()='identificationInfo']//*[local-name()='status']/*[local-name()='MD_ProgressCode']/@codeListValue";
+            String keywords    = "//*[local-name()='identificationInfo']//*[local-name()='descriptiveKeywords']/*[local-name()='keyword']/*[local-name()='CharacterString']";
+            
+            HashMap<String,String> idMap = new HashMap<String, String>();
+            
+            result = xPath.compile(abstractStr).evaluate(xmlDocument);
+            
+            if (result != null)
+            {
+            	idMap.put("abstract", result.trim());
+            }
+            
+            result = xPath.compile(statusStr).evaluate(xmlDocument);
+            
+            if (result != null)
+            {
+            	idMap.put("status", result.trim());
+            }
+            
+            list = new JSONArray();
+            nodeList = (NodeList) xPath.compile(keywords).evaluate(xmlDocument, XPathConstants.NODESET);
+            for (int i = 0; i < nodeList.getLength(); i++) 
+            {
+            	list.add(nodeList.item(i).getFirstChild().getNodeValue());
+                System.out.println(nodeList.item(i).getFirstChild().getNodeValue()); 
+            }
+            
+            System.out.println("idMap =" + idMap);
+            
+            jsonObject.put("identificationInfo", idMap);
+            
+                  
             System.out.println("JSON Result Object: " + jsonObject.toJSONString());
             
             File f = new File("/tmp/metadata.json");
