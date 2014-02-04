@@ -1,1 +1,4 @@
 sandbox/firstFile.json
+etc/tools/elasticsearch-0.90.10/data/
+etc/tools/elasticsearch-0.90.10/logs
+bin/
