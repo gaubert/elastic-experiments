@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="etc/static"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/json-simple-1.1.1.jar"/>
 	<classpathentry kind="lib" path="lib/commons-io-2.4.jar"/>
+	<classpathentry kind="lib" path="lib/spark/jetty-webapp-7.3.0.v20110203.jar"/>
+	<classpathentry kind="lib" path="lib/spark/log4j-1.2.14.jar"/>
+	<classpathentry kind="lib" path="lib/spark/servlet-api-3.0.pre4.jar"/>
+	<classpathentry kind="lib" path="lib/spark/slf4j-api-1.6.1.jar"/>
+	<classpathentry kind="lib" path="lib/spark/slf4j-log4j12-1.6.1.jar"/>
+	<classpathentry kind="lib" path="lib/spark/spark-0.9.9.4-SNAPSHOT.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

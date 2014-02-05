@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.Writer;
 import java.util.HashMap;
  
 
@@ -21,10 +22,10 @@ import javax.xml.xpath.XPathFactory;
 
 
 import org.apache.commons.io.FileUtils;
+import org.elastic.common.JSONWriter;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.w3c.dom.Document;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
  
@@ -32,6 +33,10 @@ public class XPathTests {
     public static void main(String[] args) {
  
         try {
+        	
+        	String expression = null;
+        	String result     = null;
+        	
             FileInputStream file = new FileInputStream(new File("./etc/metadata/EO-EUM-DAT-METOP-AMSU-AHRPT.xml"));
                  
             DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
@@ -46,7 +51,7 @@ public class XPathTests {
             
             JSONObject jsonObject=new JSONObject();
             
- 
+            
             // Get fileIDs
             System.out.println("*************************");
             //String expression = "/Employees/Employee[@emplid='3333']/email";
@@ -60,16 +65,16 @@ public class XPathTests {
             }
             
             // Get abstract
-            System.out.println("*************************");
-            String expression = "//*[local-name()='abstract']/*[local-name()='CharacterString']";
+            /*System.out.println("*************************");
+            expression = "//*[local-name()='abstract']/*[local-name()='CharacterString']";
             System.out.println(expression);
-            String result = xPath.compile(expression).evaluate(xmlDocument);
+            result = xPath.compile(expression).evaluate(xmlDocument);
             System.out.println("result=" + fileID);
             
             if (result != null)
             {
             	jsonObject.put("abstract", result);
-            }
+            }*/
  
             // Get hierarchyLevelNames
             System.out.println("*************************");
@@ -158,7 +163,7 @@ public class XPathTests {
             String statusStr   = "//*[local-name()='identificationInfo']//*[local-name()='status']/*[local-name()='MD_ProgressCode']/@codeListValue";
             String keywords    = "//*[local-name()='keyword']/*[local-name()='CharacterString']";
             
-            HashMap<String,String> idMap = new HashMap<String, String>();
+            HashMap<String,Object> idMap = new HashMap<String, Object>();
             
             result = xPath.compile(titleStr).evaluate(xmlDocument);
             
@@ -189,12 +194,21 @@ public class XPathTests {
                 System.out.println(nodeList.item(i).getFirstChild().getNodeValue()); 
             }
             
+            if (list.size() > 0)
+            {
+            	idMap.put("keywords", list);
+            }
+            
             System.out.println("idMap =" + idMap);
             
             jsonObject.put("identificationInfo", idMap);
             
+            // to pretty print  
+            Writer writer = new JSONWriter(); // this is the new writter that adds indentation.
+            jsonObject.writeJSONString(writer);
+          
                   
-            System.out.println("JSON Result Object: " + jsonObject.toJSONString());
+            System.out.println("JSON Result Object: " + writer.toString());
             
             File f = new File("/tmp/metadata.json");
             FileUtils.writeStringToFile(new File("./sandbox/firstFile.json"), jsonObject.toJSONString());
