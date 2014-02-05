@@ -1,0 +1,33 @@
+launch elastic search:
+----------------------
+
+./elasticsearch -f -Des.index.store.type=memory
+
+
+
+Index products:
+---------------
+
+ curl -XPOST 'http://localhost:9200/eum-products/product/EO:EUM:DAT:METOP:AMSU-AHRPT' -d '{"abstract":"The Advanced Microwave Sounding Unit-A (AMSU-A) is a 15-channel microwave radiometer that is used for measuring global atmospheric temperature profiles and will provide information on atmospheric water in all of its phases (with the exception of small ice particles, which are transparent at microwave frequencies). AMSU-A will provide information even in cloudy conditions. AMSU-A measures Earth radiance at frequencies (in GHz) as listed under the instrument channel information.","hierarchyNames":["sat.Metop","sat.Metop.AMSU-A","theme.par.Atmosphere","SBA.Weather","dis.Direct","theme.par.Level_1_Data"],"responsiblePartyAddress":"EUMETSAT Allee 1\n64295 Darmstadt\nHessen\nGermany","responsiblePartyEmail":"ops@eumetsat.int","fileIdentifier":"EO:EUM:DAT:METOP:AMSU-AHRPT"}'
+
+ response: {"ok":true,"_index":"eum-products","_type":"product","_id":"EO:EUM:DAT:METOP:AMSU-AHRPT","_version":1}
+ 
+ Search examples:
+ ----------------
+ 
+ Full fields search: 
+ 
+ curl -XGET 'http://localhost:9200/eum-products/_search?q="instrument"'
+ 
+ {"took":64,"timed_out":false,"_shards":{"total":5,"successful":5,"failed":0},
+  "hits":{"total":1,"max_score":0.038356602,
+  "hits":[{"_index":"eum-products","_type":"product","_id":"EO:EUM:DAT:METOP:AMSU-AHRPT","_score":0.038356602, "_source" : {"abstract":"The Advanced Microwave Sounding Unit-A (AMSU-A) is a 15-channel microwave radiometer that is used for measuring global atmospheric temperature profiles and will provide information on atmospheric water in all of its phases (with the exception of small ice particles, which are transparent at microwave frequencies). AMSU-A will provide information even in cloudy conditions. AMSU-A measures Earth radiance at frequencies (in GHz) as listed under the instrument channel information.","hierarchyNames":["sat.Metop","sat.Metop.AMSU-A","theme.par.Atmosphere","SBA.Weather","dis.Direct","theme.par.Level_1_Data"],"responsiblePartyAddress":"EUMETSAT Allee 1\n64295 Darmstadt\nHessen\nGermany","responsiblePartyEmail":"ops@eumetsat.int","fileIdentifier":"EO:EUM:DAT:METOP:AMSU-AHRPT"}}]}}
+  
+  
+  
+Boost based on field value:
+---------------------------
+
+http://stackoverflow.com/questions/12427449/elasticsearch-boosting-relevance-based-on-field-value
+
+  

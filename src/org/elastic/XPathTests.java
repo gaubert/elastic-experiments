@@ -154,10 +154,18 @@ public class XPathTests {
             // add identification info   
             
             String abstractStr = "//*[local-name()='identificationInfo']//*[local-name()='abstract']/*[local-name()='CharacterString']";
+            String titleStr    = "//*[local-name()='identificationInfo']//*[local-name()='title']/*[local-name()='CharacterString']";
             String statusStr   = "//*[local-name()='identificationInfo']//*[local-name()='status']/*[local-name()='MD_ProgressCode']/@codeListValue";
             String keywords    = "//*[local-name()='keyword']/*[local-name()='CharacterString']";
             
             HashMap<String,String> idMap = new HashMap<String, String>();
+            
+            result = xPath.compile(titleStr).evaluate(xmlDocument);
+            
+            if (result != null)
+            {
+            	idMap.put("title", result.trim());
+            }
             
             result = xPath.compile(abstractStr).evaluate(xmlDocument);
             
