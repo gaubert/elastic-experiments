@@ -32,7 +32,8 @@ public class XPathTests {
     public static void main(String[] args) {
  
         try {
-            FileInputStream file = new FileInputStream(new File("./etc/metadata/EO-EUM-DAT-METOP-AMSU-AHRPT.xml"));
+            //FileInputStream file = new FileInputStream(new File("./etc/metadata/EO-EUM-DAT-METOP-AMSU-AHRPT.xml"));
+        	FileInputStream file = new FileInputStream(new File("./etc/metadata/metadata_0.xml"));
                  
             DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
              
