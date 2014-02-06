@@ -17,7 +17,6 @@ public class SimpleExample {
         
     	//staticFileLocation("/public");
   
-    	Spark.
     	
         Spark.get(new Route("/hello") {
             @Override
