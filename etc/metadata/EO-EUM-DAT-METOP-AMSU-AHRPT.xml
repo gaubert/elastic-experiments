@@ -387,10 +387,10 @@
 <gmi:MI_Band>
 <gmd:descriptor>
 <gco:CharacterString>28.8</gco:CharacterString>
-</gmd:descriptor>
-<gmi:nominalSpatialResolution>
+</gmd:descriptor><gmi:nominalSpatialResolution>
 <gco:Real>1.0</gco:Real>
 </gmi:nominalSpatialResolution>
+
 </gmi:MI_Band>
 </gmd:dimension>
 <gmd:dimension>

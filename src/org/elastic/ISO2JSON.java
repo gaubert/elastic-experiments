@@ -270,7 +270,7 @@ public class ISO2JSON
 		String srcDir  = "etc/metadata";
 		String destDir = "/tmp/json-results"; 
 	 
-		//createInfoToIndex(srcDir, destDir);
+		createInfoToIndex(srcDir, destDir);
 		
 		indexDirContent(destDir);
 	}

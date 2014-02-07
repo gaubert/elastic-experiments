@@ -30,7 +30,7 @@ import spark.Route;
 /**
  * A simple example just showing some basic functionality
  */
-public class SimpleSearch {
+public class SparkSearchWeb {
     
     public static void main(String[] args) {
         
@@ -121,7 +121,9 @@ public class SimpleSearch {
                 
                 
                 
-                QueryBuilder qb = QueryBuilders.matchQuery("title", searchTerms);
+                //QueryBuilder qb = QueryBuilders.matchQuery("title", searchTerms);
+                
+                QueryBuilder qb = QueryBuilders.multiMatchQuery(searchTerms, "title", "abstract");
              
         		SearchResponse sr = client.prepareSearch("eumetsat-catalogue")
         				.setQuery(qb)
