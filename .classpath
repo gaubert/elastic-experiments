@@ -10,10 +10,11 @@
 	<classpathentry kind="lib" path="lib/spark/servlet-api-3.0.pre4.jar"/>
 	<classpathentry kind="lib" path="lib/spark/slf4j-api-1.6.1.jar"/>
 	<classpathentry kind="lib" path="lib/spark/slf4j-log4j12-1.6.1.jar"/>
-	<classpathentry kind="lib" path="lib/spark/spark-core-1.1.1.jar"/>
 	<classpathentry kind="lib" path="lib/joda-time-1.6.jar"/>
 	<classpathentry kind="lib" path="etc/tools/elasticsearch-0.90.10/lib/elasticsearch-0.90.10.jar"/>
 	<classpathentry kind="lib" path="etc/tools/elasticsearch-0.90.10/lib/lucene-core-4.6.0.jar"/>
 	<classpathentry kind="lib" path="etc/tools/elasticsearch-0.90.10/lib/log4j-1.2.17.jar"/>
+	<classpathentry kind="lib" path="lib/spark/spark-0.9.9.4-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="lib/spark/freemarker.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
