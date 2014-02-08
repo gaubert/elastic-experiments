@@ -1,6 +1,7 @@
 package org.elastic.web;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
@@ -12,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+import org.elastic.common.MimeUtil;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
@@ -20,12 +23,12 @@ import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 
-import freemarker.template.Configuration;
-import freemarker.template.Template;
-import spark.Spark;
 import spark.Request;
 import spark.Response;
 import spark.Route;
+import spark.Spark;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
 
 /**
  * A simple example just showing some basic functionality
@@ -36,30 +39,35 @@ public class SparkSearchWeb {
         
         //  setPort(5678); <- Uncomment this if you wan't spark to listen on a port different than 4567.
         
-    	//staticFileLocation("/public");
-  
-    	
-    	/*<!DOCTYPE html>
-    	<html>
-    	<body>
-
-    	<form action="demo_form.asp">
-    	First name: <input type="text" name="FirstName" value="Mickey"><br>
-    	Last name: <input type="text" name="LastName" value="Mouse"><br>
-    	<input type="submit" value="Submit">
-    	</form>
-
-    	<p>Click the "Submit" button and the form-data will be sent to a page on the server called "demo_form.asp".</p>
-
-    	</body>
-    	</html>*/
-    	
+ 
     	//start elastic client once for all
         final Client client     = new TransportClient().addTransportAddress(new InetSocketTransportAddress("localhost", 9300));
         
         //Freemarker configuration object
         final Configuration cfg = new Configuration();
-    	
+ 
+        Spark.get(new Route("/test") {
+            @Override
+            public Object handle(Request request, Response response) 
+            {
+                try {
+					return FileUtils.readFileToString(new File("etc/web/bootstrap_search.html"));
+				} catch (IOException e) 
+				{
+					StringWriter errors = new StringWriter();
+					e.printStackTrace(new PrintWriter(errors));
+					String str = errors.toString();
+					// print in out
+					System.out.println(str);
+					halt(401, "Error while processing form. error = " + str);
+					
+					
+				}
+                
+                return null;
+            }
+        });
+        
     	Spark.get(new Route("/search") {
             @Override
             public Object handle(Request request, Response response) 
@@ -199,64 +207,51 @@ public class SparkSearchWeb {
             }
         });
     	
+
     	
-        Spark.get(new Route("/hello") {
-            @Override
-            public Object handle(Request request, Response response) {
-                return "Hello World!";
-            }
-        });
-        
-        Spark.post(new Route("/hello") {
-            @Override
-            public Object handle(Request request, Response response) {
-                return "Hello World: " + request.body();
-            }
-        });
-        
-        Spark.get(new Route("/private") {
-            @Override
-            public Object handle(Request request, Response response) {
-                response.status(401);
-                return "Go Away!!!";
-            }
-        });
-        
-        Spark.get(new Route("/users/:name") {
-            @Override
-            public Object handle(Request request, Response response) {
-                return "Selected user: " + request.params(":name");
-            }
-        });
-        
-        Spark.get(new Route("/news/:section") {
-            @Override
-            public Object handle(Request request, Response response) {
-                response.type("text/xml");
-                return "<?xml version=\"1.0\" encoding=\"UTF-8\"?><news>" + request.params("section") + "</news>";
-            }
-        });
-        
-        Spark.get(new Route("/protected") {
-            @Override
-            public Object handle(Request request, Response response) {
-                halt(403, "I don't think so!!!");
-                return null;
-            }
-        });
-        
-        Spark.get(new Route("/redirect") {
-            @Override
-            public Object handle(Request request, Response response) {
-                response.redirect("/news/world");
-                return null;
-            }
-        });
         
         Spark.get(new Route("/") {
             @Override
             public Object handle(Request request, Response response) {
-                return "root";
+                
+            	// redirect to search page
+            	response.redirect("/search");
+            	return null;
+            }
+        });
+        
+        // To serve static content. This should always be the last rule.
+        // Add more mime types if necessary
+        Spark.get(new Route("/*") {
+            @Override
+            public String handle(Request request, Response response) {
+                //final File pub = new File("etc/static");
+                final File file = new File("etc/static/"+ request.pathInfo());
+                
+                if (!file.exists()) {
+                    System.out.println("File not found, returning 404: " + file);
+                    halt(404);
+                    return null;
+                }
+               
+                String mime = MimeUtil.getMimeType(file.getName());
+                           
+                System.out.println("Serving " + mime + ": " + file);
+                response.raw().setContentType(mime + ";charset=utf-8");
+                try 
+                {
+					IOUtils.copy(new FileInputStream(file), response.raw().getOutputStream());
+				} catch (Exception e) {
+					
+					StringWriter errors = new StringWriter();
+					e.printStackTrace(new PrintWriter(errors));
+					String str = errors.toString();
+					// print in out
+					System.out.println(str);
+					halt(401, "Error while serving file " + file.getName() + ". error = " + str);
+				}
+                halt(200);
+                return null;
             }
         });
         
