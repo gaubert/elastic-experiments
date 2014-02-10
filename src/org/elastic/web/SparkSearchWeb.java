@@ -30,6 +30,7 @@ import spark.Spark;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 
+
 /**
  * A simple example just showing some basic functionality
  */
