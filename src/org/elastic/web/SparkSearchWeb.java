@@ -130,9 +130,11 @@ public class SparkSearchWeb {
                 
                 
                 
-                //QueryBuilder qb = QueryBuilders.matchQuery("title", searchTerms);
+                QueryBuilder qb = QueryBuilders.matchQuery("title", searchTerms);
                 
-                QueryBuilder qb = QueryBuilders.multiMatchQuery(searchTerms, "title", "abstract");
+                //QueryBuilder qb = QueryBuilders.multiMatchQuery(searchTerms, "title", "abstract");
+                
+                System.out.println("Query:" + qb.toString());
              
         		SearchResponse sr = client.prepareSearch("eumetsat-catalogue")
         				.setQuery(qb)

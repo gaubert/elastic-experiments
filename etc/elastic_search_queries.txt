@@ -1,0 +1,34 @@
+Elastic search query DSL
+------------------------
+
+
+GET _search
+{
+    "query": {
+       "query_string": {query :"AVISO"}
+    }
+}
+
+Match All
+---------
+POST eumetsat-catalogue/product/_search
+{
+    "query" : {
+        "match_all" : {}
+    }
+}
+
+Match in 2 fields and incease score value of title
+--------------------------------------------------
+
+POST eumetsat-catalogue/product/_search
+{
+  "explain": true,
+  "query" : {
+    "simple_query_string" : {
+        "fields" : ["identificationInfo.title^10", "identificationInfo.abstract"],
+        "query" : "ATOVS METOP"
+    }
+  }
+}
+
