@@ -52,9 +52,19 @@
       </div>
     </div>
     	
-    	<form id='search-form' method='POST' action="/search/results">
-    	search (term): <input type="text" name="search-terms" value=""><br>
-    	<input type="submit" class="btn btn-primary btn-sm" role="button" value="Search">
-    	</form>
+ <form class="form-horizontal" role="form" method='POST' action="/search/results">
+  
+  <div class="col-lg-6 col-md-offset-3"> <!-- offset half of the remaining size to center -->
+    <div class="form-group">
+    <div class="input-group">
+         <input type="text" class="form-control">
+         <span class="input-group-btn">
+           <button class="btn btn-default" type="submit">Go!</button>
+         </span>
+    </div><!-- /input-group -->
+    <div> <!-- form-grou -->
+  </div><!-- /.col-lg-6 -->
+</div><!-- /.form -->
+    	
     	</body>
 </html>
