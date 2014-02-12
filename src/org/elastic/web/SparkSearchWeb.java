@@ -126,13 +126,15 @@ public class SparkSearchWeb {
             	try
             	{
                 String searchTerms = request.queryParams("search-terms");
+                //System.out.println(request.queryString());
                 System.out.println("SearchTerms " + searchTerms);
                 
                 
                 
-                QueryBuilder qb = QueryBuilders.matchQuery("title", searchTerms);
                 
-                //QueryBuilder qb = QueryBuilders.multiMatchQuery(searchTerms, "title", "abstract");
+                //QueryBuilder qb = QueryBuilders.matchQuery("title", searchTerms);
+                
+                QueryBuilder qb = QueryBuilders.multiMatchQuery(searchTerms, "title", "abstract");
                 
                 System.out.println("Query:" + qb.toString());
              
