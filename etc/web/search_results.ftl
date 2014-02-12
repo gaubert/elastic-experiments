@@ -56,7 +56,7 @@
   </p>
   <p>
     <#list hits as hit>
-       <b>${hit_index + 1}: ${hit.title}</b>
+       <b>${hit.title}</b>
        </br>
        ${hit.abstract} 
        </br>

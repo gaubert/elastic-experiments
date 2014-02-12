@@ -19,19 +19,19 @@ import java.util.Scanner;
  
 public class SimpleRestClient {
  
-    public Response doGetRequest(URL url, HashMap<String,String> headers, HashMap<String,String> params, String body, boolean debug) {
+    public WebResponse doGetRequest(URL url, HashMap<String,String> headers, HashMap<String,String> params, String body, boolean debug) {
         GET get = new GET(url, headers, params, body);
         return sendRequest(get, debug);
     }
  
-    public Response doPostRequest(URL url, HashMap<String,String> headers, String body, boolean debug) {
+    public WebResponse doPostRequest(URL url, HashMap<String,String> headers, String body, boolean debug) {
         POST post = new POST(url, headers, body);
         return sendRequest(post, debug);
     }
  
-    private Response sendRequest(Request request, boolean debug) {
+    private WebResponse sendRequest(Request request, boolean debug) {
         HttpURLConnection conn = null;
-        Response response = null;
+        WebResponse response = null;
         long time = 0;
  
         try {
@@ -66,9 +66,9 @@ public class SimpleRestClient {
             int status = conn.getResponseCode();
  
             if(status != HttpURLConnection.HTTP_OK)
-                response = new Response(status, conn.getResponseMessage());
+                response = new WebResponse(status, conn.getResponseMessage());
             else
-                response = new Response(status, readInputStream(conn.getInputStream()));
+                response = new WebResponse(status, readInputStream(conn.getInputStream()));
  
             response.time = System.currentTimeMillis() - time;
             if(debug) dumpRequest(request, response);
@@ -92,7 +92,7 @@ public class SimpleRestClient {
     /**
      * Convenience method to output everything about the request
      */
-    public void dumpRequest(Request req, Response resp)
+    public void dumpRequest(Request req, WebResponse resp)
             throws MalformedURLException {
         StringBuilder sb = new StringBuilder();
         sb.append("=> Dumping request information:");
@@ -182,12 +182,12 @@ public class SimpleRestClient {
         }
     }
  
-    public class Response {
+    public class WebResponse {
         public int status;
         public String body;
         public long time;
  
-        protected Response(int status, String body) {
+        protected WebResponse(int status, String body) {
             this.status = status;
             this.body = body;
         }

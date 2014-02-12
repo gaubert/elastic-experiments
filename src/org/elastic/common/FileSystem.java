@@ -185,9 +185,6 @@ public class FileSystem
 
         File dir = new File(aPath);
 
-        if (dir == null)
-            return null;
-
         return ((aFileFilter == null) ? dir.listFiles() : dir
                 .listFiles(aFileFilter));
     }
