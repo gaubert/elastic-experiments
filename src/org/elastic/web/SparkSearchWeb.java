@@ -146,6 +146,7 @@ public class SparkSearchWeb {
 		JSONObject jsObj = (JSONObject) parser.parse(response.body);
 
 		data.put("total_hits", ((Map) jsObj.get("hits")).get("total"));
+		data.put("search_terms" , searchTerms);
 
 		List<Map<String, Object>> hits = (List<Map<String, Object>>) ((Map) jsObj.get("hits")).get("hits");
 		
@@ -311,6 +312,7 @@ public class SparkSearchWeb {
 			public Object handle(Request request, Response response) {
 				try 
 				{
+					System.out.println("Request url " + request.raw().getRequestURL().toString());
 					String searchTerms = request.queryParams("search-terms");
 					// System.out.println(request.queryString());
 					System.out.println("SearchTerms " + searchTerms);
@@ -318,6 +320,12 @@ public class SparkSearchWeb {
 					//String result = queryElasticSearch(searchTerms);
 					String result = queryRestElasticSearch(searchTerms);
 
+					//response.raw().encodeURL("search/toto");
+					//response.body(result);
+					//response.redirect("/toto");
+					//response.body("Hello");
+					response.redirect("/search/results?search-terms=" + searchTerms);
+					response.type("text/HTML");  
 					return result;
 
 				} catch (Exception e) {
