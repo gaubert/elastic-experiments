@@ -17,7 +17,25 @@ import org.json.simple.parser.JSONParser;
 import com.sun.istack.internal.Builder;
 
 
-public class SimpleRestClientTest {
+public class SimpleRestClientTest 
+{
+	
+	public static void deleteIndex() throws Exception
+	{
+		// delete the index
+		/*URL url = new URL("http://localhost:9200/_search");
+	    HashMap<String, String> headers = new HashMap<String, String>();
+	    HashMap<String, String> params  = new HashMap<String, String>();
+	    boolean debug = true;
+		
+	    SimpleRestClient rClient = new SimpleRestClient();
+	    
+	    WebResponse response1 = rClient.do(url, headers, params, body, debug);
+		*/
+		
+		
+	}
+	
     public static void main(String[] args) throws Exception 
     {
        URL url = new URL("http://localhost:9200/_search");

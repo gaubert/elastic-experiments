@@ -28,7 +28,7 @@
       </div>
 
   <div class="col-lg-6 col-md-offset-1"> <!-- offset half of the remaining size to center -->
-    <form class="form-horizontal" role="form" method='POST' action="/search/results">
+    <form class="form-horizontal" role="form" method='GET' action="/search/results">
   
       <!--<div class="form-group">-->
       <div class="input-group">

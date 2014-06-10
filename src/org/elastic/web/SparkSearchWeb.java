@@ -307,7 +307,7 @@ public class SparkSearchWeb {
 		 * ,"email":"nwpsaf@metoffice.gov.uk"
 		 * },"fileIdentifier":"EO:EUM:SW:MULT:036"} } ] }
 		 */
-		Spark.post(new Route("/search/results") {
+		Spark.get(new Route("/search/results") {
 			@Override
 			public Object handle(Request request, Response response) {
 				try 
@@ -322,10 +322,12 @@ public class SparkSearchWeb {
 
 					//response.raw().encodeURL("search/toto");
 					//response.body(result);
+					
 					//response.redirect("/toto");
 					//response.body("Hello");
-					response.redirect("/search/results?search-terms=" + searchTerms);
-					response.type("text/HTML");  
+					
+					//response.redirect("/search/results?search-terms=" + searchTerms);
+					//response.type("text/HTML");  
 					return result;
 
 				} catch (Exception e) {

@@ -21,6 +21,15 @@
              .navbar-nav > li > a {padding-top:5px !important; padding-bottom:5px !important;}
              .navbar {min-height:32px !important}
           </style>
+          
+          <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+          <script>
+            $(document).ready(function(){
+              $("p").click(function(){
+                 $(this).hide();
+              });
+            });
+        </script>
     	</head>
     	
     	<body role="document">
@@ -29,8 +38,7 @@
         </div>
     	
  <div class="col-lg-6 col-md-offset-3"> <!-- offset half of the remaining size to center -->
- <form class="form-horizontal" role="form" method='POST' action="/search/results">
-  
+ <form class="form-horizontal" role="form" method='GET' action="/search/results">
     <!--<div class="form-group">-->
     <div class="input-group">
          <input name="search-terms" type="text" class="form-control">
@@ -39,8 +47,8 @@
          </span>
     </div><!-- /input-group -->
     <!--<div>--> <!-- form-grou -->
-</div><!-- /.form -->
- </div><!-- /.col-lg-6 -->
+ </div><!-- /.form -->
+</div><!-- /.col-lg-6 -->
     	
-    	</body>
+</body>
 </html>
