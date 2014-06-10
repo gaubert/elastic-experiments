@@ -366,7 +366,20 @@ public class SparkSearchWeb {
 				if (!file.exists()) {
 					System.out
 							.println("File not found, returning 404: " + file);
-					halt(404);
+					try
+					{
+					  halt(404, FileUtils.readFileToString(new File("etc/web/error_404.html")));
+				    }
+					catch (IOException e) 
+				    {
+					    StringWriter errors = new StringWriter();
+					    e.printStackTrace(new PrintWriter(errors));
+					    String str = errors.toString();
+					    // print in out
+					    System.out.println(str);
+					    halt(401, "Error while processing form. error = " + str);
+
+				    }
 					return null;
 				}
 
