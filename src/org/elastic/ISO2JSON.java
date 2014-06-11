@@ -73,17 +73,6 @@ public class ISO2JSON
 				jsonObject.put("fileIdentifier", fileID);
 			}
 
-			// Get abstract
-			/*
-			 * System.out.println("*************************"); expression =
-			 * "//*[local-name()='abstract']/*[local-name()='CharacterString']";
-			 * System.out.println(expression); result =
-			 * xPath.compile(expression).evaluate(xmlDocument);
-			 * System.out.println("result=" + fileID);
-			 * 
-			 * if (result != null) { jsonObject.put("abstract", result); }
-			 */
-
 			// Get hierarchyLevelNames
 			System.out.println("*************************");
 			expression = "//*[local-name()='hierarchyLevelName']/*[local-name()='CharacterString']";
@@ -156,7 +145,6 @@ public class ISO2JSON
 			jsonObject.put("contact", map);
 
 			// add identification info
-
 			String abstractStr = "//*[local-name()='identificationInfo']//*[local-name()='abstract']/*[local-name()='CharacterString']";
 			String titleStr = "//*[local-name()='identificationInfo']//*[local-name()='title']/*[local-name()='CharacterString']";
 			String statusStr = "//*[local-name()='identificationInfo']//*[local-name()='status']/*[local-name()='MD_ProgressCode']/@codeListValue";
@@ -198,7 +186,48 @@ public class ISO2JSON
 			System.out.println("idMap =" + idMap);
 
 			jsonObject.put("identificationInfo", idMap);
-
+			
+			
+			// add Geo spatial information
+			String westBLonStr  = "//*[local-name()='extent']//*[local-name()='geographicElement']//*[local-name()='westBoundLongitude']/*[local-name()='Decimal']";
+			String eastBLonStr  = "//*[local-name()='extent']//*[local-name()='geographicElement']//*[local-name()='eastBoundLongitude']/*[local-name()='Decimal']";
+			String northBLatStr = "//*[local-name()='extent']//*[local-name()='geographicElement']//*[local-name()='northBoundLatitude']/*[local-name()='Decimal']";
+			String southBLatStr = "//*[local-name()='extent']//*[local-name()='geographicElement']//*[local-name()='southBoundLatitude']/*[local-name()='Decimal']";
+			
+			// create a GeoJSON envelope object
+			HashMap<String, Object> latlonMap = new HashMap<String, Object>();
+			latlonMap.put("type", "envelope");
+			
+			JSONArray envelope = new JSONArray();
+			JSONArray leftTopPt   = new JSONArray();
+			JSONArray rightDownPt = new JSONArray();
+			
+			result = xPath.compile(westBLonStr).evaluate(xmlDocument);
+			if (result != null) {
+				leftTopPt.add(Double.parseDouble(result.trim()));
+			}	
+			
+			result = xPath.compile(northBLatStr).evaluate(xmlDocument);
+			if (result != null) {
+				leftTopPt.add(Double.parseDouble(result.trim()));
+			}	
+			
+			result = xPath.compile(eastBLonStr).evaluate(xmlDocument);
+			if (result != null) {
+				rightDownPt.add(Double.parseDouble(result.trim()));
+			}
+			
+			result = xPath.compile(southBLatStr).evaluate(xmlDocument);
+			if (result != null) {
+				rightDownPt.add(Double.parseDouble(result.trim()));
+			}
+				
+			envelope.add(leftTopPt);
+			envelope.add(rightDownPt);
+			
+			latlonMap.put("coordinates",envelope);
+			jsonObject.put("location", latlonMap);
+		
 			// to pretty print
 			Writer writer = new JSONWriter(); // this is the new writter that
 												// adds indentation.
@@ -208,6 +237,7 @@ public class ISO2JSON
 
 			String fName = aDestDirPath + "/" + FilenameUtils.getBaseName(file.getName()) + ".json";
 			
+			System.out.println("Write result in " + fName);
 			
 			FileUtils.writeStringToFile(new File(fName), jsonObject.toJSONString());
 			
