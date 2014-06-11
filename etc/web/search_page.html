@@ -37,16 +37,21 @@
         <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         </div>
     	
- <div class="col-lg-6 col-md-offset-3"> <!-- offset half of the remaining size to center -->
-    <form class="form-horizontal" role="form" method='GET' action="/search/results">
-        <div class="input-group">
-           <input name="search-terms" type="text" class="form-control">
-           <span class="input-group-btn">
-              <button class="btn btn-default" type="submit">Search</button>
-           </span>
-        </div><!-- /input-group -->
-    </form>   
-</div><!-- /.col-lg-6 -->
-    	
+ <div class="row">
+	  <div class="col-md-2">
+	  </div>
+	  <div class="col-md-8">
+	     <form class="form-horizontal" role="form" method='GET' action="/search/results">
+	        <div class="input-group">
+	           <input name="search-terms" type="text" class="form-control">
+	           <span class="input-group-btn">
+	              <button class="btn btn-default" type="submit">Search</button>
+	           </span>
+	        </div><!-- /input-group -->
+         </form>
+	  </div>
+	  <div class="col-md-2">
+	  </div>
+</div> <!-- row 1 -->   	
 </body>
 </html>

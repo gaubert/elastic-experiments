@@ -114,6 +114,12 @@ public class SparkSearchWeb {
 		return results.toString();
 	}
 
+	/**
+	 * search using the Rest interface
+	 * @param searchTerms
+	 * @return
+	 * @throws Exception
+	 */
 	public static String queryRestElasticSearch(String searchTerms)
 			throws Exception {
 		String result = null;
@@ -320,14 +326,6 @@ public class SparkSearchWeb {
 					//String result = queryElasticSearch(searchTerms);
 					String result = queryRestElasticSearch(searchTerms);
 
-					//response.raw().encodeURL("search/toto");
-					//response.body(result);
-					
-					//response.redirect("/toto");
-					//response.body("Hello");
-					
-					//response.redirect("/search/results?search-terms=" + searchTerms);
-					//response.type("text/HTML");  
 					return result;
 
 				} catch (Exception e) {

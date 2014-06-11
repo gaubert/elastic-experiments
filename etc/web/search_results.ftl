@@ -6,6 +6,7 @@
           <link href="../css/bootstrap.min.css" rel="stylesheet">
           <!-- Bootstrap theme -->
           <link href="../css/bootstrap-theme.min.css" rel="stylesheet">
+          
 
           <!-- Custom styles for this template -->
           <link href="../assets/theme.css" rel="stylesheet">
@@ -27,34 +28,45 @@
       <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       </div>
 
-  <div class="col-lg-6 col-md-offset-1"> <!-- offset half of the remaining size to center -->
-    <form class="form-horizontal" role="form" method='GET' action="/search/results">
+  <div class="row">
+	  <div class="col-md-2">
+	  </div>
+	  <div class="col-md-8">
+	     <form class="form-horizontal" role="form" method='GET' action="/search/results">
+	  
+	      <!--<div class="form-group">-->
+	      <div class="input-group">
+	         <input name="search-terms" type="text" value="${search_terms}" class="form-control">
+	           <span class="input-group-btn">
+	             <button class="btn btn-default" type="submit">Search</button>
+	           </span>
+	      </div><!-- /input-group -->
+	     </form><!-- /.form -->
+	  </div>
+	  <div class="col-md-2">
+	  </div>
+  </div> <!-- row 1 -->
   
-      <!--<div class="form-group">-->
-      <div class="input-group">
-         <input name="search-terms" type="text" value="${search_terms}" class="form-control">
-           <span class="input-group-btn">
-             <button class="btn btn-default" type="submit">Search</button>
-           </span>
-         </div><!-- /input-group -->
-     </div><!-- /.form -->
- </div><!-- /.col-lg-6 -->
- <div class="col-lg-8 col-md-offset-1">
-  </br>
-  <p>
-    <strong>Hits ${total_hits}</strong>
-  </p>
-  <hr>
-  <p>
-    <#list hits as hit>
-       <b>${hit.title}</b>
-       </br>
-       ${hit.abstract} 
-       </br>
-       score ${hit.score}
-       <hr>
-    </#list>
-  </p>
-  </div>
+  <div class="row">
+	  <div class="col-md-1">
+	  </div>
+	  <div class="col-md-10">
+	     </br>
+	     <p>
+	       <strong>Hits ${total_hits}</strong>
+	     </p>
+	     <hr>
+	     <#list hits as hit>
+	         <p><b>${hit.title}</b></p>
+	         <p class="text-justify">
+	           ${hit.abstract} 
+	         </p>
+	         <p>score: ${hit.score}</p>
+	         <hr>
+	     </#list>
+	  </div>
+	  <div class="col-md-1">
+	  </div>
+ </div> <!-- row 2 -->
 </body>
 </html>
