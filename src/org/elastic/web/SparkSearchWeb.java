@@ -50,6 +50,7 @@ public class SparkSearchWeb {
 	// Freemarker configuration object
 	final static Configuration cfg = new Configuration();
 
+	@SuppressWarnings("unchecked")
 	public static String queryElasticSearch(String searchTerms)
 			throws Exception {
 		// QueryBuilder qb = QueryBuilders.matchQuery("title", searchTerms);
@@ -86,9 +87,9 @@ public class SparkSearchWeb {
 
 			source = hit.getSource();
 
-			title = (String) ((Map) source.get("identificationInfo"))
+			title = (String) ((Map<String, Object>) source.get("identificationInfo"))
 					.get("title");
-			abstractT = (String) ((Map) source.get("identificationInfo"))
+			abstractT = (String) ((Map<String, Object>) source.get("identificationInfo"))
 					.get("abstract");
 
 			aHit.put("id", id);
@@ -122,8 +123,7 @@ public class SparkSearchWeb {
 	 */
 	public static String queryRestElasticSearch(String searchTerms)
 			throws Exception {
-		String result = null;
-
+		
 		URL url = new URL("http://localhost:9200/_search");
 		
 		HashMap<String, String> headers = new HashMap<String, String>();
@@ -153,10 +153,11 @@ public class SparkSearchWeb {
 
 		JSONObject jsObj = (JSONObject) parser.parse(response.body);
 
-		data.put("total_hits", ((Map) jsObj.get("hits")).get("total"));
+		data.put("total_hits", ((Map<?, ?>) jsObj.get("hits")).get("total"));
 		data.put("search_terms" , searchTerms);
 
-		List<Map<String, Object>> hits = (List<Map<String, Object>>) ((Map) jsObj.get("hits")).get("hits");
+		@SuppressWarnings("unchecked")
+		List<Map<String, Object>> hits = (List<Map<String, Object>>) ((Map<?,?>) jsObj.get("hits")).get("hits");
 		
 		for  ( Map<String, Object> hit : hits) {
 			resHit = new HashMap<String, String>();
@@ -164,8 +165,8 @@ public class SparkSearchWeb {
 			resHit.put("id", (String) hit.get("_id"));
 			resHit.put("score", ((Double) hit.get("_score")).toString());
 
-			resHit.put("abstract", ((String) (((Map) (((Map) hit.get("_source")).get("identificationInfo"))).get("abstract"))) );
-			resHit.put("title", ((String) (((Map) (((Map) hit.get("_source")).get("identificationInfo"))).get("title"))) );
+			resHit.put("abstract", ((String) (((Map<?, ?>) (((Map<?, ?>) hit.get("_source")).get("identificationInfo"))).get("abstract"))) );
+			resHit.put("title", ((String) (((Map<?, ?>) (((Map<?, ?>) hit.get("_source")).get("identificationInfo"))).get("title"))) );
 
 			resHits.add(resHit);
 		}
