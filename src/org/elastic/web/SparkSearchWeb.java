@@ -56,7 +56,7 @@ public class SparkSearchWeb {
 
 		QueryBuilder qb = QueryBuilders.multiMatchQuery(searchTerms, "title",
 				"abstract");
-
+		
 		System.out.println("Query:" + qb.toString());
 
 		SearchResponse sr = client.prepareSearch("eumetsat-catalogue")
@@ -140,7 +140,9 @@ public class SparkSearchWeb {
 		Map<String, Object> data = new HashMap<String, Object>();
 
 		String body = "{ \"query\" : { \"simple_query_string\" : { \"fields\" : [\"identificationInfo.title^10\", \"identificationInfo.abstract\"], \"query\" : \""
-				+ searchTerms + "\" } } }";
+				+ searchTerms + "\" } }, \"highlight\" : { \"fields\" : { \"identificationInfo.title\": {}, \"identificationInfo.abstract\": {} } }  }";
+		
+		
 
 		WebResponse response = rClient.doGetRequest(url, headers, params,
 				body, debug);
