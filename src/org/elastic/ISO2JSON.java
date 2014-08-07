@@ -33,6 +33,115 @@ import org.xml.sax.SAXException;
 
 public class ISO2JSON 
 {
+	
+	/**
+	 * Parse the hierarchy name to tentatively form facets
+	 * @param hierarchyNames
+	 */
+	public static JSONObject parseThemeHierarchy(JSONArray hierarchyNames)
+	{
+	  String dummy = null;
+	  JSONObject jsonObject = new JSONObject(); 
+	  
+	  for (Object hName : hierarchyNames) 
+	  {
+		dummy = (String) hName;
+		
+		String[] elems = dummy.split("\\.");
+		
+		if (elems[0].equalsIgnoreCase("sat"))
+		{
+			if (elems[1].equalsIgnoreCase("METOP"))
+			{
+				jsonObject.put("satellite", "METOP");
+				
+				if (elems.length > 2 )
+				{
+					//there is an instrument
+					jsonObject.put("instrument", elems[2]);
+				}
+			}
+			else if (elems[1].startsWith("JASON"))
+			{
+				jsonObject.put("satellite", elems[1]);
+				
+				if (elems.length > 2)
+				{
+					//there is an instrument
+					jsonObject.put("instrument", elems[2]);
+				}
+			}
+			else
+			{
+				//It is a meteosat
+				jsonObject.put("satellite", elems[0]);
+			}
+	  }	
+	  else if (elems[0].equalsIgnoreCase("theme"))
+	  {
+		  if (elems[1].equalsIgnoreCase("par") && elems.length > 2)
+		  {
+			   if (!jsonObject.containsKey("category") )
+			   {
+				   JSONArray array = new JSONArray();
+				   array.add(elems[2]);
+				   jsonObject.put("category", array);
+			   }
+			   else
+			   {
+				   ((JSONArray) (jsonObject.get("category"))).add(elems[2]); 
+			   }
+			  
+		      
+		  }
+	  }
+	  else if (elems[0].equalsIgnoreCase("dis"))
+	  {
+		  if (elems.length == 2)
+		  {
+			  if (!jsonObject.containsKey("distribution") )
+			  {
+				   JSONArray array = new JSONArray();
+				   array.add(elems[1]);
+				   jsonObject.put("distribution", array);
+			   }
+			   else
+			   {
+				   ((JSONArray) (jsonObject.get("distribution"))).add(elems[1]); 
+			   }
+			  
+		  }
+		  else
+		  {
+			  System.out.println("***  ALERT ALERT. DIS is different: " + hName);
+		  }
+	  }
+	  else if (elems[0].equalsIgnoreCase("SBA"))
+	  {
+		  if (elems.length == 2)
+		  {
+			  if (!jsonObject.containsKey("societalBenefitArea") )
+			  {
+				   JSONArray array = new JSONArray();
+				   array.add(elems[1]);
+				   jsonObject.put("societalBenefitArea", array);
+			   }
+			   else
+			   {
+				   ((JSONArray) (jsonObject.get("societalBenefitArea"))).add(elems[1]); 
+			   }
+			  
+		  }
+		  else
+		  {
+			  System.out.println("***  ALERT ALERT. DIS is different: " + hName);
+		  }
+	  }
+	}
+	  
+	  return jsonObject;
+}
+	
 	public static void createInfoToIndex(String aSourceDirPath, String aDestDirPath)
 	{
 
@@ -82,12 +191,21 @@ public class ISO2JSON
 					xmlDocument, XPathConstants.NODESET);
 			for (int i = 0; i < nodeList.getLength(); i++) {
 				list.add(nodeList.item(i).getFirstChild().getNodeValue());
-				// System.out.println(nodeList.item(i).getFirstChild().getNodeValue());
+				System.out.println(nodeList.item(i).getFirstChild().getNodeValue());
 			}
 
-			if (list.size() > 0) {
-				jsonObject.put("hierarchyNames", list);
+			if (list.size() > 0) 
+			{
+				JSONObject hierarchies = parseThemeHierarchy(list);
+				Writer writer = new JSONWriter(); // this is the new writter that
+				// adds indentation.
+                hierarchies.writeJSONString(writer);
+                System.out.println("JSON Result hierarchies: " + writer.toString());
+
+				jsonObject.put("hierarchyNames", hierarchies);
 			}
+			
+			//System.exit(0);
 
 			// Get Contact info
 			String deliveryPoint = "//*[local-name()='address']//*[local-name()='deliveryPoint']/*[local-name()='CharacterString']";
