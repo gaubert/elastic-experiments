@@ -51,74 +51,6 @@ public class SparkSearchWeb {
 	final static int ELEM_PER_PAGE = 10;
 
 	/**
-	@SuppressWarnings("unchecked")
-	
-	 * public static String queryElasticSearch(String searchTerms)
-			throws Exception {
-		// QueryBuilder qb = QueryBuilders.matchQuery("title", searchTerms);
-
-		QueryBuilder qb = QueryBuilders.multiMatchQuery(searchTerms, "title",
-				"abstract");
-		
-		System.out.println("Query:" + qb.toString());
-
-		SearchResponse sr = client.prepareSearch("eumetsat-catalogue")
-				.setQuery(qb).execute().actionGet();
-
-		// Load template from source folder
-		Template template = cfg.getTemplate("etc/web/search_results.ftl");
-
-		// Build the data-model
-		Map<String, Object> data = new HashMap<String, Object>();
-		data.put("total_hits", sr.getHits().totalHits());
-
-		String id = null;
-		float score = -1;
-		String title = null;
-		String abstractT = null;
-
-		Map<String, Object> source = null;
-		List<Map<String, String>> hits = new ArrayList<Map<String, String>>();
-		Map<String, String> aHit = null;
-
-		for (SearchHit hit : sr.getHits()) {
-			aHit = new HashMap<String, String>();
-
-			id = hit.getId();
-			score = hit.getScore();
-
-			source = hit.getSource();
-
-			title = (String) ((Map<String, Object>) source.get("identificationInfo"))
-					.get("title");
-			abstractT = (String) ((Map<String, Object>) source.get("identificationInfo"))
-					.get("abstract");
-
-			aHit.put("id", id);
-			aHit.put("score", Float.toString(score));
-			aHit.put("title", title);
-			aHit.put("abstract", abstractT);
-
-			hits.add(aHit);
-		}
-
-		data.put("hits", hits);
-
-		// Console output
-		Writer out = new OutputStreamWriter(System.out);
-		template.process(data, out);
-		out.flush();
-
-		// get in a String
-		StringWriter results = new StringWriter();
-		template.process(data, results);
-		results.flush();
-
-		return results.toString();
-	}
-	*/
-	
-	/**
 	 * return the pagination information
 	 * @param total
 	 * @param from_element
@@ -165,9 +97,9 @@ public class SparkSearchWeb {
 		Map<String, Object> data = new HashMap<String, Object>();
 
 		String body = "{ \"from\" : "+ from + ", \"size\" : " + size + ", \"query\" : { \"simple_query_string\" : { \"fields\" : [\"identificationInfo.title^10\", \"identificationInfo.abstract\"], \"query\" : \""
-				+ searchTerms + "\" } }, \"highlight\" : { \"fields\" : { \"identificationInfo.title\": {}, \"identificationInfo.abstract\": {} } }  }";
+				+ searchTerms + "\" } }, \"highlight\" : { \"fields\" : { \"identificationInfo.title\": {}, \"identificationInfo.abstract\": {} } } , " +
+				" \"facets\" : {\"tags\": { \"terms\" : { \"field\" : \"hierarchyNames\" } } } }";
 		
-
 		WebResponse response = rClient.doGetRequest(url, headers, params,
 				body, debug);
 
