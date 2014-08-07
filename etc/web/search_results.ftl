@@ -80,14 +80,15 @@
 	 </div>
 	 <div class="col-md-6">
      	<ul class="pagination">
-		  <li class="unactive"><a href="#">&laquo;</a></li>
+		  <li><a href="#">&laquo;</a></li>
 		  
 		  <#assign curr=pagination.current_page>
 		  <#list 1..pagination.nb_pages as index>
-		     <#if curr == index>
+		     <#if curr == (index-1)>
 		        <li class="active"><a href="#">${index}</a></li>
 		     <#else>
-		        <li class="active"><a href="#">${index}</a></li>
+		        <li><a href="/search/results?search-terms=${search_terms}&from=${pagination.elem_per_page * (index - 1)}&size=${pagination.elem_per_page}">${index}</a></li>
+		        <!--<li><a href="#">${index}</a></li>-->
 		     </#if>
 		  </#list>
 		  
@@ -97,5 +98,16 @@
      <div class="col-md-4">
 	 </div>
  </div>
+ <h2>Centered</h2>
+<div class="text-center">
+        <ul class="pagination">
+          <li><a href="#">m</a></li>
+          <li class="active"><a href="#">10</a></li>
+          <li class="disabled"><a href="#">...</a></li>
+          <li><a href="#">20</a></li>
+          <li><a href="#">m</a></li>
+        </ul>
+</div>
+ 
 </body>
 </html>

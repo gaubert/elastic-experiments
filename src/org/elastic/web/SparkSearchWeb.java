@@ -18,13 +18,10 @@ import org.apache.commons.io.IOUtils;
 import org.elastic.common.MimeUtil;
 import org.elastic.common.SimpleRestClient;
 import org.elastic.common.SimpleRestClient.WebResponse;
-import org.elasticsearch.action.search.SearchResponse;
+
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
-import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.search.SearchHit;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -49,9 +46,13 @@ public class SparkSearchWeb {
 
 	// Freemarker configuration object
 	final static Configuration cfg = new Configuration();
+	
+	//elements per page (currently only a static constant, to be externalized)
+	final static int ELEM_PER_PAGE = 10;
 
-	@SuppressWarnings("unchecked")
 	/**
+	@SuppressWarnings("unchecked")
+	
 	 * public static String queryElasticSearch(String searchTerms)
 			throws Exception {
 		// QueryBuilder qb = QueryBuilders.matchQuery("title", searchTerms);
@@ -117,9 +118,6 @@ public class SparkSearchWeb {
 	}
 	*/
 	
-	//elements per page (currently only a static constant, to be externalized)
-	public static int ELEM_PER_PAGE = 10;
-	
 	/**
 	 * return the pagination information
 	 * @param total
@@ -135,6 +133,7 @@ public class SparkSearchWeb {
 		
 		pagination.put("nb_pages" , nb_pages);
 		pagination.put("current_page", (from_element/ELEM_PER_PAGE));
+		pagination.put("elem_per_page", ELEM_PER_PAGE);
 		
 		return pagination;
 	}
@@ -167,7 +166,6 @@ public class SparkSearchWeb {
 
 		String body = "{ \"from\" : "+ from + ", \"size\" : " + size + ", \"query\" : { \"simple_query_string\" : { \"fields\" : [\"identificationInfo.title^10\", \"identificationInfo.abstract\"], \"query\" : \""
 				+ searchTerms + "\" } }, \"highlight\" : { \"fields\" : { \"identificationInfo.title\": {}, \"identificationInfo.abstract\": {} } }  }";
-		
 		
 
 		WebResponse response = rClient.doGetRequest(url, headers, params,
@@ -247,15 +245,27 @@ public class SparkSearchWeb {
 			@Override
 			public Object handle(Request request, Response response) {
 				try {
-					return FileUtils.readFileToString(new File(
-							"etc/web/search_page.html"));
-				} catch (IOException e) {
+					// Load template from source folder
+					Template template = cfg.getTemplate("etc/web/search_page.ftl");
+					
+					// template input
+					Map<String, Object> data = new HashMap<String, Object>();
+					data.put("elem_per_page", ELEM_PER_PAGE);
+					
+					// get in a String
+					StringWriter results = new StringWriter();
+					template.process(data, results);
+					results.flush();
+
+					return results.toString();
+					
+				} catch (Exception e) {
 					StringWriter errors = new StringWriter();
 					e.printStackTrace(new PrintWriter(errors));
 					String str = errors.toString();
 					// print in out
 					System.out.println(str);
-					halt(401, "Error while processing form. error = " + str);
+					halt(401, "Error while accessing page search_page. error = " + str);
 
 				}
 
