@@ -281,7 +281,7 @@ public class ISO2JSON
 			
 			cpt ++;
 			
-			System.out.println("repsonse = " + response.getId() + " [] version = " + response.getVersion());
+			System.out.println("response = " + response.getId() + " [] version = " + response.getVersion());
 		}
 		
 		System.out.println("Indexed " + cpt + " files.");

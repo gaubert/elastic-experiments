@@ -37,6 +37,8 @@
 	      <!--<div class="form-group">-->
 	      <div class="input-group">
 	         <input name="search-terms" type="text" value="${search_terms}" class="form-control">
+	         <input type="hidden" name="from" value="0" />
+	         <input type="hidden" name="size" value="10" />
 	           <span class="input-group-btn">
 	             <button class="btn btn-default" type="submit">Search</button>
 	           </span>
@@ -48,25 +50,52 @@
   </div> <!-- row 1 -->
   
   <div class="row">
-	  <div class="col-md-1">
-	  </div>
 	  <div class="col-md-10">
+	  </div>
+	  <div class="col-md-2">
 	     </br>
 	     <p>
 	       <strong>Hits ${total_hits}</strong>
 	     </p>
-	     <hr>
+	  </div>
+  </div>
+  <div class="row">
+	  <div class="col-md-1">
+	  </div>
+	  <div class="col-md-10">
 	     <#list hits as hit>
+	         <hr>
 	         <p><b>${hit.title}</b></p>
 	         <p class="text-justify">
 	           ${hit.abstract} 
 	         </p>
 	         <p>score: ${hit.score}</p>
-	         <hr>
 	     </#list>
 	  </div>
 	  <div class="col-md-1">
 	  </div>
  </div> <!-- row 2 -->
+ <div class="row">
+ 	 <div class="col-md-5">
+	 </div>
+	 <div class="col-md-6">
+     	<ul class="pagination">
+		  <li class="unactive"><a href="#">&laquo;</a></li>
+		  
+		  <#assign curr=pagination.current_page>
+		  <#list 1..pagination.nb_pages as index>
+		     <#if curr == index>
+		        <li class="active"><a href="#">${index}</a></li>
+		     <#else>
+		        <li class="active"><a href="#">${index}</a></li>
+		     </#if>
+		  </#list>
+		  
+		  <li><a href="#">&raquo;</a></li>
+     	</ul>
+     </div>
+     <div class="col-md-4">
+	 </div>
+ </div>
 </body>
 </html>

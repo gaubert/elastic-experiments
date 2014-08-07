@@ -51,7 +51,8 @@ public class SparkSearchWeb {
 	final static Configuration cfg = new Configuration();
 
 	@SuppressWarnings("unchecked")
-	public static String queryElasticSearch(String searchTerms)
+	/**
+	 * public static String queryElasticSearch(String searchTerms)
 			throws Exception {
 		// QueryBuilder qb = QueryBuilders.matchQuery("title", searchTerms);
 
@@ -114,14 +115,39 @@ public class SparkSearchWeb {
 
 		return results.toString();
 	}
+	*/
+	
+	//elements per page (currently only a static constant, to be externalized)
+	public static int ELEM_PER_PAGE = 10;
+	
+	/**
+	 * return the pagination information
+	 * @param total
+	 * @param from_element
+	 * @return 
+	 */
+	public static Map<String, Object> computePaginationParams(int total, int from_element)
+	{
+		Map<String, Object> pagination = new HashMap<String, Object>();
+		
+		// nb_pages = integer div + 1 if total mod elem_per_page > 0
+		int nb_pages = (total / ELEM_PER_PAGE) + ( ((total % ELEM_PER_PAGE) == 0) ? 0 : 1);
+		
+		pagination.put("nb_pages" , nb_pages);
+		pagination.put("current_page", (from_element/ELEM_PER_PAGE));
+		
+		return pagination;
+	}
 
 	/**
 	 * search using the Rest interface
 	 * @param searchTerms
+	 * @param from offset of the first element to return
+	 * @param size maximum nb of elements to return
 	 * @return
 	 * @throws Exception
 	 */
-	public static String queryRestElasticSearch(String searchTerms)
+	public static String queryRestElasticSearch(String searchTerms, int from, int size)
 			throws Exception {
 		
 		URL url = new URL("http://localhost:9200/_search");
@@ -139,7 +165,7 @@ public class SparkSearchWeb {
 		// template input
 		Map<String, Object> data = new HashMap<String, Object>();
 
-		String body = "{ \"query\" : { \"simple_query_string\" : { \"fields\" : [\"identificationInfo.title^10\", \"identificationInfo.abstract\"], \"query\" : \""
+		String body = "{ \"from\" : "+ from + ", \"size\" : " + size + ", \"query\" : { \"simple_query_string\" : { \"fields\" : [\"identificationInfo.title^10\", \"identificationInfo.abstract\"], \"query\" : \""
 				+ searchTerms + "\" } }, \"highlight\" : { \"fields\" : { \"identificationInfo.title\": {}, \"identificationInfo.abstract\": {} } }  }";
 		
 		
@@ -154,8 +180,13 @@ public class SparkSearchWeb {
 		JSONObject jsObj = (JSONObject) parser.parse(response.body);
 
 		data.put("total_hits", ((Map<?, ?>) jsObj.get("hits")).get("total"));
+		
+		// compute the pagination information to create the pagination bar
+		Map<String, Object> pagination = computePaginationParams(((Long) (data.get("total_hits"))).intValue(), from);
+		data.put("pagination", pagination);
+		
 		data.put("search_terms" , searchTerms);
-
+		
 		@SuppressWarnings("unchecked")
 		List<Map<String, Object>> hits = (List<Map<String, Object>>) ((Map<?,?>) jsObj.get("hits")).get("hits");
 		
@@ -323,11 +354,34 @@ public class SparkSearchWeb {
 				{
 					System.out.println("Request url " + request.raw().getRequestURL().toString());
 					String searchTerms = request.queryParams("search-terms");
+					
+					int from = -1;
+					int size = -1;
+					
+					try 
+					{	
+						from = Integer.parseInt(request.queryParams("from"));
+					} catch (Exception e) {
+						System.out.println("from parameter = " + from + ". It cannot be converted to int. default to -1.");
+						e.printStackTrace(System.out);
+					}
+					
+					try 
+					{
+						size        = Integer.parseInt(request.queryParams("size"));
+				    } catch (Exception e) {
+				       System.out.println("size parameter = " + size + ". It cannot be converted to int. default to -1.");
+					   e.printStackTrace(System.out);
+				    }		
+					
+					
 					// System.out.println(request.queryString());
 					System.out.println("SearchTerms " + searchTerms);
-
+					System.out.println("From " + from);
+					System.out.println("Size " + size);
+					
 					//String result = queryElasticSearch(searchTerms);
-					String result = queryRestElasticSearch(searchTerms);
+					String result = queryRestElasticSearch(searchTerms, from, size);
 
 					return result;
 
