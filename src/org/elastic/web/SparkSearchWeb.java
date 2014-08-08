@@ -100,6 +100,8 @@ public class SparkSearchWeb {
 				+ searchTerms + "\" } }, \"highlight\" : { \"fields\" : { \"identificationInfo.title\": {}, \"identificationInfo.abstract\": {} } } , " +
 				" \"facets\" : {\"tags\": { \"terms\" : { \"field\" : \"hierarchyNames\" } } } }";
 		
+		System.out.println("elastic-search request: " + body);
+		
 		WebResponse response = rClient.doGetRequest(url, headers, params,
 				body, debug);
 
