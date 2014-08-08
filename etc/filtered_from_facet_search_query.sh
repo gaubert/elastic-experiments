@@ -1,4 +1,5 @@
 #!/bin/bash
+# filtered query without global facets for clarity purposes
 curl -XGET 'http://localhost:9200/_search?pretty=true' -d '
 { "from" : 0, "size" : 10,
   "highlight" : {
@@ -7,41 +8,6 @@ curl -XGET 'http://localhost:9200/_search?pretty=true' -d '
                 } ,
   "facets" : 
                 { 
-                  "satellites_global":
-                   {
-                       "terms" : {
-                                   "field" : "hierarchyNames.satellite"
-                                 },
-                       "global" : true
-                   },
-                  "instruments_global": 
-                   { 
-                       "terms" : { 
-                                   "field" : "hierarchyNames.instrument" 
-                                 },
-                       "global" : true 
-                   },
-                  "categories_global": 
-                   { 
-                       "terms" : { 
-                                   "field" : "hierarchyNames.category" 
-                                 },
-                       "global" : true 
-                   },
-                  "societalBenefitArea_global": 
-                   { 
-                       "terms" : { 
-                                   "field" : "hierarchyNames.societalBenefitArea" 
-                                 },
-                       "global" : true 
-                   },
-                  "distribution_global": 
-                   { 
-                       "terms" : { 
-                                   "field" : "hierarchyNames.distribution" 
-                                 },
-                       "global" : true 
-                   },
                   "satellites":
                    {
                        "terms" : {
@@ -85,9 +51,9 @@ curl -XGET 'http://localhost:9200/_search?pretty=true' -d '
 						  },
 						 "filter" :
 						 {
-							 "terms" :
+							 "term" :
 							 {
-								 "hierarchyNames.instrument" : [ "avhrr" ]
+								 "hierarchyNames.category" : "temperature"
 							 }
 						 }
 					 }

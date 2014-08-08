@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.HashMap;
 
+import javax.sound.midi.SysexMessage;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -38,7 +39,7 @@ public class ISO2JSON
 	 * Parse the hierarchy name to tentatively form facets
 	 * @param hierarchyNames
 	 */
-	public static JSONObject parseThemeHierarchy(JSONArray hierarchyNames)
+	public static JSONObject parseThemeHierarchy(String fid, JSONArray hierarchyNames)
 	{
 	  String dummy = null;
 	  JSONObject jsonObject = new JSONObject(); 
@@ -49,13 +50,15 @@ public class ISO2JSON
 		
 		String[] elems = dummy.split("\\.");
 		
+		System.out.println("Analyze " + dummy);
+		
 		if (elems[0].equalsIgnoreCase("sat"))
 		{
 			if (elems[1].equalsIgnoreCase("METOP"))
 			{
 				jsonObject.put("satellite", "METOP");
 				
-				if (elems.length > 2 )
+				if (elems.length > 2)
 				{
 					//there is an instrument
 					jsonObject.put("instrument", elems[2]);
@@ -73,8 +76,7 @@ public class ISO2JSON
 			}
 			else
 			{
-				//It is a meteosat
-				jsonObject.put("satellite", elems[0]);
+				jsonObject.put("satellite", elems[1]);
 			}
 	  }	
 	  else if (elems[0].equalsIgnoreCase("theme"))
@@ -134,7 +136,7 @@ public class ISO2JSON
 		  }
 		  else
 		  {
-			  System.out.println("***  ALERT ALERT. DIS is different: " + hName);
+			  System.out.println("***  ALERT ALERT. SBA is different: " + hName);
 		  }
 	  }
 	}
@@ -196,7 +198,7 @@ public class ISO2JSON
 
 			if (list.size() > 0) 
 			{
-				JSONObject hierarchies = parseThemeHierarchy(list);
+				JSONObject hierarchies = parseThemeHierarchy((String) jsonObject.get("fileIdentifier"), list);
 				Writer writer = new JSONWriter(); // this is the new writter that
 				// adds indentation.
                 hierarchies.writeJSONString(writer);
@@ -204,8 +206,6 @@ public class ISO2JSON
 
 				jsonObject.put("hierarchyNames", hierarchies);
 			}
-			
-			//System.exit(0);
 
 			// Get Contact info
 			String deliveryPoint = "//*[local-name()='address']//*[local-name()='deliveryPoint']/*[local-name()='CharacterString']";

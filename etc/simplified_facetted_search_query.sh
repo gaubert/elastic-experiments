@@ -1,5 +1,5 @@
 #!/bin/bash
-curl -XGET 'http://localhost:9200/_search?pretty=true' -d '{ "from" : 0, "size" : 10, 
+curl -XGET 'http://localhost:9200/_search?pretty=true' -d '{ "from" : 0, "size" : 30, 
   "highlight" : { 
                   "fields" : 
                      { "identificationInfo.title": {}, "identificationInfo.abstract": {} } 
@@ -16,24 +16,6 @@ curl -XGET 'http://localhost:9200/_search?pretty=true' -d '{ "from" : 0, "size" 
                    { 
                        "terms" : { 
                                    "field" : "hierarchyNames.instrument" 
-                                 }
-                   },
-                  "categories": 
-                   { 
-                       "terms" : { 
-                                   "field" : "hierarchyNames.category" 
-                                 }
-                   },
-                  "societalBenefitArea": 
-                   { 
-                       "terms" : { 
-                                   "field" : "hierarchyNames.societalBenefitArea" 
-                                 }
-                   },
-                  "distribution": 
-                   { 
-                       "terms" : { 
-                                   "field" : "hierarchyNames.distribution" 
                                  }
                    }
                 }, 
