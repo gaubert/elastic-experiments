@@ -65,9 +65,49 @@ public class SparkSearchWeb {
 		
 		pagination.put("nb_pages" , nb_pages);
 		pagination.put("current_page", (from_element/ELEM_PER_PAGE));
+		System.out.println("Current page = " + (from_element/ELEM_PER_PAGE));
 		pagination.put("elem_per_page", ELEM_PER_PAGE);
 		
 		return pagination;
+	}
+	
+	/**
+	 * get the product description from elastic search index
+	 * @param id Id of the product
+	 * @return
+	 * @throws Exception
+	 */
+	private static Map<?,?> getProductDescriptionFromElSearch(String id)
+			throws Exception {
+		
+		//create the url with the id passed in argument
+		URL url = new URL("http://localhost:9200/eumetsat-catalogue/product/"+ id);
+		
+		HashMap<String, String> headers = new HashMap<String, String>();
+		HashMap<String, String> params  = new HashMap<String, String>();
+		String body = null;
+		boolean debug = true;
+		
+		WebResponse response = rClient.doGetRequest(url, headers, params,
+				body, debug);
+		
+		System.out.println("response = " + response);
+		
+		//if response.status
+
+		// template input
+		Map<String, Object> data = new HashMap<String, Object>();
+		
+		JSONParser parser = new JSONParser();
+
+		JSONObject jsObj = (JSONObject) parser.parse(response.body);
+		
+		Map<?,?> identificationInfo = ((Map<?,?>) (((Map<?,?>) jsObj.get("_source")).get("identificationInfo")));
+		
+		data.put("id", id);
+		data.put("title", identificationInfo.get("title"));
+		
+		return data;
 	}
 
 	/**
@@ -78,7 +118,7 @@ public class SparkSearchWeb {
 	 * @return
 	 * @throws Exception
 	 */
-	public static String queryRestElasticSearch(String searchTerms, int from, int size)
+	private static String searchQueryElasticSearch(String searchTerms, int from, int size)
 			throws Exception {
 		
 		URL url = new URL("http://localhost:9200/_search");
@@ -87,7 +127,7 @@ public class SparkSearchWeb {
 		HashMap<String, String> params  = new HashMap<String, String>();
 		boolean debug = true;
 
-		// Load template from source folder
+		// Load template from source foldqueryRestElasticSearcher
 		Template template = cfg.getTemplate("etc/web/search_results.ftl");
 
 		List<Map<String, String>> resHits = new ArrayList<Map<String, String>>();
@@ -207,89 +247,8 @@ public class SparkSearchWeb {
 			}
 		});
 
-		/*
-		 * "hits" : { "total" : 4, "max_score" : 2.258254, "hits" : [ { "_index"
-		 * : "eumetsat-catalogue", "_type" : "product", "_id" :
-		 * "EO:EUM:DAT:METOP:ATOVSL2", "_score" : 2.258254, "_source" :
-		 * {"identificationInfo":{"abstract":"The Advanced TIROS Operational
-		 * Sounder (ATOVS), in combination with the Advanced Very High
-		 * Resolution Radiometer (AVHRR), covers the visible, infrared and
-		 * microwave spectral regions and thus has a wide range of applications:
-		 * supplementing the retrieval of vertical temperature and humidity
-		 * profiles, cloud and precipitation monitoring, sea ice and snow cover
-		 * detection as well as surface temperature determination. ATOVS is
-		 * composed of the Advanced Microwave Sounding Unit A, the Microwave
-		 * Humidity Sounder (MHS) and the High Resolution Infrared Radiation
-		 * Sounder (HIRS\/4).","title":"ATOVS Sounding Products -
-		 * Metop","keywords":["Atmospheric
-		 * conditions","Weather","Atmosphere","EUMETSAT Data
-		 * Centre","GTS","EUMETCast
-		 * -Europe","EUMETCast-Africa","EUMETCast-Americas
-		 * ","EUMETCast"],"status":"
-		 * Operational"},"hierarchyNames":["sat.Metop","
-		 * theme.par.Atmosphere","SBA
-		 * .Weather","dis.EUMETSATArchive","dis.GTS","dis
-		 * .EUMETCast-Europe","dis.
-		 * EUMETCast-Africa","dis.EUMETCast-Americas","dis
-		 * .EUMETCast"],"contact":{"address":"EUMETSAT Allee 1\n64295
-		 * Darmstadt\nHessen
-		 * \nGermany","email":"ops@eumetsat.int"},"fileIdentifier
-		 * ":"EO:EUM:DAT:METOP:ATOVSL2"} }, { "_index" : "eumetsat-catalogue",
-		 * "_type" : "product", "_id" : "EO:EUM:DAT:NOAA:ATOVSL2", "_score" :
-		 * 2.258254, "_source" : {"identificationInfo":{"abstract":"The Advanced
-		 * TIROS Operational Sounder (ATOVS), in combination with the Advanced
-		 * Very High Resolution Radiometer (AVHRR), covers the visible, infrared
-		 * and microwave spectral regions and thus has a wide range of
-		 * applications: supplementing the retrieval of vertical temperature and
-		 * humidity profiles, cloud and precipitation monitoring, sea ice and
-		 * snow cover detection as well as surface temperature determination.
-		 * ATOVS is composed of the Advanced Microwave Sounding Unit A, the
-		 * Microwave Humidity Sounder (MHS) and the High Resolution Infrared
-		 * Radiation Sounder (HIRS\/4).","title":"ATOVS Sounding Products -
-		 * NOAA","keywords":["Atmospheric
-		 * conditions","Weather","Atmosphere","EUMETSAT Data
-		 * Centre","GTS","EUMETCast
-		 * -Europe","EUMETCast","EUMETCast-Africa","EUMETCast
-		 * -Americas"],"status":"
-		 * Operational"},"hierarchyNames":["theme.par.Atmosphere
-		 * ","theme.par.GEONETCast
-		 * ","SBA.Weather","dis.EUMETSATArchive","dis.GTS","
-		 * dis.EUMETCast-Europe","
-		 * sat.NOAA","dis.EUMETCast","dis.EUMETCast-Africa
-		 * ","dis.EUMETCast-Americas"],"contact":{"address":"EUMETSAT Allee
-		 * 1\n64295
-		 * Darmstadt\nHessen\nGermany","email":"ops@eumetsat.int"},"fileIdentifier
-		 * ":"EO:EUM:DAT:NOAA:ATOVSL2"} }, { "_index" : "eumetsat-catalogue",
-		 * "_type" : "product", "_id" : "EO:EUM:DAT:MULT:EARS-ATOVS", "_score" :
-		 * 2.1533632, "_source" : {"identificationInfo":{"abstract":
-		 * "Sounder data is produced by a set of the instruments making up the Advanced TIROS Operational Vertical Sounder (ATOVS) and is used to obtain information about the vertical profile of temperature and humidity in the atmosphere. The radiation measurements from the ATOVS instruments can be assimilated directly into numerical models of the atmosphere. The EUMETSAT Advanced Retransmission Service (EARS) provides instrument data from the Metop and NOAA satellites collected via a network of Direct Readout stations."
-		 * ,"title":"ATOVS Regional Data Service - Multimission","keywords":[
-		 * "Atmospheric conditions"
-		 * ,"Weather","GTS","EUMETCast-Europe","EUMETCast"
-		 * ,"Level 1 Data","Atmosphere"
-		 * ],"status":"Operational"},"hierarchyNames"
-		 * :["sat.NOAA","MHS; AMSU-A; HIRS"
-		 * ,"theme.par.Atmosphere","theme.par.GEONETCast"
-		 * ,"SBA.Weather","dis.GTS"
-		 * ,"dis.EUMETCast-Europe","theme.par.Level_1_Data"
-		 * ,"dis.EUMETCast","sat.Metop"],"contact":{"address":
-		 * "EUMETSAT Allee 1\n64295 Darmstadt\nHessen\nGermany"
-		 * ,"email":"ops@eumetsat.int"
-		 * },"fileIdentifier":"EO:EUM:DAT:MULT:EARS-ATOVS"} }, { "_index" :
-		 * "eumetsat-catalogue", "_type" : "product", "_id" :
-		 * "EO:EUM:SW:MULT:036", "_score" : 1.7940712, "_source" :
-		 * {"identificationInfo":{"abstract":
-		 * "As its main output, AAPP produces files of quality-controlled brightness temperature or radiance data for each instrument - either separately or mapped to a common field of view. If profiles of atmospheric variables are required the AAPP can be used in conjunction with an inversion package. AAPP radiance data are also used directly as input to variational data assimilation systems at several leading centres for Numerical Weather Prediction."
-		 * ,"title":"ATOVS and AVHRR Pre-processing Package - Multimission",
-		 * "keywords":["Atmospheric conditions","Weather","Climate","Internet",
-		 * "SAF Archive & FTP"
-		 * ],"status":""},"hierarchyNames":["sat.Metop","sat.NOAA"
-		 * ,"SBA.Weather",
-		 * "SBA.Climate","dis.SAFSoftware","theme.par.Land","dis.SAFArchiveFTP"
-		 * ],"contact":{"address":
-		 * "Met Office, Fitzroy Road\nEX1 3PB Exeter\n\nUnited Kingdom"
-		 * ,"email":"nwpsaf@metoffice.gov.uk"
-		 * },"fileIdentifier":"EO:EUM:SW:MULT:036"} } ] }
+		/**
+		 * show search results and paginate them
 		 */
 		Spark.get(new Route("/search/results") {
 			@Override
@@ -324,8 +283,7 @@ public class SparkSearchWeb {
 					System.out.println("From " + from);
 					System.out.println("Size " + size);
 					
-					//String result = queryElasticSearch(searchTerms);
-					String result = queryRestElasticSearch(searchTerms, from, size);
+					String result = searchQueryElasticSearch(searchTerms, from, size);
 
 					return result;
 
@@ -343,7 +301,58 @@ public class SparkSearchWeb {
 				return null;
 			}
 		});
+		
+		/**
+		 * add product page detail
+		 */
+		Spark.get(new Route("/product_description") {
+			@Override
+			public Object handle(Request request, Response response) {
 
+				
+				System.out.println("Request url " + request.raw().getRequestURL().toString());
+				String id = request.queryParams("id");
+				
+				// Load template from source foldqueryRestElasticSearcher
+				try 
+				{
+					Map<?,?> data = null;
+					
+					Template template = cfg.getTemplate("etc/web/product_description.ftl");
+					
+					//get product description info and return them as the input for the template
+					data = getProductDescriptionFromElSearch(id);
+					
+					// Console output
+					Writer out = new OutputStreamWriter(System.out);
+					template.process(data, out);
+					out.flush();
+
+					// get in a String
+					StringWriter results = new StringWriter();
+					template.process(data, results);
+					results.flush();
+					
+					return results.toString();
+
+					
+				} catch (Exception e) {
+					StringWriter errors = new StringWriter();
+					e.printStackTrace(new PrintWriter(errors));
+					String str = errors.toString();
+					// print in out
+					System.out.println(str);
+					halt(401, "Error while returning responses. error = " + str);
+				}
+				
+				
+				return null;
+			}
+		});
+
+		/**
+		 * default page => redirect by default to the search start page
+		 */
 		Spark.get(new Route("/") {
 			@Override
 			public Object handle(Request request, Response response) {
@@ -354,8 +363,10 @@ public class SparkSearchWeb {
 			}
 		});
 
-		// To serve static content. This should always be the last rule.
+		/**
+		 * To serve static content. This should always be the last rule.
 		// Add more mime types if necessary
+		 */
 		Spark.get(new Route("/*") {
 			@Override
 			public String handle(Request request, Response response) {

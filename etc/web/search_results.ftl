@@ -65,7 +65,7 @@
 	  <div class="col-md-10">
 	     <#list hits as hit>
 	         <hr>
-	         <p><b>${hit.title}</b></p>
+	         <p><b><a href="/product_description?id=${hit.id}">${hit.title}</a></b></p>
 	         <p class="text-justify">
 	           ${hit.abstract} 
 	         </p>
@@ -77,19 +77,24 @@
  </div> <!-- row 2 -->
  <div class="text-center">
 	<ul class="pagination">
-	  <li><a href="#">&laquo;</a></li>
-	  
 	  <#assign curr=pagination.current_page>
+	  <#if curr == 0 >
+	     <li class="disabled"><a href="#">&laquo;</a></li>
+	  <#else>
+	     <li class="#"><a href="/search/results?search-terms=${search_terms}&from=${pagination.elem_per_page * (curr -1)}&size=${pagination.elem_per_page}">&laquo;</a></li>
+	  </#if>
 	  <#list 1..pagination.nb_pages as index>
 	     <#if curr == (index-1)>
 	        <li class="active"><a href="#">${index}</a></li>
 	     <#else>
 	        <li><a href="/search/results?search-terms=${search_terms}&from=${pagination.elem_per_page * (index - 1)}&size=${pagination.elem_per_page}">${index}</a></li>
-	        <!--<li><a href="#">${index}</a></li>-->
 	     </#if>
 	  </#list>
-	  
-	  <li><a href="#">&raquo;</a></li>
+	  <#if curr == (pagination.nb_pages-1) >
+	     <li class="disabled"><a href="#">&laquo;</a></li>
+	  <#else>
+	     <li class="#"><a href="/search/results?search-terms=${search_terms}&from=${pagination.elem_per_page * (curr +1)}&size=${pagination.elem_per_page}">&raquo;</a></li>
+	  </#if>
 	</ul>
  </div>
 </body>

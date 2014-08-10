@@ -54,13 +54,17 @@ public class SimpleRestClient {
                     conn.getOutputStream().write(payload);
             }
             
-            if (request instanceof GET) {
-            	
-        		byte[] payload = ((GET)request).body.getBytes();
+            if (request instanceof GET) 
+            {
+                //encode body only if there is one. otherwise send GET request without body
+            	if (((GET)request).body != null) 
+            	{
+        		   byte[] payload = ((GET)request).body.getBytes();
 
-                conn.setDoOutput(true);
-                conn.setFixedLengthStreamingMode(payload.length);
-                conn.getOutputStream().write(payload);
+                   conn.setDoOutput(true);
+                   conn.setFixedLengthStreamingMode(payload.length);
+                   conn.getOutputStream().write(payload);
+            	}
             }
  
             int status = conn.getResponseCode();
