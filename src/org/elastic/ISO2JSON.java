@@ -39,6 +39,7 @@ public class ISO2JSON
 	 * Parse the hierarchy name to tentatively form facets
 	 * @param hierarchyNames
 	 */
+	@SuppressWarnings("unchecked")
 	public static JSONObject parseThemeHierarchy(String fid, JSONArray hierarchyNames)
 	{
 	  String dummy = null;
@@ -144,6 +145,7 @@ public class ISO2JSON
 	  return jsonObject;
 }
 	
+	@SuppressWarnings("unchecked")
 	public static void createInfoToIndex(String aSourceDirPath, String aDestDirPath)
 	{
 
@@ -305,7 +307,15 @@ public class ISO2JSON
 
 			jsonObject.put("identificationInfo", idMap);
 			
+			// get thumbnail product
+			String browseThumbnailStr = "//*[local-name()='graphicOverview']//*[local-name()='MD_BrowseGraphic']//*[local-name()='fileName']//*[local-name()='CharacterString']";
 			
+			result = xPath.compile(browseThumbnailStr).evaluate(xmlDocument);
+
+			if (result != null) {
+				idMap.put("thumbnail", result.trim());
+			}
+					
 			// add Geo spatial information
 			String westBLonStr  = "//*[local-name()='extent']//*[local-name()='geographicElement']//*[local-name()='westBoundLongitude']/*[local-name()='Decimal']";
 			String eastBLonStr  = "//*[local-name()='extent']//*[local-name()='geographicElement']//*[local-name()='eastBoundLongitude']/*[local-name()='Decimal']";

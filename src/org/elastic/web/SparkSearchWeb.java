@@ -56,7 +56,7 @@ public class SparkSearchWeb {
 	 * @param from_element
 	 * @return 
 	 */
-	public static Map<String, Object> computePaginationParams(int total, int from_element)
+	private static Map<String, Object> computePaginationParams(int total, int from_element)
 	{
 		Map<String, Object> pagination = new HashMap<String, Object>();
 		
@@ -105,7 +105,8 @@ public class SparkSearchWeb {
 		Map<?,?> identificationInfo = ((Map<?,?>) (((Map<?,?>) jsObj.get("_source")).get("identificationInfo")));
 		
 		data.put("id", id);
-		data.put("title", identificationInfo.get("title"));
+		data.put("title",    identificationInfo.get("title"));
+		data.put("abstract", identificationInfo.get("abstract"));
 		
 		return data;
 	}
