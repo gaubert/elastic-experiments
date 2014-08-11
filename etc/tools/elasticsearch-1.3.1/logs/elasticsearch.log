@@ -318,3 +318,189 @@ java.io.StreamCorruptedException: invalid internal transport message format
 [2014-08-11 10:47:55,092][INFO ][cluster.metadata         ] [Black Tarantula] [eumetsat-catalogue] update_mapping [product] (dynamic)
 [2014-08-11 10:47:55,197][INFO ][cluster.metadata         ] [Black Tarantula] [eumetsat-catalogue] update_mapping [product] (dynamic)
 [2014-08-11 10:47:58,413][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [337] and action [], resetting
+[2014-08-11 10:54:25,728][DEBUG][action.search.type       ] [Black Tarantula] [eumetsat-catalogue][4], node[OjtHdsHDRfOsYivKsLNxQg], [P], s[STARTED]: Failed to execute [org.elasticsearch.action.search.SearchRequest@14ff6e9] lastShard [true]
+org.elasticsearch.search.SearchParseException: [eumetsat-catalogue][4]: from[0],size[10]: Parse Failure [Failed to parse source [{ "from" : 0, "size" : 10, 
+  "highlight" : { 
+                  "pre_tags" : ["<strong>"],
+                  "post_tags" : ["</strong>"],
+                  "fields" : 
+                     { "identificationInfo.title": {"fragment_size" : , "number_of_fragments" : 1 }, "identificationInfo.abstract": {} } 
+                } ,  
+  "_source" : false,
+  "query" : { 
+              "simple_query_string" : 
+                  { "fields" : ["identificationInfo.title^10", "identificationInfo.abstract"], "query" : "iasi" } 
+            } 
+}
+]]
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:664)
+	at org.elasticsearch.search.SearchService.createContext(SearchService.java:515)
+	at org.elasticsearch.search.SearchService.createAndPutContext(SearchService.java:487)
+	at org.elasticsearch.search.SearchService.executeQueryPhase(SearchService.java:256)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$5.call(SearchServiceTransportAction.java:206)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$5.call(SearchServiceTransportAction.java:203)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$23.run(SearchServiceTransportAction.java:517)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: org.elasticsearch.common.jackson.core.JsonParseException: Unexpected character (',' (code 44)): expected a valid value (number, String, array, object, 'true', 'false' or 'null')
+ at [Source: [B@802642; line: 6, column: 72]
+	at org.elasticsearch.common.jackson.core.JsonParser._constructError(JsonParser.java:1419)
+	at org.elasticsearch.common.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:508)
+	at org.elasticsearch.common.jackson.core.base.ParserMinimalBase._reportUnexpectedChar(ParserMinimalBase.java:437)
+	at org.elasticsearch.common.jackson.core.json.UTF8StreamJsonParser._handleUnexpectedValue(UTF8StreamJsonParser.java:2363)
+	at org.elasticsearch.common.jackson.core.json.UTF8StreamJsonParser.nextToken(UTF8StreamJsonParser.java:748)
+	at org.elasticsearch.common.xcontent.json.JsonXContentParser.nextToken(JsonXContentParser.java:50)
+	at org.elasticsearch.search.highlight.HighlighterParseElement.parseFields(HighlighterParseElement.java:191)
+	at org.elasticsearch.search.highlight.HighlighterParseElement.parse(HighlighterParseElement.java:163)
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:648)
+	... 9 more
+[2014-08-11 10:54:25,728][DEBUG][action.search.type       ] [Black Tarantula] [eumetsat-catalogue][1], node[OjtHdsHDRfOsYivKsLNxQg], [P], s[STARTED]: Failed to execute [org.elasticsearch.action.search.SearchRequest@14ff6e9]
+org.elasticsearch.search.SearchParseException: [eumetsat-catalogue][1]: from[0],size[10]: Parse Failure [Failed to parse source [{ "from" : 0, "size" : 10, 
+  "highlight" : { 
+                  "pre_tags" : ["<strong>"],
+                  "post_tags" : ["</strong>"],
+                  "fields" : 
+                     { "identificationInfo.title": {"fragment_size" : , "number_of_fragments" : 1 }, "identificationInfo.abstract": {} } 
+                } ,  
+  "_source" : false,
+  "query" : { 
+              "simple_query_string" : 
+                  { "fields" : ["identificationInfo.title^10", "identificationInfo.abstract"], "query" : "iasi" } 
+            } 
+}
+]]
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:664)
+	at org.elasticsearch.search.SearchService.createContext(SearchService.java:515)
+	at org.elasticsearch.search.SearchService.createAndPutContext(SearchService.java:487)
+	at org.elasticsearch.search.SearchService.executeQueryPhase(SearchService.java:256)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$5.call(SearchServiceTransportAction.java:206)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$5.call(SearchServiceTransportAction.java:203)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$23.run(SearchServiceTransportAction.java:517)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: org.elasticsearch.common.jackson.core.JsonParseException: Unexpected character (',' (code 44)): expected a valid value (number, String, array, object, 'true', 'false' or 'null')
+ at [Source: [B@802642; line: 6, column: 72]
+	at org.elasticsearch.common.jackson.core.JsonParser._constructError(JsonParser.java:1419)
+	at org.elasticsearch.common.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:508)
+	at org.elasticsearch.common.jackson.core.base.ParserMinimalBase._reportUnexpectedChar(ParserMinimalBase.java:437)
+	at org.elasticsearch.common.jackson.core.json.UTF8StreamJsonParser._handleUnexpectedValue(UTF8StreamJsonParser.java:2363)
+	at org.elasticsearch.common.jackson.core.json.UTF8StreamJsonParser.nextToken(UTF8StreamJsonParser.java:748)
+	at org.elasticsearch.common.xcontent.json.JsonXContentParser.nextToken(JsonXContentParser.java:50)
+	at org.elasticsearch.search.highlight.HighlighterParseElement.parseFields(HighlighterParseElement.java:191)
+	at org.elasticsearch.search.highlight.HighlighterParseElement.parse(HighlighterParseElement.java:163)
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:648)
+	... 9 more
+[2014-08-11 10:54:25,728][DEBUG][action.search.type       ] [Black Tarantula] [eumetsat-catalogue][2], node[OjtHdsHDRfOsYivKsLNxQg], [P], s[STARTED]: Failed to execute [org.elasticsearch.action.search.SearchRequest@14ff6e9] lastShard [true]
+org.elasticsearch.search.SearchParseException: [eumetsat-catalogue][2]: from[0],size[10]: Parse Failure [Failed to parse source [{ "from" : 0, "size" : 10, 
+  "highlight" : { 
+                  "pre_tags" : ["<strong>"],
+                  "post_tags" : ["</strong>"],
+                  "fields" : 
+                     { "identificationInfo.title": {"fragment_size" : , "number_of_fragments" : 1 }, "identificationInfo.abstract": {} } 
+                } ,  
+  "_source" : false,
+  "query" : { 
+              "simple_query_string" : 
+                  { "fields" : ["identificationInfo.title^10", "identificationInfo.abstract"], "query" : "iasi" } 
+            } 
+}
+]]
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:664)
+	at org.elasticsearch.search.SearchService.createContext(SearchService.java:515)
+	at org.elasticsearch.search.SearchService.createAndPutContext(SearchService.java:487)
+	at org.elasticsearch.search.SearchService.executeQueryPhase(SearchService.java:256)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$5.call(SearchServiceTransportAction.java:206)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$5.call(SearchServiceTransportAction.java:203)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$23.run(SearchServiceTransportAction.java:517)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: org.elasticsearch.common.jackson.core.JsonParseException: Unexpected character (',' (code 44)): expected a valid value (number, String, array, object, 'true', 'false' or 'null')
+ at [Source: [B@802642; line: 6, column: 72]
+	at org.elasticsearch.common.jackson.core.JsonParser._constructError(JsonParser.java:1419)
+	at org.elasticsearch.common.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:508)
+	at org.elasticsearch.common.jackson.core.base.ParserMinimalBase._reportUnexpectedChar(ParserMinimalBase.java:437)
+	at org.elasticsearch.common.jackson.core.json.UTF8StreamJsonParser._handleUnexpectedValue(UTF8StreamJsonParser.java:2363)
+	at org.elasticsearch.common.jackson.core.json.UTF8StreamJsonParser.nextToken(UTF8StreamJsonParser.java:748)
+	at org.elasticsearch.common.xcontent.json.JsonXContentParser.nextToken(JsonXContentParser.java:50)
+	at org.elasticsearch.search.highlight.HighlighterParseElement.parseFields(HighlighterParseElement.java:191)
+	at org.elasticsearch.search.highlight.HighlighterParseElement.parse(HighlighterParseElement.java:163)
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:648)
+	... 9 more
+[2014-08-11 10:54:25,728][DEBUG][action.search.type       ] [Black Tarantula] [eumetsat-catalogue][3], node[OjtHdsHDRfOsYivKsLNxQg], [P], s[STARTED]: Failed to execute [org.elasticsearch.action.search.SearchRequest@14ff6e9] lastShard [true]
+org.elasticsearch.search.SearchParseException: [eumetsat-catalogue][3]: from[0],size[10]: Parse Failure [Failed to parse source [{ "from" : 0, "size" : 10, 
+  "highlight" : { 
+                  "pre_tags" : ["<strong>"],
+                  "post_tags" : ["</strong>"],
+                  "fields" : 
+                     { "identificationInfo.title": {"fragment_size" : , "number_of_fragments" : 1 }, "identificationInfo.abstract": {} } 
+                } ,  
+  "_source" : false,
+  "query" : { 
+              "simple_query_string" : 
+                  { "fields" : ["identificationInfo.title^10", "identificationInfo.abstract"], "query" : "iasi" } 
+            } 
+}
+]]
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:664)
+	at org.elasticsearch.search.SearchService.createContext(SearchService.java:515)
+	at org.elasticsearch.search.SearchService.createAndPutContext(SearchService.java:487)
+	at org.elasticsearch.search.SearchService.executeQueryPhase(SearchService.java:256)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$5.call(SearchServiceTransportAction.java:206)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$5.call(SearchServiceTransportAction.java:203)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$23.run(SearchServiceTransportAction.java:517)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: org.elasticsearch.common.jackson.core.JsonParseException: Unexpected character (',' (code 44)): expected a valid value (number, String, array, object, 'true', 'false' or 'null')
+ at [Source: [B@802642; line: 6, column: 72]
+	at org.elasticsearch.common.jackson.core.JsonParser._constructError(JsonParser.java:1419)
+	at org.elasticsearch.common.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:508)
+	at org.elasticsearch.common.jackson.core.base.ParserMinimalBase._reportUnexpectedChar(ParserMinimalBase.java:437)
+	at org.elasticsearch.common.jackson.core.json.UTF8StreamJsonParser._handleUnexpectedValue(UTF8StreamJsonParser.java:2363)
+	at org.elasticsearch.common.jackson.core.json.UTF8StreamJsonParser.nextToken(UTF8StreamJsonParser.java:748)
+	at org.elasticsearch.common.xcontent.json.JsonXContentParser.nextToken(JsonXContentParser.java:50)
+	at org.elasticsearch.search.highlight.HighlighterParseElement.parseFields(HighlighterParseElement.java:191)
+	at org.elasticsearch.search.highlight.HighlighterParseElement.parse(HighlighterParseElement.java:163)
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:648)
+	... 9 more
+[2014-08-11 10:54:25,728][DEBUG][action.search.type       ] [Black Tarantula] [eumetsat-catalogue][0], node[OjtHdsHDRfOsYivKsLNxQg], [P], s[STARTED]: Failed to execute [org.elasticsearch.action.search.SearchRequest@14ff6e9] lastShard [true]
+org.elasticsearch.search.SearchParseException: [eumetsat-catalogue][0]: from[0],size[10]: Parse Failure [Failed to parse source [{ "from" : 0, "size" : 10, 
+  "highlight" : { 
+                  "pre_tags" : ["<strong>"],
+                  "post_tags" : ["</strong>"],
+                  "fields" : 
+                     { "identificationInfo.title": {"fragment_size" : , "number_of_fragments" : 1 }, "identificationInfo.abstract": {} } 
+                } ,  
+  "_source" : false,
+  "query" : { 
+              "simple_query_string" : 
+                  { "fields" : ["identificationInfo.title^10", "identificationInfo.abstract"], "query" : "iasi" } 
+            } 
+}
+]]
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:664)
+	at org.elasticsearch.search.SearchService.createContext(SearchService.java:515)
+	at org.elasticsearch.search.SearchService.createAndPutContext(SearchService.java:487)
+	at org.elasticsearch.search.SearchService.executeQueryPhase(SearchService.java:256)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$5.call(SearchServiceTransportAction.java:206)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$5.call(SearchServiceTransportAction.java:203)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$23.run(SearchServiceTransportAction.java:517)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: org.elasticsearch.common.jackson.core.JsonParseException: Unexpected character (',' (code 44)): expected a valid value (number, String, array, object, 'true', 'false' or 'null')
+ at [Source: [B@802642; line: 6, column: 72]
+	at org.elasticsearch.common.jackson.core.JsonParser._constructError(JsonParser.java:1419)
+	at org.elasticsearch.common.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:508)
+	at org.elasticsearch.common.jackson.core.base.ParserMinimalBase._reportUnexpectedChar(ParserMinimalBase.java:437)
+	at org.elasticsearch.common.jackson.core.json.UTF8StreamJsonParser._handleUnexpectedValue(UTF8StreamJsonParser.java:2363)
+	at org.elasticsearch.common.jackson.core.json.UTF8StreamJsonParser.nextToken(UTF8StreamJsonParser.java:748)
+	at org.elasticsearch.common.xcontent.json.JsonXContentParser.nextToken(JsonXContentParser.java:50)
+	at org.elasticsearch.search.highlight.HighlighterParseElement.parseFields(HighlighterParseElement.java:191)
+	at org.elasticsearch.search.highlight.HighlighterParseElement.parse(HighlighterParseElement.java:163)
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:648)
+	... 9 more
+[2014-08-11 10:54:25,729][DEBUG][action.search.type       ] [Black Tarantula] All shards failed for phase: [query]

@@ -390,14 +390,13 @@ public class ISO2JSON
 	
 	public static void indexDirContent(String aSrcDir)
 	{
-		Client client     = null;
         String jsonStr    = null;
         JSONParser parser = new JSONParser();
         JSONObject jsObj  = null;
         
         Settings settings = ImmutableSettings.settingsBuilder().put("cluster.name", "elasticsearch").build();
-        TransportClient transportClient = new TransportClient(settings);
-        client = transportClient.addTransportAddress(new InetSocketTransportAddress("localhost", 9300));
+        TransportClient client = new TransportClient(settings);
+        client.addTransportAddress(new InetSocketTransportAddress("localhost", 9300));
 
         try
         {

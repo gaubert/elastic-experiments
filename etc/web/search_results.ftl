@@ -50,12 +50,12 @@
   </div> <!-- row 1 -->
   
   <div class="row">
-	  <div class="col-md-10">
+      <div class="col-md-1">
 	  </div>
-	  <div class="col-md-2">
+	  <div class="col-md-10">
 	     </br>
-	     <p>
-	       <strong>Hits ${total_hits}</strong>
+	     <p class="text-muted">
+	       <small>About ${total_hits} results (${elapsed} milliseconds)</small>
 	     </p>
 	  </div>
   </div>
@@ -64,12 +64,12 @@
 	  </div>
 	  <div class="col-md-10">
 	     <#list hits as hit>
-	         <hr>
-	         <p><b><a href="/product_description?id=${hit.id}">${hit.title}</a></b></p>
+	         <h5><a href="/product_description?id=${hit.id}">${hit.title}</a></h5>
 	         <p class="text-justify">
 	           ${hit.abstract} 
 	         </p>
-	         <p>score: ${hit.score}</p>
+	         <p class="text-muted"><small>score: ${hit.score}</small></p>
+	         <hr>
 	     </#list>
 	  </div>
 	  <div class="col-md-1">

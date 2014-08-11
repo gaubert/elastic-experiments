@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
@@ -24,6 +25,8 @@ import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+
+import com.google.common.base.Stopwatch;
 
 import spark.Request;
 import spark.Response;
@@ -137,10 +140,15 @@ public class SparkSearchWeb {
 		String body = "{ \"from\" : "+ from + ", \"size\" : " + size + "," + 
 		              "\"query\" : { \"simple_query_string\" : { \"fields\" : [\"identificationInfo.title^10\", \"identificationInfo.abstract\"], \"query\" : \""
 				+ searchTerms + "\" } }," + 
-		              "  \"highlight\" : { \"fields\" : { \"identificationInfo.title\": {}, \"identificationInfo.abstract\": {} } } , " +
+		              "  \"highlight\" : { \"pre_tags\" : [\"<em><strong>\"], \"post_tags\" : [\"</strong></eml>\"], " + 
+				         "\"fields\" : { \"identificationInfo.title\": {\"fragment_size\" : 300, \"number_of_fragments\" : 1}, "+ 
+				                                          "\"identificationInfo.abstract\": {\"fragment_size\" : 5000, \"number_of_fragments\" : 1} } } , " +
 				      " \"facets\" : {\"tags\": { \"terms\" : { \"field\" : \"hierarchyNames\" } } } }";
 		
 		System.out.println("elastic-search request: " + body);
+		
+		//measure elapsed time
+		Stopwatch stopwatch = Stopwatch.createStarted();
 		
 		WebResponse response = rClient.doGetRequest(url, headers, params,
 				body, debug);
@@ -168,13 +176,13 @@ public class SparkSearchWeb {
 			resHit = new HashMap<String, String>();
 
 			resHit.put("id", (String) hit.get("_id"));
-			resHit.put("score", ((Double) hit.get("_score")).toString());
+			resHit.put("score", String.format("%.4g%n", ((Double) hit.get("_score"))));
 
 			// can have or not title or abstract
 			// strategy. If it doesn't have an abstract or a title match then take it from the _source
 			highlight= (Map<?, ?>) hit.get("highlight");
 			
-			if (highlight.containsKey("identification.title"))
+			if (highlight.containsKey("identificationInfo.title"))
 			{
 				resHit.put("title", (String) ((JSONArray) highlight.get("identificationInfo.title")).get(0) );
 			}
@@ -183,7 +191,7 @@ public class SparkSearchWeb {
 				resHit.put("title", ((String) (((Map<?, ?>) (((Map<?, ?>) hit.get("_source")).get("identificationInfo"))).get("title"))) );
 			}
 			
-			if (highlight.containsKey("identification.abstract"))
+			if (highlight.containsKey("identificationInfo.abstract"))
 			{
 				resHit.put("abstract", (String) ((JSONArray) highlight.get("identificationInfo.abstract")).get(0) );
 			}
@@ -196,7 +204,11 @@ public class SparkSearchWeb {
 		}
 
 		data.put("hits", resHits);
+		
+		stopwatch.stop(); // optional
 
+		data.put("elapsed", (double) (stopwatch.elapsed(TimeUnit.MILLISECONDS))/ (double) 1000);
+		
 		return data;
 
 	}
