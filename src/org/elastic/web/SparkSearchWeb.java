@@ -140,7 +140,7 @@ public class SparkSearchWeb {
 		String body = "{ \"from\" : "+ from + ", \"size\" : " + size + "," + 
 		              "\"query\" : { \"simple_query_string\" : { \"fields\" : [\"identificationInfo.title^10\", \"identificationInfo.abstract\"], \"query\" : \""
 				+ searchTerms + "\" } }," + 
-		              "  \"highlight\" : { \"pre_tags\" : [\"<em><strong>\"], \"post_tags\" : [\"</strong></eml>\"], " + 
+		              "  \"highlight\" : { \"pre_tags\" : [\"<em><strong>\"], \"post_tags\" : [\"</strong></em>\"], " + 
 				         "\"fields\" : { \"identificationInfo.title\": {\"fragment_size\" : 300, \"number_of_fragments\" : 1}, "+ 
 				                                          "\"identificationInfo.abstract\": {\"fragment_size\" : 5000, \"number_of_fragments\" : 1} } } , " +
 				      " \"facets\" : {\"tags\": { \"terms\" : { \"field\" : \"hierarchyNames\" } } } }";
@@ -223,7 +223,7 @@ public class SparkSearchWeb {
 			public Object handle(Request request, Response response) {
 				try {
 					return FileUtils.readFileToString(new File(
-							"etc/web/bootstrap_search.html"));
+							"etc/web/test.html"));
 				} catch (IOException e) {
 					StringWriter errors = new StringWriter();
 					e.printStackTrace(new PrintWriter(errors));
