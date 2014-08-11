@@ -18,10 +18,10 @@ import org.apache.commons.io.IOUtils;
 import org.elastic.common.MimeUtil;
 import org.elastic.common.SimpleRestClient;
 import org.elastic.common.SimpleRestClient.WebResponse;
-
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -119,7 +119,7 @@ public class SparkSearchWeb {
 	 * @return
 	 * @throws Exception
 	 */
-	private static String searchQueryElasticSearch(String searchTerms, int from, int size)
+	private static Map<?,?> searchQueryElasticSearch(String searchTerms, int from, int size)
 			throws Exception {
 		
 		URL url = new URL("http://localhost:9200/_search");
@@ -128,18 +128,17 @@ public class SparkSearchWeb {
 		HashMap<String, String> params  = new HashMap<String, String>();
 		boolean debug = true;
 
-		// Load template from source foldqueryRestElasticSearcher
-		Template template = cfg.getTemplate("etc/web/search_results.ftl");
-
 		List<Map<String, String>> resHits = new ArrayList<Map<String, String>>();
 		Map<String, String>       resHit  = null;
 
 		// template input
 		Map<String, Object> data = new HashMap<String, Object>();
 
-		String body = "{ \"from\" : "+ from + ", \"size\" : " + size + ", \"query\" : { \"simple_query_string\" : { \"fields\" : [\"identificationInfo.title^10\", \"identificationInfo.abstract\"], \"query\" : \""
-				+ searchTerms + "\" } }, \"highlight\" : { \"fields\" : { \"identificationInfo.title\": {}, \"identificationInfo.abstract\": {} } } , " +
-				" \"facets\" : {\"tags\": { \"terms\" : { \"field\" : \"hierarchyNames\" } } } }";
+		String body = "{ \"from\" : "+ from + ", \"size\" : " + size + "," + 
+		              "\"query\" : { \"simple_query_string\" : { \"fields\" : [\"identificationInfo.title^10\", \"identificationInfo.abstract\"], \"query\" : \""
+				+ searchTerms + "\" } }," + 
+		              "  \"highlight\" : { \"fields\" : { \"identificationInfo.title\": {}, \"identificationInfo.abstract\": {} } } , " +
+				      " \"facets\" : {\"tags\": { \"terms\" : { \"field\" : \"hierarchyNames\" } } } }";
 		
 		System.out.println("elastic-search request: " + body);
 		
@@ -163,31 +162,42 @@ public class SparkSearchWeb {
 		@SuppressWarnings("unchecked")
 		List<Map<String, Object>> hits = (List<Map<String, Object>>) ((Map<?,?>) jsObj.get("hits")).get("hits");
 		
+		//to get the highlight
+		Map<?,?> highlight = null;
 		for  ( Map<String, Object> hit : hits) {
 			resHit = new HashMap<String, String>();
 
 			resHit.put("id", (String) hit.get("_id"));
 			resHit.put("score", ((Double) hit.get("_score")).toString());
 
-			resHit.put("abstract", ((String) (((Map<?, ?>) (((Map<?, ?>) hit.get("_source")).get("identificationInfo"))).get("abstract"))) );
-			resHit.put("title", ((String) (((Map<?, ?>) (((Map<?, ?>) hit.get("_source")).get("identificationInfo"))).get("title"))) );
-
+			// can have or not title or abstract
+			// strategy. If it doesn't have an abstract or a title match then take it from the _source
+			highlight= (Map<?, ?>) hit.get("highlight");
+			
+			if (highlight.containsKey("identification.title"))
+			{
+				resHit.put("title", (String) ((JSONArray) highlight.get("identificationInfo.title")).get(0) );
+			}
+			else
+			{
+				resHit.put("title", ((String) (((Map<?, ?>) (((Map<?, ?>) hit.get("_source")).get("identificationInfo"))).get("title"))) );
+			}
+			
+			if (highlight.containsKey("identification.abstract"))
+			{
+				resHit.put("abstract", (String) ((JSONArray) highlight.get("identificationInfo.abstract")).get(0) );
+			}
+			else
+			{
+				resHit.put("abstract", ((String) (((Map<?, ?>) (((Map<?, ?>) hit.get("_source")).get("identificationInfo"))).get("abstract"))) );
+			}
+			
 			resHits.add(resHit);
 		}
 
 		data.put("hits", resHits);
 
-		// Console output
-		Writer out = new OutputStreamWriter(System.out);
-		template.process(data, out);
-		out.flush();
-
-		// get in a String
-		StringWriter results = new StringWriter();
-		template.process(data, results);
-		results.flush();
-
-		return results.toString();
+		return data;
 
 	}
 
@@ -277,16 +287,30 @@ public class SparkSearchWeb {
 				       System.out.println("size parameter = " + size + ". It cannot be converted to int. default to -1.");
 					   e.printStackTrace(System.out);
 				    }		
-					
-					
+						
 					// System.out.println(request.queryString());
 					System.out.println("SearchTerms " + searchTerms);
 					System.out.println("From " + from);
 					System.out.println("Size " + size);
 					
-					String result = searchQueryElasticSearch(searchTerms, from, size);
+					//template parameter map
+					Map<?,?> data = null;
+					// Load template from source foldqueryRestElasticSearcher
+					Template template = cfg.getTemplate("etc/web/search_results.ftl");
+					
+					data = searchQueryElasticSearch(searchTerms, from, size);
 
-					return result;
+					// Console output
+					Writer out = new OutputStreamWriter(System.out);
+					template.process(data, out);
+					out.flush();
+
+					// get in a String
+					StringWriter results = new StringWriter();
+					template.process(data, results);
+					results.flush();
+					
+					return results.toString();
 
 				} catch (Exception e) {
 
@@ -317,6 +341,7 @@ public class SparkSearchWeb {
 				// Load template from source foldqueryRestElasticSearcher
 				try 
 				{
+					//template parameter map
 					Map<?,?> data = null;
 					
 					Template template = cfg.getTemplate("etc/web/product_description.ftl");

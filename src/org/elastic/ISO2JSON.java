@@ -24,6 +24,8 @@ import org.elastic.common.JSONWriter;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.common.settings.ImmutableSettings;
+import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -388,11 +390,15 @@ public class ISO2JSON
 	
 	public static void indexDirContent(String aSrcDir)
 	{
-		Client client     = new TransportClient().addTransportAddress(new InetSocketTransportAddress("localhost", 9300));
+		Client client     = null;
         String jsonStr    = null;
         JSONParser parser = new JSONParser();
         JSONObject jsObj  = null;
-		
+        
+        Settings settings = ImmutableSettings.settingsBuilder().put("cluster.name", "elasticsearch").build();
+        TransportClient transportClient = new TransportClient(settings);
+        client = transportClient.addTransportAddress(new InetSocketTransportAddress("localhost", 9300));
+
         try
         {
         

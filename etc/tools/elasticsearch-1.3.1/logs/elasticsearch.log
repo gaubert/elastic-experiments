@@ -1,0 +1,320 @@
+[2014-08-11 10:29:25,139][WARN ][bootstrap                ] jvm uses the client vm, make sure to run `java` with the server vm for best performance by adding `-server` to the command line
+[2014-08-11 10:29:25,218][INFO ][node                     ] [Ramshot] version[1.3.1], pid[6036], build[2de6dc5/2014-07-28T14:45:15Z]
+[2014-08-11 10:29:25,218][INFO ][node                     ] [Ramshot] initializing ...
+[2014-08-11 10:29:25,222][INFO ][plugins                  ] [Ramshot] loaded [], sites []
+[2014-08-11 10:29:29,731][WARN ][bootstrap                ] jvm uses the client vm, make sure to run `java` with the server vm for best performance by adding `-server` to the command line
+[2014-08-11 10:29:29,814][INFO ][node                     ] [Varnae] version[1.3.1], pid[11496], build[2de6dc5/2014-07-28T14:45:15Z]
+[2014-08-11 10:29:29,814][INFO ][node                     ] [Varnae] initializing ...
+[2014-08-11 10:29:29,818][INFO ][plugins                  ] [Varnae] loaded [], sites []
+[2014-08-11 10:29:31,272][INFO ][node                     ] [Varnae] initialized
+[2014-08-11 10:29:31,272][INFO ][node                     ] [Varnae] starting ...
+[2014-08-11 10:29:31,737][INFO ][transport                ] [Varnae] bound_address {inet[/0:0:0:0:0:0:0:0:9300]}, publish_address {inet[/10.128.125.24:9300]}
+[2014-08-11 10:29:32,771][INFO ][discovery                ] [Varnae] elasticsearch/wzfASPd6QL2URD7TDK1fQA
+[2014-08-11 10:29:35,429][WARN ][transport.netty          ] [Varnae] Message not fully read (request) for [125] and action [], resetting
+[2014-08-11 10:29:35,785][INFO ][cluster.service          ] [Varnae] new_master [Varnae][wzfASPd6QL2URD7TDK1fQA][NB808570][inet[/10.128.125.24:9300]], reason: zen-disco-join (elected_as_master)
+[2014-08-11 10:29:35,830][INFO ][gateway                  ] [Varnae] recovered [0] indices into cluster_state
+[2014-08-11 10:29:36,155][INFO ][http                     ] [Varnae] bound_address {inet[/0:0:0:0:0:0:0:0:9200]}, publish_address {inet[/10.128.125.24:9200]}
+[2014-08-11 10:29:36,155][INFO ][node                     ] [Varnae] started
+[2014-08-11 10:29:40,438][WARN ][transport.netty          ] [Varnae] Message not fully read (request) for [126] and action [], resetting
+[2014-08-11 10:29:45,444][WARN ][transport.netty          ] [Varnae] Message not fully read (request) for [127] and action [], resetting
+[2014-08-11 10:29:50,449][WARN ][transport.netty          ] [Varnae] Message not fully read (request) for [128] and action [], resetting
+[2014-08-11 10:29:55,453][WARN ][transport.netty          ] [Varnae] Message not fully read (request) for [129] and action [], resetting
+[2014-08-11 10:30:00,457][WARN ][transport.netty          ] [Varnae] Message not fully read (request) for [130] and action [], resetting
+[2014-08-11 10:30:05,462][WARN ][transport.netty          ] [Varnae] Message not fully read (request) for [131] and action [], resetting
+[2014-08-11 10:30:10,061][WARN ][transport.netty          ] [Varnae] Message not fully read (request) for [0] and action [], resetting
+[2014-08-11 10:30:10,499][WARN ][transport.netty          ] [Varnae] Message not fully read (request) for [132] and action [], resetting
+[2014-08-11 10:30:15,504][WARN ][transport.netty          ] [Varnae] Message not fully read (request) for [133] and action [], resetting
+[2014-08-11 10:30:20,509][WARN ][transport.netty          ] [Varnae] Message not fully read (request) for [134] and action [], resetting
+[2014-08-11 10:30:25,514][WARN ][transport.netty          ] [Varnae] Message not fully read (request) for [135] and action [], resetting
+[2014-08-11 10:31:10,066][WARN ][bootstrap                ] jvm uses the client vm, make sure to run `java` with the server vm for best performance by adding `-server` to the command line
+[2014-08-11 10:31:10,145][INFO ][node                     ] [Black Tarantula] version[1.3.1], pid[6664], build[2de6dc5/2014-07-28T14:45:15Z]
+[2014-08-11 10:31:10,145][INFO ][node                     ] [Black Tarantula] initializing ...
+[2014-08-11 10:31:10,150][INFO ][plugins                  ] [Black Tarantula] loaded [], sites []
+[2014-08-11 10:31:11,669][INFO ][node                     ] [Black Tarantula] initialized
+[2014-08-11 10:31:11,669][INFO ][node                     ] [Black Tarantula] starting ...
+[2014-08-11 10:31:12,123][INFO ][transport                ] [Black Tarantula] bound_address {inet[/0:0:0:0:0:0:0:0:9300]}, publish_address {inet[/10.128.125.24:9300]}
+[2014-08-11 10:31:12,575][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [136] and action [], resetting
+[2014-08-11 10:31:13,171][INFO ][discovery                ] [Black Tarantula] elasticsearch/OjtHdsHDRfOsYivKsLNxQg
+[2014-08-11 10:31:16,181][INFO ][cluster.service          ] [Black Tarantula] new_master [Black Tarantula][OjtHdsHDRfOsYivKsLNxQg][NB808570][inet[/10.128.125.24:9300]], reason: zen-disco-join (elected_as_master)
+[2014-08-11 10:31:16,216][INFO ][gateway                  ] [Black Tarantula] recovered [0] indices into cluster_state
+[2014-08-11 10:31:16,540][INFO ][http                     ] [Black Tarantula] bound_address {inet[/0:0:0:0:0:0:0:0:9200]}, publish_address {inet[/10.128.125.24:9200]}
+[2014-08-11 10:31:16,541][INFO ][node                     ] [Black Tarantula] started
+[2014-08-11 10:31:17,579][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [137] and action [], resetting
+[2014-08-11 10:31:22,583][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [138] and action [], resetting
+[2014-08-11 10:31:27,586][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [139] and action [], resetting
+[2014-08-11 10:31:32,592][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [140] and action [], resetting
+[2014-08-11 10:31:37,596][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [141] and action [], resetting
+[2014-08-11 10:31:42,599][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [142] and action [], resetting
+[2014-08-11 10:31:47,605][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [143] and action [], resetting
+[2014-08-11 10:31:52,609][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [144] and action [], resetting
+[2014-08-11 10:31:57,612][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [145] and action [], resetting
+[2014-08-11 10:32:02,616][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [146] and action [], resetting
+[2014-08-11 10:32:07,621][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [147] and action [], resetting
+[2014-08-11 10:32:12,625][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [148] and action [], resetting
+[2014-08-11 10:32:17,630][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [149] and action [], resetting
+[2014-08-11 10:32:22,635][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [150] and action [], resetting
+[2014-08-11 10:32:27,640][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [151] and action [], resetting
+[2014-08-11 10:32:29,304][WARN ][transport.netty          ] [Black Tarantula] exception caught on transport layer [[id: 0x62283421, /127.0.0.1:63146 => /127.0.0.1:9300]], closing connection
+java.io.StreamCorruptedException: invalid internal transport message format
+	at org.elasticsearch.transport.netty.SizeHeaderFrameDecoder.decode(SizeHeaderFrameDecoder.java:46)
+	at org.elasticsearch.common.netty.handler.codec.frame.FrameDecoder.callDecode(FrameDecoder.java:425)
+	at org.elasticsearch.common.netty.handler.codec.frame.FrameDecoder.messageReceived(FrameDecoder.java:310)
+	at org.elasticsearch.common.netty.channel.SimpleChannelUpstreamHandler.handleUpstream(SimpleChannelUpstreamHandler.java:70)
+	at org.elasticsearch.common.netty.channel.DefaultChannelPipeline.sendUpstream(DefaultChannelPipeline.java:564)
+	at org.elasticsearch.common.netty.channel.DefaultChannelPipeline$DefaultChannelHandlerContext.sendUpstream(DefaultChannelPipeline.java:791)
+	at org.elasticsearch.common.netty.OpenChannelsHandler.handleUpstream(OpenChannelsHandler.java:74)
+	at org.elasticsearch.common.netty.channel.DefaultChannelPipeline.sendUpstream(DefaultChannelPipeline.java:564)
+	at org.elasticsearch.common.netty.channel.DefaultChannelPipeline.sendUpstream(DefaultChannelPipeline.java:559)
+	at org.elasticsearch.common.netty.channel.Channels.fireMessageReceived(Channels.java:268)
+	at org.elasticsearch.common.netty.channel.Channels.fireMessageReceived(Channels.java:255)
+	at org.elasticsearch.common.netty.channel.socket.nio.NioWorker.read(NioWorker.java:88)
+	at org.elasticsearch.common.netty.channel.socket.nio.AbstractNioWorker.process(AbstractNioWorker.java:108)
+	at org.elasticsearch.common.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:318)
+	at org.elasticsearch.common.netty.channel.socket.nio.AbstractNioWorker.run(AbstractNioWorker.java:89)
+	at org.elasticsearch.common.netty.channel.socket.nio.NioWorker.run(NioWorker.java:178)
+	at org.elasticsearch.common.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.elasticsearch.common.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+[2014-08-11 10:32:29,306][WARN ][transport.netty          ] [Black Tarantula] exception caught on transport layer [[id: 0x62283421, /127.0.0.1:63146 :> /127.0.0.1:9300]], closing connection
+java.io.StreamCorruptedException: invalid internal transport message format
+	at org.elasticsearch.transport.netty.SizeHeaderFrameDecoder.decode(SizeHeaderFrameDecoder.java:46)
+	at org.elasticsearch.common.netty.handler.codec.frame.FrameDecoder.callDecode(FrameDecoder.java:425)
+	at org.elasticsearch.common.netty.handler.codec.frame.FrameDecoder.cleanup(FrameDecoder.java:482)
+	at org.elasticsearch.common.netty.handler.codec.frame.FrameDecoder.channelDisconnected(FrameDecoder.java:365)
+	at org.elasticsearch.common.netty.channel.SimpleChannelUpstreamHandler.handleUpstream(SimpleChannelUpstreamHandler.java:102)
+	at org.elasticsearch.common.netty.channel.DefaultChannelPipeline.sendUpstream(DefaultChannelPipeline.java:564)
+	at org.elasticsearch.common.netty.channel.DefaultChannelPipeline$DefaultChannelHandlerContext.sendUpstream(DefaultChannelPipeline.java:791)
+	at org.elasticsearch.common.netty.OpenChannelsHandler.handleUpstream(OpenChannelsHandler.java:74)
+	at org.elasticsearch.common.netty.channel.DefaultChannelPipeline.sendUpstream(DefaultChannelPipeline.java:564)
+	at org.elasticsearch.common.netty.channel.DefaultChannelPipeline.sendUpstream(DefaultChannelPipeline.java:559)
+	at org.elasticsearch.common.netty.channel.Channels.fireChannelDisconnected(Channels.java:396)
+	at org.elasticsearch.common.netty.channel.socket.nio.AbstractNioWorker.close(AbstractNioWorker.java:360)
+	at org.elasticsearch.common.netty.channel.socket.nio.NioServerSocketPipelineSink.handleAcceptedSocket(NioServerSocketPipelineSink.java:81)
+	at org.elasticsearch.common.netty.channel.socket.nio.NioServerSocketPipelineSink.eventSunk(NioServerSocketPipelineSink.java:36)
+	at org.elasticsearch.common.netty.channel.DefaultChannelPipeline.sendDownstream(DefaultChannelPipeline.java:574)
+	at org.elasticsearch.common.netty.channel.Channels.close(Channels.java:812)
+	at org.elasticsearch.common.netty.channel.AbstractChannel.close(AbstractChannel.java:197)
+	at org.elasticsearch.transport.netty.NettyTransport.exceptionCaught(NettyTransport.java:539)
+	at org.elasticsearch.transport.netty.MessageChannelHandler.exceptionCaught(MessageChannelHandler.java:234)
+	at org.elasticsearch.common.netty.channel.SimpleChannelUpstreamHandler.handleUpstream(SimpleChannelUpstreamHandler.java:112)
+	at org.elasticsearch.common.netty.channel.DefaultChannelPipeline.sendUpstream(DefaultChannelPipeline.java:564)
+	at org.elasticsearch.common.netty.channel.DefaultChannelPipeline$DefaultChannelHandlerContext.sendUpstream(DefaultChannelPipeline.java:791)
+	at org.elasticsearch.common.netty.handler.codec.frame.FrameDecoder.exceptionCaught(FrameDecoder.java:377)
+	at org.elasticsearch.common.netty.channel.SimpleChannelUpstreamHandler.handleUpstream(SimpleChannelUpstreamHandler.java:112)
+	at org.elasticsearch.common.netty.channel.DefaultChannelPipeline.sendUpstream(DefaultChannelPipeline.java:564)
+	at org.elasticsearch.common.netty.channel.DefaultChannelPipeline$DefaultChannelHandlerContext.sendUpstream(DefaultChannelPipeline.java:791)
+	at org.elasticsearch.common.netty.OpenChannelsHandler.handleUpstream(OpenChannelsHandler.java:74)
+	at org.elasticsearch.common.netty.channel.DefaultChannelPipeline.sendUpstream(DefaultChannelPipeline.java:564)
+	at org.elasticsearch.common.netty.channel.DefaultChannelPipeline.sendUpstream(DefaultChannelPipeline.java:559)
+	at org.elasticsearch.common.netty.channel.Channels.fireExceptionCaught(Channels.java:525)
+	at org.elasticsearch.common.netty.channel.AbstractChannelSink.exceptionCaught(AbstractChannelSink.java:48)
+	at org.elasticsearch.common.netty.channel.DefaultChannelPipeline.notifyHandlerException(DefaultChannelPipeline.java:658)
+	at org.elasticsearch.common.netty.channel.DefaultChannelPipeline.sendUpstream(DefaultChannelPipeline.java:566)
+	at org.elasticsearch.common.netty.channel.DefaultChannelPipeline$DefaultChannelHandlerContext.sendUpstream(DefaultChannelPipeline.java:791)
+	at org.elasticsearch.common.netty.OpenChannelsHandler.handleUpstream(OpenChannelsHandler.java:74)
+	at org.elasticsearch.common.netty.channel.DefaultChannelPipeline.sendUpstream(DefaultChannelPipeline.java:564)
+	at org.elasticsearch.common.netty.channel.DefaultChannelPipeline.sendUpstream(DefaultChannelPipeline.java:559)
+	at org.elasticsearch.common.netty.channel.Channels.fireMessageReceived(Channels.java:268)
+	at org.elasticsearch.common.netty.channel.Channels.fireMessageReceived(Channels.java:255)
+	at org.elasticsearch.common.netty.channel.socket.nio.NioWorker.read(NioWorker.java:88)
+	at org.elasticsearch.common.netty.channel.socket.nio.AbstractNioWorker.process(AbstractNioWorker.java:108)
+	at org.elasticsearch.common.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:318)
+	at org.elasticsearch.common.netty.channel.socket.nio.AbstractNioWorker.run(AbstractNioWorker.java:89)
+	at org.elasticsearch.common.netty.channel.socket.nio.NioWorker.run(NioWorker.java:178)
+	at org.elasticsearch.common.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.elasticsearch.common.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+[2014-08-11 10:32:32,644][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [152] and action [], resetting
+[2014-08-11 10:32:37,647][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [153] and action [], resetting
+[2014-08-11 10:32:42,653][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [154] and action [], resetting
+[2014-08-11 10:32:47,657][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [155] and action [], resetting
+[2014-08-11 10:32:52,662][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [156] and action [], resetting
+[2014-08-11 10:32:57,666][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [157] and action [], resetting
+[2014-08-11 10:33:02,670][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [158] and action [], resetting
+[2014-08-11 10:33:07,674][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [159] and action [], resetting
+[2014-08-11 10:33:12,678][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [160] and action [], resetting
+[2014-08-11 10:33:17,682][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [161] and action [], resetting
+[2014-08-11 10:33:22,686][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [162] and action [], resetting
+[2014-08-11 10:33:25,746][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [0] and action [], resetting
+[2014-08-11 10:33:27,690][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [163] and action [], resetting
+[2014-08-11 10:33:32,694][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [164] and action [], resetting
+[2014-08-11 10:33:37,698][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [165] and action [], resetting
+[2014-08-11 10:33:42,702][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [166] and action [], resetting
+[2014-08-11 10:33:47,707][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [167] and action [], resetting
+[2014-08-11 10:33:52,713][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [168] and action [], resetting
+[2014-08-11 10:33:57,717][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [169] and action [], resetting
+[2014-08-11 10:34:02,720][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [170] and action [], resetting
+[2014-08-11 10:34:07,724][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [171] and action [], resetting
+[2014-08-11 10:34:12,728][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [172] and action [], resetting
+[2014-08-11 10:34:17,734][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [173] and action [], resetting
+[2014-08-11 10:34:22,739][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [174] and action [], resetting
+[2014-08-11 10:34:27,743][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [175] and action [], resetting
+[2014-08-11 10:34:32,746][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [176] and action [], resetting
+[2014-08-11 10:34:37,749][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [177] and action [], resetting
+[2014-08-11 10:34:42,753][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [178] and action [], resetting
+[2014-08-11 10:34:47,756][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [179] and action [], resetting
+[2014-08-11 10:34:52,760][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [180] and action [], resetting
+[2014-08-11 10:34:57,764][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [181] and action [], resetting
+[2014-08-11 10:35:02,769][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [182] and action [], resetting
+[2014-08-11 10:35:07,773][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [183] and action [], resetting
+[2014-08-11 10:35:12,777][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [184] and action [], resetting
+[2014-08-11 10:35:17,783][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [185] and action [], resetting
+[2014-08-11 10:35:22,788][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [186] and action [], resetting
+[2014-08-11 10:35:27,791][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [187] and action [], resetting
+[2014-08-11 10:35:32,795][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [188] and action [], resetting
+[2014-08-11 10:35:37,799][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [189] and action [], resetting
+[2014-08-11 10:35:42,803][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [190] and action [], resetting
+[2014-08-11 10:35:47,807][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [191] and action [], resetting
+[2014-08-11 10:35:52,812][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [192] and action [], resetting
+[2014-08-11 10:35:57,815][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [193] and action [], resetting
+[2014-08-11 10:36:02,818][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [194] and action [], resetting
+[2014-08-11 10:36:07,821][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [195] and action [], resetting
+[2014-08-11 10:36:12,826][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [196] and action [], resetting
+[2014-08-11 10:36:17,829][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [197] and action [], resetting
+[2014-08-11 10:36:22,833][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [198] and action [], resetting
+[2014-08-11 10:36:27,838][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [199] and action [], resetting
+[2014-08-11 10:36:32,841][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [200] and action [], resetting
+[2014-08-11 10:36:37,844][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [201] and action [], resetting
+[2014-08-11 10:36:42,847][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [202] and action [], resetting
+[2014-08-11 10:36:47,852][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [203] and action [], resetting
+[2014-08-11 10:36:52,856][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [204] and action [], resetting
+[2014-08-11 10:36:57,859][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [205] and action [], resetting
+[2014-08-11 10:37:02,864][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [206] and action [], resetting
+[2014-08-11 10:37:07,867][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [207] and action [], resetting
+[2014-08-11 10:37:12,871][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [208] and action [], resetting
+[2014-08-11 10:37:17,874][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [209] and action [], resetting
+[2014-08-11 10:37:22,880][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [210] and action [], resetting
+[2014-08-11 10:37:27,887][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [211] and action [], resetting
+[2014-08-11 10:37:32,891][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [212] and action [], resetting
+[2014-08-11 10:37:37,896][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [213] and action [], resetting
+[2014-08-11 10:37:42,900][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [214] and action [], resetting
+[2014-08-11 10:37:47,903][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [215] and action [], resetting
+[2014-08-11 10:37:52,906][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [216] and action [], resetting
+[2014-08-11 10:37:57,911][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [217] and action [], resetting
+[2014-08-11 10:38:02,914][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [218] and action [], resetting
+[2014-08-11 10:38:07,918][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [219] and action [], resetting
+[2014-08-11 10:38:12,923][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [220] and action [], resetting
+[2014-08-11 10:38:17,927][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [221] and action [], resetting
+[2014-08-11 10:38:22,932][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [222] and action [], resetting
+[2014-08-11 10:38:27,934][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [223] and action [], resetting
+[2014-08-11 10:38:32,938][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [224] and action [], resetting
+[2014-08-11 10:38:37,941][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [225] and action [], resetting
+[2014-08-11 10:38:42,945][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [226] and action [], resetting
+[2014-08-11 10:38:47,950][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [227] and action [], resetting
+[2014-08-11 10:38:52,954][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [228] and action [], resetting
+[2014-08-11 10:38:57,958][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [229] and action [], resetting
+[2014-08-11 10:39:02,962][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [230] and action [], resetting
+[2014-08-11 10:39:07,966][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [231] and action [], resetting
+[2014-08-11 10:39:12,969][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [232] and action [], resetting
+[2014-08-11 10:39:17,972][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [233] and action [], resetting
+[2014-08-11 10:39:22,977][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [234] and action [], resetting
+[2014-08-11 10:39:27,980][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [235] and action [], resetting
+[2014-08-11 10:39:32,983][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [236] and action [], resetting
+[2014-08-11 10:39:37,986][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [237] and action [], resetting
+[2014-08-11 10:39:42,992][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [238] and action [], resetting
+[2014-08-11 10:39:47,995][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [239] and action [], resetting
+[2014-08-11 10:39:52,999][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [240] and action [], resetting
+[2014-08-11 10:39:58,004][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [241] and action [], resetting
+[2014-08-11 10:40:03,007][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [242] and action [], resetting
+[2014-08-11 10:40:08,010][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [243] and action [], resetting
+[2014-08-11 10:40:13,014][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [244] and action [], resetting
+[2014-08-11 10:40:18,019][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [245] and action [], resetting
+[2014-08-11 10:40:23,024][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [246] and action [], resetting
+[2014-08-11 10:40:28,028][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [247] and action [], resetting
+[2014-08-11 10:40:33,032][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [248] and action [], resetting
+[2014-08-11 10:40:38,035][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [249] and action [], resetting
+[2014-08-11 10:40:43,039][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [250] and action [], resetting
+[2014-08-11 10:40:48,043][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [251] and action [], resetting
+[2014-08-11 10:40:53,048][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [252] and action [], resetting
+[2014-08-11 10:40:58,052][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [253] and action [], resetting
+[2014-08-11 10:41:03,055][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [254] and action [], resetting
+[2014-08-11 10:41:08,060][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [255] and action [], resetting
+[2014-08-11 10:41:13,067][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [256] and action [], resetting
+[2014-08-11 10:41:18,070][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [257] and action [], resetting
+[2014-08-11 10:41:23,073][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [258] and action [], resetting
+[2014-08-11 10:41:28,079][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [259] and action [], resetting
+[2014-08-11 10:41:33,082][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [260] and action [], resetting
+[2014-08-11 10:41:38,086][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [261] and action [], resetting
+[2014-08-11 10:41:43,091][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [262] and action [], resetting
+[2014-08-11 10:41:48,096][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [263] and action [], resetting
+[2014-08-11 10:41:53,100][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [264] and action [], resetting
+[2014-08-11 10:41:58,104][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [265] and action [], resetting
+[2014-08-11 10:42:03,110][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [266] and action [], resetting
+[2014-08-11 10:42:08,114][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [267] and action [], resetting
+[2014-08-11 10:42:13,118][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [268] and action [], resetting
+[2014-08-11 10:42:18,123][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [269] and action [], resetting
+[2014-08-11 10:42:23,127][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [270] and action [], resetting
+[2014-08-11 10:42:28,132][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [271] and action [], resetting
+[2014-08-11 10:42:33,136][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [272] and action [], resetting
+[2014-08-11 10:42:38,141][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [273] and action [], resetting
+[2014-08-11 10:42:43,145][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [274] and action [], resetting
+[2014-08-11 10:42:48,149][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [275] and action [], resetting
+[2014-08-11 10:42:53,153][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [276] and action [], resetting
+[2014-08-11 10:42:58,156][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [277] and action [], resetting
+[2014-08-11 10:43:03,161][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [278] and action [], resetting
+[2014-08-11 10:43:08,165][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [279] and action [], resetting
+[2014-08-11 10:43:13,170][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [280] and action [], resetting
+[2014-08-11 10:43:18,173][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [281] and action [], resetting
+[2014-08-11 10:43:23,176][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [282] and action [], resetting
+[2014-08-11 10:43:28,183][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [283] and action [], resetting
+[2014-08-11 10:43:33,187][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [284] and action [], resetting
+[2014-08-11 10:43:38,191][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [285] and action [], resetting
+[2014-08-11 10:43:43,195][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [286] and action [], resetting
+[2014-08-11 10:43:48,200][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [287] and action [], resetting
+[2014-08-11 10:43:53,204][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [288] and action [], resetting
+[2014-08-11 10:43:58,208][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [289] and action [], resetting
+[2014-08-11 10:44:03,213][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [290] and action [], resetting
+[2014-08-11 10:44:08,216][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [291] and action [], resetting
+[2014-08-11 10:44:13,220][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [292] and action [], resetting
+[2014-08-11 10:44:18,223][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [293] and action [], resetting
+[2014-08-11 10:44:23,228][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [294] and action [], resetting
+[2014-08-11 10:44:28,232][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [295] and action [], resetting
+[2014-08-11 10:44:33,235][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [296] and action [], resetting
+[2014-08-11 10:44:38,240][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [297] and action [], resetting
+[2014-08-11 10:44:43,244][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [298] and action [], resetting
+[2014-08-11 10:44:48,247][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [299] and action [], resetting
+[2014-08-11 10:44:53,251][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [300] and action [], resetting
+[2014-08-11 10:44:58,256][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [301] and action [], resetting
+[2014-08-11 10:45:03,260][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [302] and action [], resetting
+[2014-08-11 10:45:08,264][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [303] and action [], resetting
+[2014-08-11 10:45:13,270][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [304] and action [], resetting
+[2014-08-11 10:45:18,273][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [305] and action [], resetting
+[2014-08-11 10:45:23,277][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [306] and action [], resetting
+[2014-08-11 10:45:28,281][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [307] and action [], resetting
+[2014-08-11 10:45:33,285][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [308] and action [], resetting
+[2014-08-11 10:45:38,288][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [309] and action [], resetting
+[2014-08-11 10:45:43,292][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [310] and action [], resetting
+[2014-08-11 10:45:48,297][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [311] and action [], resetting
+[2014-08-11 10:45:53,301][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [312] and action [], resetting
+[2014-08-11 10:45:58,304][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [313] and action [], resetting
+[2014-08-11 10:46:03,307][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [314] and action [], resetting
+[2014-08-11 10:46:08,312][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [315] and action [], resetting
+[2014-08-11 10:46:13,316][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [316] and action [], resetting
+[2014-08-11 10:46:18,321][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [317] and action [], resetting
+[2014-08-11 10:46:23,326][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [318] and action [], resetting
+[2014-08-11 10:46:28,329][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [319] and action [], resetting
+[2014-08-11 10:46:33,333][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [320] and action [], resetting
+[2014-08-11 10:46:38,344][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [321] and action [], resetting
+[2014-08-11 10:46:43,352][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [322] and action [], resetting
+[2014-08-11 10:46:48,355][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [323] and action [], resetting
+[2014-08-11 10:46:53,359][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [324] and action [], resetting
+[2014-08-11 10:46:58,364][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [325] and action [], resetting
+[2014-08-11 10:47:03,369][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [326] and action [], resetting
+[2014-08-11 10:47:08,372][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [327] and action [], resetting
+[2014-08-11 10:47:13,376][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [328] and action [], resetting
+[2014-08-11 10:47:18,380][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [329] and action [], resetting
+[2014-08-11 10:47:23,384][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [330] and action [], resetting
+[2014-08-11 10:47:28,387][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [331] and action [], resetting
+[2014-08-11 10:47:33,392][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [332] and action [], resetting
+[2014-08-11 10:47:38,396][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [333] and action [], resetting
+[2014-08-11 10:47:43,400][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [334] and action [], resetting
+[2014-08-11 10:47:48,405][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [335] and action [], resetting
+[2014-08-11 10:47:53,409][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [336] and action [], resetting
+[2014-08-11 10:47:54,520][INFO ][cluster.metadata         ] [Black Tarantula] [eumetsat-catalogue] creating index, cause [auto(index api)], shards [5]/[1], mappings []
+[2014-08-11 10:47:55,092][INFO ][cluster.metadata         ] [Black Tarantula] [eumetsat-catalogue] update_mapping [product] (dynamic)
+[2014-08-11 10:47:55,197][INFO ][cluster.metadata         ] [Black Tarantula] [eumetsat-catalogue] update_mapping [product] (dynamic)
+[2014-08-11 10:47:58,413][WARN ][transport.netty          ] [Black Tarantula] Message not fully read (request) for [337] and action [], resetting
