@@ -504,3 +504,125 @@ Caused by: org.elasticsearch.common.jackson.core.JsonParseException: Unexpected 
 	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:648)
 	... 9 more
 [2014-08-11 10:54:25,729][DEBUG][action.search.type       ] [Black Tarantula] All shards failed for phase: [query]
+[2014-08-11 13:55:04,407][DEBUG][action.search.type       ] [Black Tarantula] [eumetsat-catalogue][3], node[OjtHdsHDRfOsYivKsLNxQg], [P], s[STARTED]: Failed to execute [org.elasticsearch.action.search.SearchRequest@11a75c4] lastShard [true]
+org.elasticsearch.search.SearchParseException: [eumetsat-catalogue][3]: query[identificationInfo.title:iasi^10.0 identificationInfo.abstract:iasi],from[0],size[10]: Parse Failure [Failed to parse source [{ "from" : 0, "size" : 10,"query" : { "simple_query_string" : { "fields" : ["identificationInfo.title^10", "identificationInfo.abstract"], "query" : "iasi" } },"highlight" : { "pre_tags" : ["<em><strong>"], "post_tags" : ["</strong></em>"],                   "fields" : { "identificationInfo.title": {"fragment_size" : 300, "number_of_fragments" : 1},                                  "identificationInfo.abstract": {"fragment_size" : 5000, "number_of_fragments" : 1} } } ,  "facets" :   { "satellites": { "terms" : { "field" : "hierarchyNames.satellite" } },                   "instruments": { "terms" : { "field" : "hierarchyNames.instrument" } },                   "categories": { "terms" : { "field" : "hierarchyNames.category" } },                   "societalBenefitArea": { "terms" : { "field" : "hierarchyNames.societalBenefitArea" } },                   "distribution": { "terms" : { "field" : "hierarchyNames.distribution" } },                 } }]]
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:664)
+	at org.elasticsearch.search.SearchService.createContext(SearchService.java:515)
+	at org.elasticsearch.search.SearchService.createAndPutContext(SearchService.java:487)
+	at org.elasticsearch.search.SearchService.executeQueryPhase(SearchService.java:256)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$5.call(SearchServiceTransportAction.java:206)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$5.call(SearchServiceTransportAction.java:203)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$23.run(SearchServiceTransportAction.java:517)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: org.elasticsearch.common.jackson.core.JsonParseException: Unexpected character ('}' (code 125)): was expecting either valid name character (for unquoted name) or double-quote (for quoted) to start field name
+ at [Source: [B@c5e85e; line: 1, column: 955]
+	at org.elasticsearch.common.jackson.core.JsonParser._constructError(JsonParser.java:1419)
+	at org.elasticsearch.common.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:508)
+	at org.elasticsearch.common.jackson.core.base.ParserMinimalBase._reportUnexpectedChar(ParserMinimalBase.java:437)
+	at org.elasticsearch.common.jackson.core.json.UTF8StreamJsonParser._handleOddName(UTF8StreamJsonParser.java:1808)
+	at org.elasticsearch.common.jackson.core.json.UTF8StreamJsonParser._parseName(UTF8StreamJsonParser.java:1496)
+	at org.elasticsearch.common.jackson.core.json.UTF8StreamJsonParser.nextToken(UTF8StreamJsonParser.java:693)
+	at org.elasticsearch.common.xcontent.json.JsonXContentParser.nextToken(JsonXContentParser.java:50)
+	at org.elasticsearch.search.facet.FacetParseElement.parse(FacetParseElement.java:67)
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:648)
+	... 9 more
+[2014-08-11 13:55:04,407][DEBUG][action.search.type       ] [Black Tarantula] [eumetsat-catalogue][0], node[OjtHdsHDRfOsYivKsLNxQg], [P], s[STARTED]: Failed to execute [org.elasticsearch.action.search.SearchRequest@11a75c4]
+org.elasticsearch.search.SearchParseException: [eumetsat-catalogue][0]: query[identificationInfo.title:iasi^10.0 identificationInfo.abstract:iasi],from[0],size[10]: Parse Failure [Failed to parse source [{ "from" : 0, "size" : 10,"query" : { "simple_query_string" : { "fields" : ["identificationInfo.title^10", "identificationInfo.abstract"], "query" : "iasi" } },"highlight" : { "pre_tags" : ["<em><strong>"], "post_tags" : ["</strong></em>"],                   "fields" : { "identificationInfo.title": {"fragment_size" : 300, "number_of_fragments" : 1},                                  "identificationInfo.abstract": {"fragment_size" : 5000, "number_of_fragments" : 1} } } ,  "facets" :   { "satellites": { "terms" : { "field" : "hierarchyNames.satellite" } },                   "instruments": { "terms" : { "field" : "hierarchyNames.instrument" } },                   "categories": { "terms" : { "field" : "hierarchyNames.category" } },                   "societalBenefitArea": { "terms" : { "field" : "hierarchyNames.societalBenefitArea" } },                   "distribution": { "terms" : { "field" : "hierarchyNames.distribution" } },                 } }]]
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:664)
+	at org.elasticsearch.search.SearchService.createContext(SearchService.java:515)
+	at org.elasticsearch.search.SearchService.createAndPutContext(SearchService.java:487)
+	at org.elasticsearch.search.SearchService.executeQueryPhase(SearchService.java:256)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$5.call(SearchServiceTransportAction.java:206)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$5.call(SearchServiceTransportAction.java:203)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$23.run(SearchServiceTransportAction.java:517)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: org.elasticsearch.common.jackson.core.JsonParseException: Unexpected character ('}' (code 125)): was expecting either valid name character (for unquoted name) or double-quote (for quoted) to start field name
+ at [Source: [B@c5e85e; line: 1, column: 955]
+	at org.elasticsearch.common.jackson.core.JsonParser._constructError(JsonParser.java:1419)
+	at org.elasticsearch.common.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:508)
+	at org.elasticsearch.common.jackson.core.base.ParserMinimalBase._reportUnexpectedChar(ParserMinimalBase.java:437)
+	at org.elasticsearch.common.jackson.core.json.UTF8StreamJsonParser._handleOddName(UTF8StreamJsonParser.java:1808)
+	at org.elasticsearch.common.jackson.core.json.UTF8StreamJsonParser._parseName(UTF8StreamJsonParser.java:1496)
+	at org.elasticsearch.common.jackson.core.json.UTF8StreamJsonParser.nextToken(UTF8StreamJsonParser.java:693)
+	at org.elasticsearch.common.xcontent.json.JsonXContentParser.nextToken(JsonXContentParser.java:50)
+	at org.elasticsearch.search.facet.FacetParseElement.parse(FacetParseElement.java:67)
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:648)
+	... 9 more
+[2014-08-11 13:55:04,407][DEBUG][action.search.type       ] [Black Tarantula] [eumetsat-catalogue][1], node[OjtHdsHDRfOsYivKsLNxQg], [P], s[STARTED]: Failed to execute [org.elasticsearch.action.search.SearchRequest@11a75c4] lastShard [true]
+org.elasticsearch.search.SearchParseException: [eumetsat-catalogue][1]: query[identificationInfo.title:iasi^10.0 identificationInfo.abstract:iasi],from[0],size[10]: Parse Failure [Failed to parse source [{ "from" : 0, "size" : 10,"query" : { "simple_query_string" : { "fields" : ["identificationInfo.title^10", "identificationInfo.abstract"], "query" : "iasi" } },"highlight" : { "pre_tags" : ["<em><strong>"], "post_tags" : ["</strong></em>"],                   "fields" : { "identificationInfo.title": {"fragment_size" : 300, "number_of_fragments" : 1},                                  "identificationInfo.abstract": {"fragment_size" : 5000, "number_of_fragments" : 1} } } ,  "facets" :   { "satellites": { "terms" : { "field" : "hierarchyNames.satellite" } },                   "instruments": { "terms" : { "field" : "hierarchyNames.instrument" } },                   "categories": { "terms" : { "field" : "hierarchyNames.category" } },                   "societalBenefitArea": { "terms" : { "field" : "hierarchyNames.societalBenefitArea" } },                   "distribution": { "terms" : { "field" : "hierarchyNames.distribution" } },                 } }]]
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:664)
+	at org.elasticsearch.search.SearchService.createContext(SearchService.java:515)
+	at org.elasticsearch.search.SearchService.createAndPutContext(SearchService.java:487)
+	at org.elasticsearch.search.SearchService.executeQueryPhase(SearchService.java:256)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$5.call(SearchServiceTransportAction.java:206)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$5.call(SearchServiceTransportAction.java:203)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$23.run(SearchServiceTransportAction.java:517)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: org.elasticsearch.common.jackson.core.JsonParseException: Unexpected character ('}' (code 125)): was expecting either valid name character (for unquoted name) or double-quote (for quoted) to start field name
+ at [Source: [B@c5e85e; line: 1, column: 955]
+	at org.elasticsearch.common.jackson.core.JsonParser._constructError(JsonParser.java:1419)
+	at org.elasticsearch.common.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:508)
+	at org.elasticsearch.common.jackson.core.base.ParserMinimalBase._reportUnexpectedChar(ParserMinimalBase.java:437)
+	at org.elasticsearch.common.jackson.core.json.UTF8StreamJsonParser._handleOddName(UTF8StreamJsonParser.java:1808)
+	at org.elasticsearch.common.jackson.core.json.UTF8StreamJsonParser._parseName(UTF8StreamJsonParser.java:1496)
+	at org.elasticsearch.common.jackson.core.json.UTF8StreamJsonParser.nextToken(UTF8StreamJsonParser.java:693)
+	at org.elasticsearch.common.xcontent.json.JsonXContentParser.nextToken(JsonXContentParser.java:50)
+	at org.elasticsearch.search.facet.FacetParseElement.parse(FacetParseElement.java:67)
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:648)
+	... 9 more
+[2014-08-11 13:55:04,407][DEBUG][action.search.type       ] [Black Tarantula] [eumetsat-catalogue][2], node[OjtHdsHDRfOsYivKsLNxQg], [P], s[STARTED]: Failed to execute [org.elasticsearch.action.search.SearchRequest@11a75c4] lastShard [true]
+org.elasticsearch.search.SearchParseException: [eumetsat-catalogue][2]: query[identificationInfo.title:iasi^10.0 identificationInfo.abstract:iasi],from[0],size[10]: Parse Failure [Failed to parse source [{ "from" : 0, "size" : 10,"query" : { "simple_query_string" : { "fields" : ["identificationInfo.title^10", "identificationInfo.abstract"], "query" : "iasi" } },"highlight" : { "pre_tags" : ["<em><strong>"], "post_tags" : ["</strong></em>"],                   "fields" : { "identificationInfo.title": {"fragment_size" : 300, "number_of_fragments" : 1},                                  "identificationInfo.abstract": {"fragment_size" : 5000, "number_of_fragments" : 1} } } ,  "facets" :   { "satellites": { "terms" : { "field" : "hierarchyNames.satellite" } },                   "instruments": { "terms" : { "field" : "hierarchyNames.instrument" } },                   "categories": { "terms" : { "field" : "hierarchyNames.category" } },                   "societalBenefitArea": { "terms" : { "field" : "hierarchyNames.societalBenefitArea" } },                   "distribution": { "terms" : { "field" : "hierarchyNames.distribution" } },                 } }]]
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:664)
+	at org.elasticsearch.search.SearchService.createContext(SearchService.java:515)
+	at org.elasticsearch.search.SearchService.createAndPutContext(SearchService.java:487)
+	at org.elasticsearch.search.SearchService.executeQueryPhase(SearchService.java:256)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$5.call(SearchServiceTransportAction.java:206)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$5.call(SearchServiceTransportAction.java:203)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$23.run(SearchServiceTransportAction.java:517)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: org.elasticsearch.common.jackson.core.JsonParseException: Unexpected character ('}' (code 125)): was expecting either valid name character (for unquoted name) or double-quote (for quoted) to start field name
+ at [Source: [B@c5e85e; line: 1, column: 955]
+	at org.elasticsearch.common.jackson.core.JsonParser._constructError(JsonParser.java:1419)
+	at org.elasticsearch.common.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:508)
+	at org.elasticsearch.common.jackson.core.base.ParserMinimalBase._reportUnexpectedChar(ParserMinimalBase.java:437)
+	at org.elasticsearch.common.jackson.core.json.UTF8StreamJsonParser._handleOddName(UTF8StreamJsonParser.java:1808)
+	at org.elasticsearch.common.jackson.core.json.UTF8StreamJsonParser._parseName(UTF8StreamJsonParser.java:1496)
+	at org.elasticsearch.common.jackson.core.json.UTF8StreamJsonParser.nextToken(UTF8StreamJsonParser.java:693)
+	at org.elasticsearch.common.xcontent.json.JsonXContentParser.nextToken(JsonXContentParser.java:50)
+	at org.elasticsearch.search.facet.FacetParseElement.parse(FacetParseElement.java:67)
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:648)
+	... 9 more
+[2014-08-11 13:55:04,407][DEBUG][action.search.type       ] [Black Tarantula] [eumetsat-catalogue][4], node[OjtHdsHDRfOsYivKsLNxQg], [P], s[STARTED]: Failed to execute [org.elasticsearch.action.search.SearchRequest@11a75c4] lastShard [true]
+org.elasticsearch.search.SearchParseException: [eumetsat-catalogue][4]: query[identificationInfo.title:iasi^10.0 identificationInfo.abstract:iasi],from[0],size[10]: Parse Failure [Failed to parse source [{ "from" : 0, "size" : 10,"query" : { "simple_query_string" : { "fields" : ["identificationInfo.title^10", "identificationInfo.abstract"], "query" : "iasi" } },"highlight" : { "pre_tags" : ["<em><strong>"], "post_tags" : ["</strong></em>"],                   "fields" : { "identificationInfo.title": {"fragment_size" : 300, "number_of_fragments" : 1},                                  "identificationInfo.abstract": {"fragment_size" : 5000, "number_of_fragments" : 1} } } ,  "facets" :   { "satellites": { "terms" : { "field" : "hierarchyNames.satellite" } },                   "instruments": { "terms" : { "field" : "hierarchyNames.instrument" } },                   "categories": { "terms" : { "field" : "hierarchyNames.category" } },                   "societalBenefitArea": { "terms" : { "field" : "hierarchyNames.societalBenefitArea" } },                   "distribution": { "terms" : { "field" : "hierarchyNames.distribution" } },                 } }]]
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:664)
+	at org.elasticsearch.search.SearchService.createContext(SearchService.java:515)
+	at org.elasticsearch.search.SearchService.createAndPutContext(SearchService.java:487)
+	at org.elasticsearch.search.SearchService.executeQueryPhase(SearchService.java:256)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$5.call(SearchServiceTransportAction.java:206)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$5.call(SearchServiceTransportAction.java:203)
+	at org.elasticsearch.search.action.SearchServiceTransportAction$23.run(SearchServiceTransportAction.java:517)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: org.elasticsearch.common.jackson.core.JsonParseException: Unexpected character ('}' (code 125)): was expecting either valid name character (for unquoted name) or double-quote (for quoted) to start field name
+ at [Source: [B@c5e85e; line: 1, column: 955]
+	at org.elasticsearch.common.jackson.core.JsonParser._constructError(JsonParser.java:1419)
+	at org.elasticsearch.common.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:508)
+	at org.elasticsearch.common.jackson.core.base.ParserMinimalBase._reportUnexpectedChar(ParserMinimalBase.java:437)
+	at org.elasticsearch.common.jackson.core.json.UTF8StreamJsonParser._handleOddName(UTF8StreamJsonParser.java:1808)
+	at org.elasticsearch.common.jackson.core.json.UTF8StreamJsonParser._parseName(UTF8StreamJsonParser.java:1496)
+	at org.elasticsearch.common.jackson.core.json.UTF8StreamJsonParser.nextToken(UTF8StreamJsonParser.java:693)
+	at org.elasticsearch.common.xcontent.json.JsonXContentParser.nextToken(JsonXContentParser.java:50)
+	at org.elasticsearch.search.facet.FacetParseElement.parse(FacetParseElement.java:67)
+	at org.elasticsearch.search.SearchService.parseSource(SearchService.java:648)
+	... 9 more
+[2014-08-11 13:55:04,413][DEBUG][action.search.type       ] [Black Tarantula] All shards failed for phase: [query]
+[2014-08-11 15:37:39,289][INFO ][cluster.metadata         ] [Black Tarantula] [eumetsat-catalogue] update_mapping [product] (dynamic)

@@ -21,6 +21,23 @@
              !decrease navbar size
              .navbar-nav > li > a {padding-top:5px !important; padding-bottom:5px !important;}
              .navbar {min-height:32px !important}
+             
+             .badge {
+  				padding: 1px 9px 2px;
+  				font-size: 09.025px;
+  				font-weight: bold;
+  				white-space: nowrap;
+  				color: #ffffff;
+  				background-color: #999999;
+  				-webkit-border-radius: 9px;
+  				-moz-border-radius: 9px;
+  				border-radius: 9px;
+			  }
+			  .badge:hover {
+  				color: #ffffff;
+  				text-decoration: none;
+  				cursor: pointer;
+			  }
           </style>
 </head>
 <body>
@@ -28,7 +45,7 @@
       <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       </div>
 
-  <div class="row">
+  <div class="row"> <!-- row 1: top of the page with search elems -->
 	  <div class="col-md-2">
 	  </div>
 	  <div class="col-md-8">
@@ -49,8 +66,9 @@
 	  </div>
   </div> <!-- row 1 -->
   
-  <div class="row">
+  <div class="row"> <!-- row 2 contains hits and so on -->
       <div class="col-md-1">
+        
 	  </div>
 	  <div class="col-md-10">
 	     </br>
@@ -59,10 +77,20 @@
 	     </p>
 	  </div>
   </div>
-  <div class="row">
-	  <div class="col-md-1">
+  <div class="row"> <!-- row 3 with the results -->
+	  <div class="col-md-2">
+	        <ul id="sidebar" class="nav nav-stacked affix">
+            <#list facets?keys as facet>
+               <a href="#sec0">${facet}<span class="badge pull-right">${facets[facet].total}</span></a>
+               <ul class="nav">
+	               <#list facets[facet].terms as aterm>
+	                   <li class=""><small><a href="#">- ${aterm.term}<span class="badge pull-right">${aterm.count}</span></small></a></li>
+	               </#list>
+               </ul>
+            </#list>
+           </ul>
 	  </div>
-	  <div class="col-md-10">
+	  <div class="col-md-8">
 	     <#list hits as hit>
 	         <h5><a href="/product_description?id=${hit.id}">${hit.title}</a></h5>
 	         <p class="text-justify">
@@ -72,9 +100,8 @@
 	         <hr>
 	     </#list>
 	  </div>
-	  <div class="col-md-1">
-	  </div>
- </div> <!-- row 2 -->
+ </div> <!-- row 3 -->
+ <div class="row"> <!-- row 4: pagination -->
  <div class="text-center">
 	<ul class="pagination">
 	  <#assign curr=pagination.current_page>

@@ -86,6 +86,23 @@ public class ISO2JSON
 	  {
 		  if (elems[1].equalsIgnoreCase("par") && elems.length > 2)
 		  {
+			   if (elems[2].equalsIgnoreCase("sea_surface_temperature"))
+			   {
+				   elems[2] = "sst";
+			   }
+			   else if (elems[2].equalsIgnoreCase("level_0_data"))
+			   {
+				   elems[2] = "level0 ";
+			   }
+			   else if (elems[2].equalsIgnoreCase("level_1_data"))
+			   {
+				   elems[2] = "level1";
+			   }
+			   else if (elems[2].equalsIgnoreCase("level_2_data"))
+			   {
+				   elems[2] = "level2";
+			   }
+			   
 			   if (!jsonObject.containsKey("category") )
 			   {
 				   JSONArray array = new JSONArray();
@@ -104,16 +121,19 @@ public class ISO2JSON
 	  {
 		  if (elems.length == 2)
 		  {
-			  if (!jsonObject.containsKey("distribution") )
+			  if (!elems[1].equalsIgnoreCase("Eumetcast"))
 			  {
-				   JSONArray array = new JSONArray();
-				   array.add(elems[1]);
-				   jsonObject.put("distribution", array);
-			   }
-			   else
-			   {
-				   ((JSONArray) (jsonObject.get("distribution"))).add(elems[1]); 
-			   }
+				  if (!jsonObject.containsKey("distribution") )
+				  {
+					   JSONArray array = new JSONArray();
+					   array.add(elems[1]);
+					   jsonObject.put("distribution", array);
+				   }
+				   else
+				   {
+					   ((JSONArray) (jsonObject.get("distribution"))).add(elems[1]); 
+				   }
+			  }
 			  
 		  }
 		  else

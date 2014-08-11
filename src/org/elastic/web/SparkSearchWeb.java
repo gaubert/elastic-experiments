@@ -137,14 +137,27 @@ public class SparkSearchWeb {
 		// template input
 		Map<String, Object> data = new HashMap<String, Object>();
 
-		String body = "{ \"from\" : "+ from + ", \"size\" : " + size + "," + 
-		              "\"query\" : { \"simple_query_string\" : { \"fields\" : [\"identificationInfo.title^10\", \"identificationInfo.abstract\"], \"query\" : \""
-				+ searchTerms + "\" } }," + 
-		              "  \"highlight\" : { \"pre_tags\" : [\"<em><strong>\"], \"post_tags\" : [\"</strong></em>\"], " + 
-				         "\"fields\" : { \"identificationInfo.title\": {\"fragment_size\" : 300, \"number_of_fragments\" : 1}, "+ 
-				                                          "\"identificationInfo.abstract\": {\"fragment_size\" : 5000, \"number_of_fragments\" : 1} } } , " +
-				      " \"facets\" : {\"tags\": { \"terms\" : { \"field\" : \"hierarchyNames\" } } } }";
-		
+		String body = "{ "+
+		              // pagination information
+		              "\"from\" : "+ from + ", \"size\" : " + size + "," + 
+		              // request highlighted info
+				      "\"highlight\" : { \"pre_tags\" : [\"<em><strong>\"], \"post_tags\" : [\"</strong></em>\"], " + 
+			          "                  \"fields\" : { \"identificationInfo.title\": {\"fragment_size\" : 300, \"number_of_fragments\" : 1}, "+ 
+			          "                                 \"identificationInfo.abstract\": {\"fragment_size\" : 5000, \"number_of_fragments\" : 1} } } , " +
+			          // request facets to refine search
+			          " \"facets\" :   { \"satellites\": { \"terms\" : { \"field\" : \"hierarchyNames.satellite\", \"size\":5 } }, " +
+					  "                  \"instruments\": { \"terms\" : { \"field\" : \"hierarchyNames.instrument\", \"size\":5  } }, "  +
+					  "                  \"categories\": { \"terms\" : { \"field\" : \"hierarchyNames.category\", \"size\":5 } }, "  +
+					  "                  \"societal Benefit Area\": { \"terms\" : { \"field\" : \"hierarchyNames.societalBenefitArea\", \"size\":5 } }, "  +
+					  "                  \"distribution\": { \"terms\" : { \"field\" : \"hierarchyNames.distribution\", \"size\":5 } } "  +
+					  "                }," +
+				      // add query info
+		              "\"query\" : { \"simple_query_string\" : { \"fields\" : [\"identificationInfo.title^10\", \"identificationInfo.abstract\"], " + 
+				                                                 "\"query\" : \"" + searchTerms + "\" } }" + 
+		             
+					 
+					  " }";
+					     
 		System.out.println("elastic-search request: " + body);
 		
 		//measure elapsed time
@@ -208,6 +221,8 @@ public class SparkSearchWeb {
 		stopwatch.stop(); // optional
 
 		data.put("elapsed", (double) (stopwatch.elapsed(TimeUnit.MILLISECONDS))/ (double) 1000);
+	
+		data.put("facets", jsObj.get("facets"));
 		
 		return data;
 
@@ -312,10 +327,12 @@ public class SparkSearchWeb {
 					
 					data = searchQueryElasticSearch(searchTerms, from, size);
 
-					// Console output
-					Writer out = new OutputStreamWriter(System.out);
-					template.process(data, out);
-					out.flush();
+					// output html to Console
+					//Writer out = new OutputStreamWriter(System.out);
+					//template.process(data, out);
+					//out.flush();
+					
+					Object dummy = ((Map<?,?>) (((Map<?,?>) (data.get("facets"))).get("instruments"))).get("total");
 
 					// get in a String
 					StringWriter results = new StringWriter();
