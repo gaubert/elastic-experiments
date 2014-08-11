@@ -81,10 +81,10 @@
 	  <div class="col-md-2">
 	        <ul id="sidebar" class="nav nav-stacked affix">
             <#list facets?keys as facet>
-               <a href="#sec0">${facet}<span class="badge pull-right">${facets[facet].total}</span></a>
+               <a href="#sec0">${facet?cap_first}<span class="badge pull-right">${facets[facet].total}</span></a>
                <ul class="nav">
 	               <#list facets[facet].terms as aterm>
-	                   <li class=""><small><a href="#">- ${aterm.term}<span class="badge pull-right">${aterm.count}</span></small></a></li>
+	                   <li class=""><small><a href="#"> --- ${aterm.term?lower_case}<span class="badge pull-right">${aterm.count}</span></small></a></li>
 	               </#list>
                </ul>
             </#list>
