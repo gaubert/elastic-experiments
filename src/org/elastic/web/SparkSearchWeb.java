@@ -122,7 +122,7 @@ public class SparkSearchWeb {
 	 * @return
 	 * @throws Exception
 	 */
-	private static Map<?,?> searchQueryElasticSearch(String searchTerms, int from, int size)
+	private static Map<?,?> searchQueryElasticSearch(String searchTerms, String filterString, int from, int size)
 			throws Exception {
 		
 		URL url = new URL("http://localhost:9200/_search");
@@ -136,6 +136,34 @@ public class SparkSearchWeb {
 
 		// template input
 		Map<String, Object> data = new HashMap<String, Object>();
+		
+		// create construct for fitlerTerms
+		//String[] filterTermsArr = filterString.split(",");
+		
+		Map<String, String> filterTermsMap = new HashMap<String, String>();
+		
+		String filterConstruct = "";
+		if (filterTermsMap.size() > 0)
+		{
+			int i = 0;
+			String terms = "";
+			for (String key : filterTermsMap.keySet()) 
+			{
+			   if ( i == 0)	
+			   {
+				   terms += "{ \"term\" : {" + key + ":" + filterTermsMap.get(key) + "}}"; 
+			   }
+			   else
+			   {
+				   terms += ",{ \"term\" : {" + key + ":" + filterTermsMap.get(key) + "}}";  
+			   }
+			}	
+			
+			filterConstruct = ",\"filter\": { " +
+                                    "\"bool\" : { " +
+                                        "\"must\" : [" + terms + "]" +
+                                       "}}";
+		}		
 
 		String body = "{ "+
 		              // pagination information
@@ -152,12 +180,13 @@ public class SparkSearchWeb {
 					  "                  \"distribution\": { \"terms\" : { \"field\" : \"hierarchyNames.distribution\", \"size\":5 } } "  +
 					  "                }," +
 				      // add query info
-		              "\"query\" : { \"simple_query_string\" : { \"fields\" : [\"identificationInfo.title^10\", \"identificationInfo.abstract\"], " + 
-				                                                 "\"query\" : \"" + searchTerms + "\" } }" + 
-		             
-					 
-					  " }";
-					     
+		              "\"query\" : { \"filtered\": { \"query\": " +
+				      "              { \"simple_query_string\" : { \"fields\" : [\"identificationInfo.title^10\", \"identificationInfo.abstract\"], " + 
+				                                                  "\"query\" : \"" + searchTerms + "\" } "
+				                  + "}" + 
+		                           ",\"filter\": {" + filterConstruct + "}" +					 
+					  " }}}";
+		     
 		System.out.println("elastic-search request: " + body);
 		
 		//measure elapsed time
@@ -295,6 +324,7 @@ public class SparkSearchWeb {
 				{
 					System.out.println("Request url " + request.raw().getRequestURL().toString());
 					String searchTerms = request.queryParams("search-terms");
+					String filterTerms = request.queryParams("filter-terms");
 					
 					int from = -1;
 					int size = -1;
@@ -317,6 +347,7 @@ public class SparkSearchWeb {
 						
 					// System.out.println(request.queryString());
 					System.out.println("SearchTerms " + searchTerms);
+					System.out.println("FilterTerms " + filterTerms);
 					System.out.println("From " + from);
 					System.out.println("Size " + size);
 					
@@ -325,7 +356,79 @@ public class SparkSearchWeb {
 					// Load template from source foldqueryRestElasticSearcher
 					Template template = cfg.getTemplate("etc/web/search_results.ftl");
 					
-					data = searchQueryElasticSearch(searchTerms, from, size);
+					data = searchQueryElasticSearch(searchTerms, filterTerms, from, size);
+
+					// output html to Console
+					//Writer out = new OutputStreamWriter(System.out);
+					//template.process(data, out);
+					//out.flush();
+					
+					// get in a String
+					StringWriter results = new StringWriter();
+					template.process(data, results);
+					results.flush();
+					
+					return results.toString();
+
+				} catch (Exception e) {
+
+					StringWriter errors = new StringWriter();
+					e.printStackTrace(new PrintWriter(errors));
+					String str = errors.toString();
+					// print in out
+					System.out.println(str);
+					halt(401, "Error while returning responses. error = " + str);
+
+				}
+
+				return null;
+			}
+		});
+		
+		
+		/**
+		 * show search results and paginate them
+		 */
+		Spark.get(new Route("/search/filtered_results") {
+			@Override
+			public Object handle(Request request, Response response) {
+				try 
+				{
+					System.out.println("Request url " + request.raw().getRequestURL().toString());
+					String searchTerms   = request.queryParams("search-terms");
+					String filterTerms = request.queryParams("filter-terms");
+					
+					int from = -1;
+					int size = -1;
+					
+					try 
+					{	
+						from = Integer.parseInt(request.queryParams("from"));
+					} catch (Exception e) {
+						System.out.println("from parameter = " + from + ". It cannot be converted to int. default to -1.");
+						e.printStackTrace(System.out);
+					}
+					
+					try 
+					{
+						size        = Integer.parseInt(request.queryParams("size"));
+				    } catch (Exception e) {
+				       System.out.println("size parameter = " + size + ". It cannot be converted to int. default to -1.");
+					   e.printStackTrace(System.out);
+				    }		
+						
+					// System.out.println(request.queryString());
+					System.out.println("SearchTerms "   + searchTerms);
+					System.out.println("FilteredTerms " + filterTerms);
+					System.out.println("From " + from);
+					System.out.println("Size " + size);
+					
+					//template parameter map
+					Map<?,?> data = null;
+					// Load template from source foldqueryRestElasticSearcher
+					Template template = cfg.getTemplate("etc/web/search_results.ftl");
+					
+					data = searchQueryElasticSearch(searchTerms, filterTerms, from, size);
 
 					// output html to Console
 					//Writer out = new OutputStreamWriter(System.out);
@@ -355,6 +458,10 @@ public class SparkSearchWeb {
 				return null;
 			}
 		});
+		
+		
+		
+		
 		
 		/**
 		 * add product page detail

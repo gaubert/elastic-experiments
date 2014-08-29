@@ -41,9 +41,12 @@
           </style>
 </head>
 <body>
-      <!-- Fixed navbar -->
-      <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      </div>
+
+<div class="container-fluid">
+  
+  <!-- Fixed navbar -->
+  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  </div>
 
   <div class="row"> <!-- row 1: top of the page with search elems -->
 	  <div class="col-md-2">
@@ -54,6 +57,7 @@
 	      <!--<div class="form-group">-->
 	      <div class="input-group">
 	         <input name="search-terms" type="text" value="${search_terms}" class="form-control">
+	         <input type="hidden" name="filter-terms" value=""/> 
 	         <input type="hidden" name="from" value="0" />
 	         <input type="hidden" name="size" value="10" />
 	           <span class="input-group-btn">
@@ -67,7 +71,7 @@
   </div> <!-- row 1 -->
   
   <div class="row"> <!-- row 2 contains hits and so on -->
-      <div class="col-md-1">
+      <div class="col-md-2">
         
 	  </div>
 	  <div class="col-md-10">
@@ -80,17 +84,18 @@
   <div class="row"> <!-- row 3 with the results -->
 	  <div class="col-md-2">
 	        <ul id="sidebar" class="nav nav-stacked affix">
-            <#list facets?keys as facet>
-               <a href="#sec0">${facet?cap_first}<span class="badge pull-right">${facets[facet].total}</span></a>
-               <ul class="nav">
-	               <#list facets[facet].terms as aterm>
-	                   <li class=""><small><a href="#"> --- ${aterm.term?lower_case}<span class="badge pull-right">${aterm.count}</span></small></a></li>
-	               </#list>
-               </ul>
-            </#list>
+	            <#list facets?keys as facet>
+	               <!--<a href="#sec0">${facet?cap_first}<span class="badge pull-right">${facets[facet].total}</span></a>-->
+	               <p>${facet?cap_first}</p>
+	               <ul class="nav">
+		               <#list facets[facet].terms as aterm>
+		                   <li class=""><small><a href="#"> --- ${aterm.term?lower_case}<span class="badge pull-right">${aterm.count}</span></small></a></li>
+		               </#list>
+	               </ul>
+	            </#list>
            </ul>
 	  </div>
-	  <div class="col-md-8">
+	  <div class="col-md-10">
 	     <#list hits as hit>
 	         <h5><a href="/product_description?id=${hit.id}">${hit.title}</a></h5>
 	         <p class="text-justify">
@@ -124,5 +129,8 @@
 	  </#if>
 	</ul>
  </div>
+ 
+ <div class="container-fluid">
+ 
 </body>
 </html>

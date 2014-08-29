@@ -39,25 +39,23 @@ curl -XGET 'http://localhost:9200/_search?pretty=true' -d '
                                  }
                    }
                 }, 
-  "query" : {
-              "filtered" :
-              {
-					 "query" :
-					 {
-						 "simple_query_string" :
-						  {
-							 "fields" : ["identificationInfo.title^10", "identificationInfo.abstract"],
-							 "query" : "iasi"
-						  },
-						 "filter" :
-						 {
-							 "term" :
-							 {
-								 "hierarchyNames.category" : "temperature"
-							 }
-						 }
-					 }
-              }
-            }
+   "query": {
+               "filtered": 
+               { 
+				   "query": {
+							  "simple_query_string": { "fields" : ["identificationInfo.title^10", "identificationInfo.abstract"],
+                                                       "query" : "iasi" 
+                                                     }
+				   }
+				   ,"filter": {
+                                    "bool" : {
+                                        "must" : [
+                                             { "term" : {"hierarchyNames.instrument" : "IASI"}} 
+                                             ,{ "term" : {"hierarchyNames.category" : "Radiation"}} 
+                                        ]
+									   }
+							  }
+			 }
+  }
 }
 '

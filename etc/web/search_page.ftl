@@ -44,6 +44,7 @@
 	     <form class="form-horizontal" role="form" method='GET' action="/search/results">
 	        <div class="input-group">
 	           <input name="search-terms" type="text" class="form-control">
+	           <input type="hidden" name="filter-terms" value=""/> 
 	           <input type="hidden" name="from" value="0" />
 	           <input type="hidden" name="size" value="${elem_per_page}" />
 	           <span class="input-group-btn">
