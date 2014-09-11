@@ -1,4 +1,5 @@
 #!/bin/bash
+# facets with two modes. filtered facted to restrict search and global to show all elements for each category in catalogue 
 curl -XGET 'http://localhost:9200/_search?pretty=true' -d '{ "from" : 0, "size" : 10, 
   "highlight" : { 
                   "fields" : 

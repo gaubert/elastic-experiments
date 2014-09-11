@@ -1,4 +1,5 @@
 #!/bin/bash
+#facetted search with IASI, goes in pair with filtered_from_facet_search_query.sh
 curl -XGET 'http://localhost:9200/_search?pretty=true' -d '{ "from" : 0, "size" : 10, 
   "highlight" : { 
                   "fields" : 
