@@ -38,18 +38,36 @@
   				text-decoration: none;
   				cursor: pointer;
 			  }
-          </style>
-          
-          <script src="../js/jquery-1.11.0.js"></script>
+			  
+			 !add css for collapsible menus
+			 /* make sidebar nav vertical */ 
+			@media (min-width: 768px) {
+			  .sidebar-nav .navbar .navbar-collapse {
+			    padding: 0;
+			    max-height: none;
+			  }
+			  .sidebar-nav .navbar ul {
+			    float: none;
+			  }
+			  .sidebar-nav .navbar ul:not {
+			    display: block;
+			  }
+			  .sidebar-nav .navbar li {
+			    float: none;
+			    display: block;
+			  }
+			  .sidebar-nav .navbar li a {
+			    padding-top: 12px;
+			    padding-bottom: 12px;
+			  }
+			}
+      </style>
 </head>
 <body>
-
-<div class="container-fluid">
+      <!-- Fixed navbar -->
+      <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      </div>
   
-  <!-- Fixed navbar -->
-  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-  </div>
-
   <div class="row"> <!-- row 1: top of the page with search elems -->
 	  <div class="col-md-2">
 	  </div>
@@ -59,7 +77,6 @@
 	      <!--<div class="form-group">-->
 	      <div class="input-group">
 	         <input name="search-terms" type="text" value="${search_terms}" class="form-control">
-	         <input type="hidden" name="filter-terms" value=""/> 
 	         <input type="hidden" name="from" value="0" />
 	         <input type="hidden" name="size" value="10" />
 	           <span class="input-group-btn">
@@ -72,8 +89,9 @@
 	  </div>
   </div> <!-- row 1 -->
   
+     
   <div class="row"> <!-- row 2 contains hits and so on -->
-      <div class="col-md-2">
+      <div class="col-md-1">
         
 	  </div>
 	  <div class="col-md-10">
@@ -83,21 +101,69 @@
 	     </p>
 	  </div>
   </div>
+  
+  <div class=row">
+      <div class="col-sm-2">
+	    <div class="sidebar-nav">
+	      <div class="navbar navbar-default" role="navigation">
+	        <div class="navbar-header">
+	          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-navbar-collapse">
+	            <span class="sr-only">Toggle navigation</span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	          </button>
+	          <span class="visible-xs navbar-brand">Sidebar menu</span>
+	        </div>
+	        <div class="navbar-collapse collapse sidebar-navbar-collapse">
+	          <ul class="nav navbar-nav">
+	            <li class="active"><a href="#">Menu Item 1</a></li>
+	            <li><a href="#">Menu Item 2</a></li>
+	            <li class="dropdown">
+	              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+	              <ul class="dropdown-menu">
+	                <li><a href="#">Action</a></li>
+	                <li><a href="#">Another action</a></li>
+	                <li><a href="#">Something else here</a></li>
+	                <li class="divider"></li>
+	                <li class="dropdown-header">Nav header</li>
+	                <li><a href="#">Separated link</a></li>
+	                <li><a href="#">One more separated link</a></li>
+	              </ul>
+	            </li>
+	            <li><a href="#">Menu Item 4</a></li>
+	            <li><a href="#">Reviews <span class="badge">1,118</span></a></li>
+	          </ul>
+	        </div><!--/.nav-collapse -->
+	      </div>
+	    </div>
+      </div>
+      <div class="col-sm-10">
+	     <#list hits as hit>
+	         <h5><a href="/product_description?id=${hit.id}">${hit.title}</a></h5>
+	         <p class="text-justify">
+	           ${hit.abstract} 
+	         </p>
+	         <p class="text-muted"><small>score: ${hit.score}</small></p>
+	         <hr>
+	     </#list>
+	  </div>
+  </div>
+  
   <div class="row"> <!-- row 3 with the results -->
 	  <div class="col-md-2">
 	        <ul id="sidebar" class="nav nav-stacked affix">
-	            <#list facets?keys as facet>
-	               <!--<a href="#sec0">${facet?cap_first}<span class="badge pull-right">${facets[facet].total}</span></a>-->
-	               <p>${facet?cap_first}</p>
-	               <ul class="nav">
-		               <#list facets[facet].terms as aterm>
-		                   <li class=""><small><a href="/search/results?search-terms=${search_terms}&from=0&size=10&filter-terms=${facet}:${aterm.term}"> --- ${aterm.term?lower_case}<span class="badge pull-right">${aterm.count}</span></small></a></li>
-		               </#list>
-	               </ul>
-	            </#list>
+            <#list facets?keys as facet>
+               <a href="#sec0">${facet?cap_first}<span class="badge pull-right">${facets[facet].total}</span></a>
+               <ul class="nav">
+	               <#list facets[facet].terms as aterm>
+	                   <li class=""><small><a href="#"> --- ${aterm.term?lower_case}<span class="badge pull-right">${aterm.count}</span></small></a></li>
+	               </#list>
+               </ul>
+            </#list>
            </ul>
 	  </div>
-	  <div class="col-md-10">
+	  <div class="col-md-8">
 	     <#list hits as hit>
 	         <h5><a href="/product_description?id=${hit.id}">${hit.title}</a></h5>
 	         <p class="text-justify">
@@ -131,8 +197,5 @@
 	  </#if>
 	</ul>
  </div>
- 
- <div class="container-fluid">
- 
 </body>
 </html>

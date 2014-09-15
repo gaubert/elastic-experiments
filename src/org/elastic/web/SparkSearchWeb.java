@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
@@ -21,12 +22,15 @@ import org.elastic.common.SimpleRestClient;
 import org.elastic.common.SimpleRestClient.WebResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.common.collect.ImmutableMap;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import com.google.common.base.Stopwatch;
+import com.google.common.collect.Multimap;
+import com.google.common.collect.HashMultimap;
 
 import spark.Request;
 import spark.Response;
@@ -113,7 +117,47 @@ public class SparkSearchWeb {
 		
 		return data;
 	}
+	
+	/**
+	 * Parse a filter string in the form of key1:val1,val2#key2:val3,val4#
+	 * @param filterString
+	 * @return
+	 * @throws Exception 
+	 */
+	private static Multimap<String, String> parseFiltersTerms(String filterString) throws Exception
+	{
+		Multimap<String, String> filterTermsMap = HashMultimap.create(); 
+		
+		//parse only when there is something to return
+		if (filterString.length() > 0)
+		{
+			// Do not use a regexpr for the moment but should do
+		
+			String[] elems = filterString.split("[\\+, ]");
+			
+			for (String elem : elems) 
+			{
+			    String [] dummy = elem.split(":");
+			    
+			    if (dummy.length < 2)
+			    	throw new Exception("Error filterTermsMap incorrectly formatted. map content = " + elem);
+			    
+			    filterTermsMap.put(dummy[0], dummy[1]);   
+			}
+		}
+		
+		return filterTermsMap;
+	}
 
+	
+	//Static immutable map to create a translation table between the facets and the name displayed on screen to users
+	static final ImmutableMap<String, String> FACETS2HIERACHYNAMES = ImmutableMap.of("satellites" , "hierarchyNames.satellite",
+			                                                                         "instruments", "hierarchyNames.instrument",
+			                                                                         "categories", "hierarchyNames.category",
+			                                                                         "societal Benefit Area", "hierarchyNames.societalBenefitArea",
+			                                                                         "distribution", "hierarchyNames.distribution"
+			                                                                         );
+	
 	/**
 	 * search using the Rest interface
 	 * @param searchTerms
@@ -140,30 +184,32 @@ public class SparkSearchWeb {
 		// create construct for fitlerTerms
 		//String[] filterTermsArr = filterString.split(",");
 		
-		Map<String, String> filterTermsMap = new HashMap<String, String>();
+		Multimap<String, String> filterTermsMap = parseFiltersTerms(filterString);
 		
 		String filterConstruct = "";
 		if (filterTermsMap.size() > 0)
 		{
 			int i = 0;
-			String terms = "";
+			String filterTerms = "";
 			for (String key : filterTermsMap.keySet()) 
 			{
-			   if ( i == 0)	
+			   for (String term : filterTermsMap.get(key)) 
 			   {
-				   terms += "{ \"term\" : {" + key + ":" + filterTermsMap.get(key) + "}}"; 
+				   if ( i == 0)	
+				   {
+					   filterTerms += "{ \"term\" : { \"" + FACETS2HIERACHYNAMES.get(key) + "\":\"" + term + "\"}}"; 
+				   }
+				   else
+				   {
+					   filterTerms += ",{ \"term\" : { \"" + FACETS2HIERACHYNAMES.get(key) + "\":\"" + term + "\"}}";
+				   }
+				   
+				   i++;
 			   }
-			   else
-			   {
-				   terms += ",{ \"term\" : {" + key + ":" + filterTermsMap.get(key) + "}}";  
-			   }
-			}	
+			}
 			
-			filterConstruct = ",\"filter\": { " +
-                                    "\"bool\" : { " +
-                                        "\"must\" : [" + terms + "]" +
-                                       "}}";
-		}		
+			filterConstruct = " \"bool\" : { \"must\" : [" + filterTerms + "] }";
+		}			
 
 		String body = "{ "+
 		              // pagination information
@@ -196,62 +242,67 @@ public class SparkSearchWeb {
 				body, debug);
 
 		System.out.println("response = " + response);
-
-		JSONParser parser = new JSONParser();
-
-		JSONObject jsObj = (JSONObject) parser.parse(response.body);
-
-		data.put("total_hits", ((Map<?, ?>) jsObj.get("hits")).get("total"));
 		
-		// compute the pagination information to create the pagination bar
-		Map<String, Object> pagination = computePaginationParams(((Long) (data.get("total_hits"))).intValue(), from);
-		data.put("pagination", pagination);
-		
-		data.put("search_terms" , searchTerms);
-		
-		@SuppressWarnings("unchecked")
-		List<Map<String, Object>> hits = (List<Map<String, Object>>) ((Map<?,?>) jsObj.get("hits")).get("hits");
-		
-		//to get the highlight
-		Map<?,?> highlight = null;
-		for  ( Map<String, Object> hit : hits) {
-			resHit = new HashMap<String, String>();
+		if (response.status == 200 )
+		{
+			JSONParser parser = new JSONParser();
 
-			resHit.put("id", (String) hit.get("_id"));
-			resHit.put("score", String.format("%.4g%n", ((Double) hit.get("_score"))));
+			JSONObject jsObj = (JSONObject) parser.parse(response.body);
 
-			// can have or not title or abstract
-			// strategy. If it doesn't have an abstract or a title match then take it from the _source
-			highlight= (Map<?, ?>) hit.get("highlight");
+			data.put("total_hits", ((Map<?, ?>) jsObj.get("hits")).get("total"));
+		
+			// compute the pagination information to create the pagination bar
+			Map<String, Object> pagination = computePaginationParams(((Long) (data.get("total_hits"))).intValue(), from);
+			data.put("pagination", pagination);
 			
-			if (highlight.containsKey("identificationInfo.title"))
-			{
-				resHit.put("title", (String) ((JSONArray) highlight.get("identificationInfo.title")).get(0) );
-			}
-			else
-			{
-				resHit.put("title", ((String) (((Map<?, ?>) (((Map<?, ?>) hit.get("_source")).get("identificationInfo"))).get("title"))) );
-			}
+			data.put("search_terms" , searchTerms);
 			
-			if (highlight.containsKey("identificationInfo.abstract"))
-			{
-				resHit.put("abstract", (String) ((JSONArray) highlight.get("identificationInfo.abstract")).get(0) );
-			}
-			else
-			{
-				resHit.put("abstract", ((String) (((Map<?, ?>) (((Map<?, ?>) hit.get("_source")).get("identificationInfo"))).get("abstract"))) );
-			}
+			@SuppressWarnings("unchecked")
+			List<Map<String, Object>> hits = (List<Map<String, Object>>) ((Map<?,?>) jsObj.get("hits")).get("hits");
 			
-			resHits.add(resHit);
-		}
-
-		data.put("hits", resHits);
-		
-		stopwatch.stop(); // optional
-
-		data.put("elapsed", (double) (stopwatch.elapsed(TimeUnit.MILLISECONDS))/ (double) 1000);
+			//to get the highlight
+			Map<?,?> highlight = null;
+			for  ( Map<String, Object> hit : hits) {
+				resHit = new HashMap<String, String>();
 	
-		data.put("facets", jsObj.get("facets"));
+				resHit.put("id", (String) hit.get("_id"));
+				resHit.put("score", String.format("%.4g%n", ((Double) hit.get("_score"))));
+	
+				// can have or not title or abstract
+				// strategy. If it doesn't have an abstract or a title match then take it from the _source
+				highlight= (Map<?, ?>) hit.get("highlight");
+				
+				if (highlight.containsKey("identificationInfo.title"))
+				{
+					resHit.put("title", (String) ((JSONArray) highlight.get("identificationInfo.title")).get(0) );
+				}
+				else
+				{
+					resHit.put("title", ((String) (((Map<?, ?>) (((Map<?, ?>) hit.get("_source")).get("identificationInfo"))).get("title"))) );
+				}
+				
+				if (highlight.containsKey("identificationInfo.abstract"))
+				{
+					resHit.put("abstract", (String) ((JSONArray) highlight.get("identificationInfo.abstract")).get(0) );
+				}
+				else
+				{
+					resHit.put("abstract", ((String) (((Map<?, ?>) (((Map<?, ?>) hit.get("_source")).get("identificationInfo"))).get("abstract"))) );
+				}
+				
+				resHits.add(resHit);
+			}
+	
+			data.put("hits", resHits);
+			
+			stopwatch.stop(); // optional
+	
+			data.put("elapsed", (double) (stopwatch.elapsed(TimeUnit.MILLISECONDS))/ (double) 1000);
+		
+			data.put("facets", jsObj.get("facets"));
+
+		}
+		
 		
 		return data;
 
