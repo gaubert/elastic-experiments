@@ -41,7 +41,10 @@
           </style>
           
           <script src="../js/jquery-1.11.0.js"></script>
-          <script> <!-- code to change url on facets dynamically -->
+          <script> 
+          
+          
+              <!-- code to change url on facets dynamically -->
               $(document).ready(function() {
   					$("a.facetref").click(function(event){		
 						var curr_url = $(location).attr('href');
@@ -57,6 +60,31 @@
                         location.href = curr_url;
 						
 					});
+					
+					$("a.pagiref").on('click', function(event){		
+						var curr_url = $(location).attr('href');
+						
+						// replace from with the new from
+						var from = $(this).attr("data-from");
+						
+						curr_url = curr_url.replace(/from=\d+/g, "from=" + from);
+							
+						event.preventDefault();
+                        location.href = curr_url;
+						
+					});
+					
+					/*$("a.pagiref").on('mouseover', function(event){	
+					    
+					    var curr_url = $(location).attr('href');
+						
+						// replace from with the new from
+						var from = $(this).attr("data-from");
+						
+						curr_url = curr_url.replace(/from=\d+/g, "from=" + from);
+						
+						$(this).attr("href", curr_url);
+					});*/
 			  });
           </script>
 </head>
@@ -109,7 +137,9 @@
 	               <p>${facet?cap_first}</p>
 	               <ul class="nav">
 		               <#list facets[facet].terms as aterm>
-		                   <li><small><a class="facetref" data-filter="${facet}:${aterm.term}" href="/search/results?search-terms=${search_terms}&from=0&size=10&filter-terms=${facet}:${aterm.term}"> --- ${aterm.term?lower_case}<span class="badge pull-right">${aterm.count}</span></small></a></li>
+		                  <#if ! tohide?seq_contains("${facet}:${aterm.term}")>
+		                    <li><small><a class="facetref" data-filter="${facet?replace(" ","")}:${aterm.term}" href="/search/results?search-terms=${search_terms}&from=0&size=10&filter-terms=${facet}:${aterm.term}"> --- ${aterm.term?lower_case}<span class="badge pull-right">${aterm.count}</span></small></a></li>
+		                  </#if>
 		               </#list>
 	               </ul>
 	            </#list>
@@ -133,19 +163,19 @@
 	  <#if curr == 0 >
 	     <li class="disabled"><a href="#">&laquo;</a></li>
 	  <#else>
-	     <li class="#"><a href="/search/results?search-terms=${search_terms}&from=${pagination.elem_per_page * (curr -1)}&size=${pagination.elem_per_page}">&laquo;</a></li>
+	     <li class="#"><a class="pagiref" data-from="${pagination.elem_per_page * (curr -1)}" href="/search/results?search-terms=${search_terms}&from=${pagination.elem_per_page * (curr -1)}&size=${pagination.elem_per_page}">&laquo;</a></li>
 	  </#if>
 	  <#list 1..pagination.nb_pages as index>
 	     <#if curr == (index-1)>
 	        <li class="active"><a href="#">${index}</a></li>
 	     <#else>
-	        <li><a href="/search/results?search-terms=${search_terms}&from=${pagination.elem_per_page * (index - 1)}&size=${pagination.elem_per_page}">${index}</a></li>
+	        <li><a class="pagiref" data-from="${pagination.elem_per_page * (index - 1)}" href="/search/results?search-terms=${search_terms}&from=${pagination.elem_per_page * (index - 1)}&size=${pagination.elem_per_page}">${index}</a></li>
 	     </#if>
 	  </#list>
 	  <#if curr == (pagination.nb_pages-1) >
 	     <li class="disabled"><a href="#">&laquo;</a></li>
 	  <#else>
-	     <li class="#"><a href="/search/results?search-terms=${search_terms}&from=${pagination.elem_per_page * (curr +1)}&size=${pagination.elem_per_page}">&raquo;</a></li>
+	     <li class="#"><a class="pagiref" data-from="${pagination.elem_per_page * (curr + 1)}" href="/search/results?search-terms=${search_terms}&from=${pagination.elem_per_page * (curr +1)}&size=${pagination.elem_per_page}">&raquo;</a></li>
 	  </#if>
 	</ul>
  </div>

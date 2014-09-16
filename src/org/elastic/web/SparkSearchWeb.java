@@ -10,6 +10,7 @@ import java.io.Writer;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -132,7 +133,6 @@ public class SparkSearchWeb {
 		if (filterString.length() > 0)
 		{
 			// Do not use a regexpr for the moment but should do
-		
 			String[] elems = filterString.split("[\\+, ]");
 			
 			for (String elem : elems) 
@@ -154,10 +154,11 @@ public class SparkSearchWeb {
 
 	
 	//Static immutable map to create a translation table between the facets and the name displayed on screen to users
+	//TODO to externalize in a config file
 	static final ImmutableMap<String, String> FACETS2HIERACHYNAMES = ImmutableMap.of("satellites" , "hierarchyNames.satellite",
 			                                                                         "instruments", "hierarchyNames.instrument",
 			                                                                         "categories", "hierarchyNames.category",
-			                                                                         "societal Benefit Area", "hierarchyNames.societalBenefitArea",
+			                                                                         "societalBenefitArea", "hierarchyNames.societalBenefitArea",
 			                                                                         "distribution", "hierarchyNames.distribution"
 			                                                                         );
 	
@@ -183,11 +184,9 @@ public class SparkSearchWeb {
 
 		// template input
 		Map<String, Object> data = new HashMap<String, Object>();
-		
-		// create construct for fitlerTerms
-		//String[] filterTermsArr = filterString.split(",");
-		
+			
 		Multimap<String, String> filterTermsMap = parseFiltersTerms(filterString);
+		Set<String> hiddenFacets = new HashSet<String>(); // to create the list of filters to hide
 		
 		String filterConstruct = "";
 		if (filterTermsMap.size() > 0)
@@ -206,6 +205,8 @@ public class SparkSearchWeb {
 				   {
 					   filterTerms += ",{ \"term\" : { \"" + FACETS2HIERACHYNAMES.get(key) + "\":\"" + term + "\"}}";
 				   }
+				   
+				   hiddenFacets.add(key + ":" + term);
 				   
 				   i++;
 			   }
@@ -253,7 +254,7 @@ public class SparkSearchWeb {
 			JSONObject jsObj = (JSONObject) parser.parse(response.body);
 
 			data.put("total_hits", ((Map<?, ?>) jsObj.get("hits")).get("total"));
-		
+			
 			// compute the pagination information to create the pagination bar
 			Map<String, Object> pagination = computePaginationParams(((Long) (data.get("total_hits"))).intValue(), from);
 			data.put("pagination", pagination);
@@ -302,7 +303,11 @@ public class SparkSearchWeb {
 	
 			data.put("elapsed", (double) (stopwatch.elapsed(TimeUnit.MILLISECONDS))/ (double) 1000);
 		
+			Map<?,?> facets = (Map<?, ?>) jsObj.get("facets");
+			
 			data.put("facets", jsObj.get("facets"));
+			
+			data.put("tohide", hiddenFacets);
 
 		}
 		
@@ -438,83 +443,6 @@ public class SparkSearchWeb {
 				return null;
 			}
 		});
-		
-		
-		/**
-		 * show search results and paginate them
-		 */
-		Spark.get(new Route("/search/filtered_results") {
-			@Override
-			public Object handle(Request request, Response response) {
-				try 
-				{
-					System.out.println("Request url " + request.raw().getRequestURL().toString());
-					String searchTerms   = request.queryParams("search-terms");
-					String filterTerms = request.queryParams("filter-terms");
-					
-					int from = -1;
-					int size = -1;
-					
-					try 
-					{	
-						from = Integer.parseInt(request.queryParams("from"));
-					} catch (Exception e) {
-						System.out.println("from parameter = " + from + ". It cannot be converted to int. default to -1.");
-						e.printStackTrace(System.out);
-					}
-					
-					try 
-					{
-						size        = Integer.parseInt(request.queryParams("size"));
-				    } catch (Exception e) {
-				       System.out.println("size parameter = " + size + ". It cannot be converted to int. default to -1.");
-					   e.printStackTrace(System.out);
-				    }		
-						
-					// System.out.println(request.queryString());
-					System.out.println("SearchTerms "   + searchTerms);
-					System.out.println("FilteredTerms " + filterTerms);
-					System.out.println("From " + from);
-					System.out.println("Size " + size);
-					
-					//template parameter map
-					Map<?,?> data = null;
-					// Load template from source foldqueryRestElasticSearcher
-					Template template = cfg.getTemplate("etc/web/search_results.ftl");
-					
-					data = searchQueryElasticSearch(searchTerms, filterTerms, from, size);
-
-					// output html to Console
-					//Writer out = new OutputStreamWriter(System.out);
-					//template.process(data, out);
-					//out.flush();
-					
-					Object dummy = ((Map<?,?>) (((Map<?,?>) (data.get("facets"))).get("instruments"))).get("total");
-
-					// get in a String
-					StringWriter results = new StringWriter();
-					template.process(data, results);
-					results.flush();
-					
-					return results.toString();
-
-				} catch (Exception e) {
-
-					StringWriter errors = new StringWriter();
-					e.printStackTrace(new PrintWriter(errors));
-					String str = errors.toString();
-					// print in out
-					System.out.println(str);
-					halt(401, "Error while returning responses. error = " + str);
-
-				}
-
-				return null;
-			}
-		});
-		
-		
-		
 		
 		
 		/**
