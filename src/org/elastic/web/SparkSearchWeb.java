@@ -137,12 +137,15 @@ public class SparkSearchWeb {
 			
 			for (String elem : elems) 
 			{
-			    String [] dummy = elem.split(":");
-			    
-			    if (dummy.length < 2)
-			    	throw new Exception("Error filterTermsMap incorrectly formatted. map content = " + elem);
-			    
-			    filterTermsMap.put(dummy[0], dummy[1]);   
+				// ignore empty elements
+				if (elem.length() > 0)
+			    {
+					String [] dummy = elem.split(":");
+					if (dummy.length < 2)
+				    	throw new Exception("Error filterTermsMap incorrectly formatted. map content = " + elem);
+				    
+				    filterTermsMap.put(dummy[0], dummy[1]);
+			    }  
 			}
 		}
 		

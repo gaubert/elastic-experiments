@@ -41,6 +41,24 @@
           </style>
           
           <script src="../js/jquery-1.11.0.js"></script>
+          <script> <!-- code to change url on facets dynamically -->
+              $(document).ready(function() {
+  					$("a.facetref").click(function(event){		
+						var curr_url = $(location).attr('href');
+						
+						// add new element
+						var new_filter = $(this).attr("data-filter");
+						
+						curr_url += "+" + new_filter;
+						
+						//alert("You clicked me! " + curr_url);
+						
+						event.preventDefault();
+                        location.href = curr_url;
+						
+					});
+			  });
+          </script>
 </head>
 <body>
 
@@ -59,9 +77,9 @@
 	      <!--<div class="form-group">-->
 	      <div class="input-group">
 	         <input name="search-terms" type="text" value="${search_terms}" class="form-control">
-	         <input type="hidden" name="filter-terms" value=""/> 
 	         <input type="hidden" name="from" value="0" />
 	         <input type="hidden" name="size" value="10" />
+	         <input type="hidden" name="filter-terms" value=""/> 
 	           <span class="input-group-btn">
 	             <button class="btn btn-default" type="submit">Search</button>
 	           </span>
@@ -91,7 +109,7 @@
 	               <p>${facet?cap_first}</p>
 	               <ul class="nav">
 		               <#list facets[facet].terms as aterm>
-		                   <li class=""><small><a href="/search/results?search-terms=${search_terms}&from=0&size=10&filter-terms=${facet}:${aterm.term}"> --- ${aterm.term?lower_case}<span class="badge pull-right">${aterm.count}</span></small></a></li>
+		                   <li><small><a class="facetref" data-filter="${facet}:${aterm.term}" href="/search/results?search-terms=${search_terms}&from=0&size=10&filter-terms=${facet}:${aterm.term}"> --- ${aterm.term?lower_case}<span class="badge pull-right">${aterm.count}</span></small></a></li>
 		               </#list>
 	               </ul>
 	            </#list>
