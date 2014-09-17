@@ -61,6 +61,25 @@
 						
 					});
 					
+					// to change dynamically the URL displayed by the browser
+					// intercept the mouseover event and change the url
+					$("a.facetref").on('mouseover', function(event){	
+					    
+					    var curr_url = $(location).attr('href');
+						
+						// replace from with the new from
+						var new_filter = $(this).attr("data-filter");
+						
+						//filter-terms=+distribution:EUMETCast-Europe+categories:Land
+						
+						// to be replaced by a working regexpr
+						curr_url += "+" + new_filter;
+						//curr_url = curr_url.replace(/filter-terms=\+\w:\w/g, "$&" + new_filter);
+						
+						$(this).attr("href", curr_url);
+					});
+					
+					// change dynamically the url on click
 					$("a.pagiref").on('click', function(event){		
 						var curr_url = $(location).attr('href');
 						
@@ -74,7 +93,9 @@
 						
 					});
 					
-					/*$("a.pagiref").on('mouseover', function(event){	
+					// to change dynamically the URL displayed by the browser
+					// intercept the mouseover event and change the url
+					$("a.pagiref").on('mouseover', function(event){	
 					    
 					    var curr_url = $(location).attr('href');
 						
@@ -84,7 +105,7 @@
 						curr_url = curr_url.replace(/from=\d+/g, "from=" + from);
 						
 						$(this).attr("href", curr_url);
-					});*/
+					});
 			  });
           </script>
 </head>
