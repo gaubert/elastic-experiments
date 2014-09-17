@@ -54,6 +54,9 @@
 						
 						curr_url += "+" + new_filter;
 						
+						// reset from to 0 everytime
+						curr_url = curr_url.replace(/from=\d+/g, "from=0");
+						
 						//alert("You clicked me! " + curr_url);
 						
 						event.preventDefault();
@@ -70,7 +73,8 @@
 						// replace from with the new from
 						var new_filter = $(this).attr("data-filter");
 						
-						//filter-terms=+distribution:EUMETCast-Europe+categories:Land
+						// reset from to 0 everytime
+						curr_url = curr_url.replace(/from=\d+/g, "from=0");
 						
 						// to be replaced by a working regexpr
 						curr_url += "+" + new_filter;
