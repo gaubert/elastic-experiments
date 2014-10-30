@@ -22,7 +22,6 @@ import org.apache.commons.io.filefilter.SuffixFileFilter;
 import org.elastic.common.FileSystem;
 import org.elastic.common.JSONWriter;
 import org.elasticsearch.action.index.IndexResponse;
-import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.common.settings.Settings;

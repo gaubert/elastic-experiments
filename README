@@ -1,1 +1,48 @@
-test
+Quick guide to launch the prototype
+
+1) Run ElasticSearch
+
+>cd etc/tools/elasticsearch-1.3.1/bin
+>./myelastic.sh
+
+or
+
+>./elasticsearch -Des.index.store.type=memory -d
+
+Create a simple ElasticSearch Store without persistence
+The metadata records needs to be indexed
+
+2) Index metadata records
+
+Run org.elastic.ISO2JSON
+
+In Eclipse working dir is the top project directory
+
+This Class extracts info from XML records with XPath and create a json object stored in a file for each record. Then all the JSON files are indexed in the ElasticSearch.
+
+A typical JSON record is described here https://gist.github.com/gaubert/e26eb189f7e42317fbb1
+
+3) Run Web App search
+
+The Web App is based a on a tiny web framework called Spark meant for rapid development (like Sinatra and other).
+
+It is based on http://www.sparkjava.com
+
+Web pages are built using a simple Template engine called Freemarker (http://freemarker.org).
+It is also based on Boostrap and Jquery and a bit of javascript.
+
+Elastic Search is accessed using the REST interface with a REST client.
+
+Run org.elastic.web.SparkSearchWeb 
+
+Point your browser to:
+http://localhost:4567/
+
+Search is based on having different weight for the different parts of the record (Title, Abstract).
+Use Facetted search to filter out results.
+Highlight found keywords in search results.
+Bookmarkable search.
+
+4) Elastic Search Experiment
+
+In elastic-experiment/etc there are also multiple curl requests to experiment with ElasticSearch

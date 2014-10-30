@@ -302,8 +302,6 @@ public class SparkSearchWeb {
 			stopwatch.stop(); // optional
 	
 			data.put("elapsed", (double) (stopwatch.elapsed(TimeUnit.MILLISECONDS))/ (double) 1000);
-		
-			Map<?,?> facets = (Map<?, ?>) jsObj.get("facets");
 			
 			data.put("facets", jsObj.get("facets"));
 			
@@ -372,7 +370,8 @@ public class SparkSearchWeb {
 				return null;
 			}
 		});
-
+		
+		
 		/**
 		 * show search results and paginate them
 		 */
@@ -490,6 +489,41 @@ public class SparkSearchWeb {
 				}
 				
 				
+				return null;
+			}
+		});
+		
+		/**
+		 * test typeahead.js
+		 */
+		Spark.get(new Route("/test-search") {
+			@Override
+			public Object handle(Request request, Response response) {
+				try {
+					// Load template from source folder
+					Template template = cfg.getTemplate("etc/web/test_search_page.ftl");
+					
+					// template input
+					Map<String, Object> data = new HashMap<String, Object>();
+					data.put("elem_per_page", ELEM_PER_PAGE);
+					
+					// get in a String
+					StringWriter results = new StringWriter();
+					template.process(data, results);
+					results.flush();
+
+					return results.toString();
+					
+				} catch (Exception e) {
+					StringWriter errors = new StringWriter();
+					e.printStackTrace(new PrintWriter(errors));
+					String str = errors.toString();
+					// print in out
+					System.out.println(str);
+					halt(401, "Error while accessing page search_page. error = " + str);
+
+				}
+
 				return null;
 			}
 		});

@@ -32,29 +32,29 @@
         </script>
     	</head>
     	
-    	<body role="document">
-    	<!-- Fixed navbar -->
-        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        </div>
+<body role="document">
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    </div>
     	
- <div class="row">
-	  <div class="col-md-2">
-	  </div>
-	  <div class="col-md-8">
-	     <form class="form-horizontal" role="form" method='GET' action="/search/results">
-	        <div class="input-group">
-	           <input name="search-terms" type="text" class="form-control">
-	           <input type="hidden" name="from" value="0" />
-	           <input type="hidden" name="size" value="${elem_per_page}" />
-	           <input type="hidden" name="filter-terms" value=""/> 
-	           <span class="input-group-btn">
-	              <button class="btn btn-default" type="submit">Search</button>
-	           </span>
-	        </div><!-- /input-group -->
-         </form>
-	  </div>
-	  <div class="col-md-2">
-	  </div>
-</div> <!-- row 1 -->   	
+	<div class="row">
+		  <div class="col-md-2">
+		  </div>
+		  <div class="col-md-8">
+		     <form class="form-horizontal" role="form" method='GET' action="/search/results">
+		        <div class="input-group">
+		           <input name="search-terms" type="text" class="form-control">
+		           <input type="hidden" name="from" value="0" />
+		           <input type="hidden" name="size" value="${elem_per_page}" />
+		           <input type="hidden" name="filter-terms" value=""/> 
+		           <span class="input-group-btn">
+		              <button class="btn btn-default" type="submit">Search</button>
+		           </span>
+		        </div><!-- /input-group -->
+	         </form>
+		  </div>
+		  <div class="col-md-2">
+		  </div>
+	</div> <!-- row 1 -->   	
 </body>
 </html>
