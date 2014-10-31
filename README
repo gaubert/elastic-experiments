@@ -12,6 +12,10 @@ or
 Create a simple ElasticSearch Store without persistence
 The metadata records needs to be indexed
 
+Define a new mapping for the products to avoid index with an analyzer the content of the hierarchyNames (topic categories) to be used to create the facets
+
+new_index_mapping.sh
+
 2) Index metadata records
 
 Run org.elastic.ISO2JSON
