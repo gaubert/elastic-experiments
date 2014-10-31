@@ -14,7 +14,7 @@ The metadata records needs to be indexed
 
 Define a new mapping for the products to avoid index with an analyzer the content of the hierarchyNames (topic categories) to be used to create the facets
 
-new_index_mapping.sh
+etc/new_index_mapping.sh
 
 2) Index metadata records
 
